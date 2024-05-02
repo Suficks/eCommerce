@@ -1,27 +1,24 @@
 #### Title of Pull Request
 
+
+
 #### 🤔 This is a ...
 
-- [ ] 🌟 New task
-- [ ] 🌐 New module
-- [ ] ⚙️ Update to an existing task
-- [ ] 🔧 Update to an existing module
-- [ ] 🔗 Update or addition of external resources or links
-- [ ] 🐛 Fix in a task or related content
-- [ ] 🛠 Fix in a module or related content
-- [ ] ✏️ Fixed a typo or grammatical error
-- [ ] 🔗 Fixed a broken link
+- [ ] 🌟 New feature
+- [ ] ⚙️ Update feature
+- [ ] 🔧 Fix feature
+- [ ] 🐛 Refactor code
+- [ ] 🔗 Fix a broken link
+- [ ] ✏️ Fix a typo or grammatical error
 - [ ] ❓ Other (specify: **\*\*\*\***\_\_\_\_**\*\*\*\***)
 
 #### Description
 
 - **Brief Overview:**
-- **Implementation Approach:**
 
 #### Additional Information
 
 - **Screenshots/Links:**
-- [ ] Related Issues:
 
 #### Checklist
 
