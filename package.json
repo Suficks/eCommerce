@@ -7,10 +7,19 @@
     "start": "vite",
     "build": "vite build",
     "prettier": "npx prettier --write \"**/*.{ts,tsx,json}\"",
-    "lint:scss": "npx stylelint \"**/*.scss\" --fix"
+    "lint:scss": "npx stylelint \"**/*.scss\" --fix",
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.1",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.3.1",
+    "react-test-renderer": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.2.1",
@@ -19,6 +28,8 @@
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-order": "^6.0.4",
+    "tsx": "^4.8.2",
+    "typescript": "^5.3.3",
     "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0"
   },
