@@ -1,0 +1,9 @@
+{
+  "cSpell.words": ["ecommerce", "stylelint", "svgr"],
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  }
+}
