@@ -6,7 +6,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "prettier": "npx prettier --write \"**/*.{ts,tsx,json}\""
+    "prettier": "npx prettier --write \"**/*.{ts,tsx,json}\"",
+    "lint:scss": "npx stylelint \"**/*.scss\" --fix"
   },
   "devDependencies": {
     "@types/react": "^18.3.1",
@@ -14,6 +15,10 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.2.1",
     "prettier": "^3.2.5",
+    "stylelint": "^16.5.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-order": "^6.0.4",
     "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0"
   },
