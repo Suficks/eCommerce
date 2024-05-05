@@ -5,18 +5,19 @@
   ],
   "plugins": [
     "stylelint-order",
-    "stylelint-config-rational-order/plugin"
+    "stylelint-config-rational-order/plugin",
+    "stylelint-scss"
   ],
+  "stylelint.validate": ["css", "scss"],
   "rules": {
     "selector-class-pattern": null,
     "custom-property-pattern": null,
     "order/properties-order": [],
-    "declaration-empty-line-before": null,
+    "declaration-empty-line-before": "never",
     "plugin/rational-order": [
       true,
       {
-        "border-in-box-model": true,
-        "empty-line-between-groups": true
+        "border-in-box-model": true
       }
     ]
   }

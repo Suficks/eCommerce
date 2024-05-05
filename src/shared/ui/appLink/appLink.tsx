@@ -1,4 +1,7 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+
+import './appLink.scss';
 
 interface AppLinkProps {
   to: string;
@@ -8,7 +11,7 @@ interface AppLinkProps {
 
 function AppLink({ to, text, className }: AppLinkProps) {
   return (
-    <Link to={to} className={`app-link ${className}`}>
+    <Link to={to} className={`app-link ${className || ''}`}>
       {text}
     </Link>
   );
@@ -17,4 +20,5 @@ function AppLink({ to, text, className }: AppLinkProps) {
 AppLink.defaultProps = {
   className: '',
 };
+
 export default AppLink;

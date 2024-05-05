@@ -4,7 +4,12 @@
     "ecommerce",
     "stylelint",
     "svgr",
-    "tsbuildinfo"
+    "tsbuildinfo",
+    "вмонтировать",
+    "Контейнер",
+    "найден",
+    "приложение",
+    "удалось"
   ],
   "editor.formatOnSave": true,
   "[typescript]": {
