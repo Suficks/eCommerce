@@ -2,6 +2,7 @@
 build
 coverage
 node_modules
+vite-env.d.ts
 *.html
 *.css
 *.scss

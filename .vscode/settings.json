@@ -1,5 +1,17 @@
 {
-  "cSpell.words": ["ecommerce", "stylelint", "svgr"],
+  "cSpell.words": [
+    "codepaths",
+    "ecommerce",
+    "Parens",
+    "stylelint",
+    "svgr",
+    "tsbuildinfo",
+    "вмонтировать",
+    "Контейнер",
+    "найден",
+    "приложение",
+    "удалось"
+  ],
   "editor.formatOnSave": true,
   "[typescript]": {
     "editor.codeActionsOnSave": {
