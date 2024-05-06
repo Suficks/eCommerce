@@ -46,6 +46,7 @@ module.exports = {
     'import/extensions': 'off',
     'prettier/prettier': 'error',
     'import/prefer-default-export': 'off',
+    "react/function-component-definition": 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/array-type': [
