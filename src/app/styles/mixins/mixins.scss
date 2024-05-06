@@ -1,0 +1,6 @@
+@mixin montserrat($fontSize, $fontWeight, $lineHeight) {
+  font-weight: $fontWeight;
+  font-size: $fontSize;
+  font-family: Montserrat, sans-serif;
+  line-height: $lineHeight;
+}
