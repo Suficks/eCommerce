@@ -1,6 +1,5 @@
 import './styles/index.scss';
 
-function App() {
+export const App = () => {
   return <div />;
-}
-export default App;
+};

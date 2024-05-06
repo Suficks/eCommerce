@@ -1,6 +1,7 @@
 .modal-wrapper{
   position: fixed;
   top: 166px;
+
   display: flex;
   flex-direction: column;
   gap:15px;
@@ -10,5 +11,6 @@
   min-height: 100px;
   padding: 30px;
   border-radius: 34px;
+
   background-color: rgba($gray, 0.25);
 }
