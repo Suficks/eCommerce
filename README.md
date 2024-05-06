@@ -1,6 +1,8 @@
 ## Description
 
-
+🌱 **Prakriti**: Online store of products for environmentally responsible consumption
+🌲 At a time when environmental issues are becoming more pressing, Prakriti online store offers an innovative solution for those who want to live in harmony with nature. Our store specializes in selling products that are not only healthy, but also do not harm the environment.
+🍀 In our range you will find a wide range of products, including bio- and eco-products, created keeping in mind Ayurveda and Naturopathy. We cooperate with the best manufacturers who use only natural ingredients and environmentally friendly production technologies. Our goal is to help you live better and longer without harming the planet.
 
 ---
 
