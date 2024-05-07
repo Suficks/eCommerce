@@ -1,11 +1,10 @@
+@import '@/app/styles/mixins/mixins';
+@import '@/app/styles/variables/global';
+
 .AppLink{
-  display: flex;
-
-  @include montserrat(20px, 500);
-  height: 24px;
-
+  @include montserrat(20px, 500, 24px);
   color: $green;
-  text-align: center;
+  text-decoration: none;
 
   &:hover {
     cursor: pointer;

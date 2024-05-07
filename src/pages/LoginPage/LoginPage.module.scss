@@ -8,19 +8,15 @@
   filter: brightness(45%);
 }
 
-.Card {
-  position: fixed;
-  top: 166px;
-
-  display: flex;
-  flex-direction: column;
-  gap:15px;
-  align-items: center;
-  justify-content: center;
-  min-width: 100px;
-  min-height: 100px;
+.card {
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 606px;
+  margin: auto;
   padding: 30px;
+  border: 1px solid white;
   border-radius: 34px;
 
-  background-color: rgba($gray, 0.25);
+  background-color: rgba(#808080, 0.5);
+  backdrop-filter: blur(2px);
 }
