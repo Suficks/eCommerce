@@ -41,9 +41,11 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'no-debugger': 'off',
+    'no-unused-vars': 'warn',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'class-methods-use-this': 'off',
     'import/extensions': 'off',
+    'react/require-default-props': 'off',
     'prettier/prettier': 'error',
     'import/prefer-default-export': 'off',
     "react/function-component-definition": 'off',
@@ -60,6 +62,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'error',
     curly: ['error', 'all'],
     '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-this-alias': [
       'error',
       {
