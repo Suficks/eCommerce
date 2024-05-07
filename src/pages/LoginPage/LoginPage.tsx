@@ -1,6 +1,6 @@
 import Logo from '@/shared/assets/images/logo.svg';
 import AuthBackground from '@/shared/assets/images/auth_background.webp';
-import { LoginFrom } from '@/features/Login/ui/LoginForm';
+import { LoginForm } from '@/features/Login';
 
 import cls from './LoginPage.module.scss';
 
@@ -10,7 +10,7 @@ export const LoginPage = () => {
       <img className={cls.background} src={AuthBackground} alt="background" />
       <Logo />
       <div className={cls.card}>
-        <LoginFrom />
+        <LoginForm />
       </div>
     </main>
   );

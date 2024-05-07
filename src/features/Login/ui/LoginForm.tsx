@@ -2,7 +2,7 @@ import { AppLink } from '@/shared/ui/AppLink/AppLink';
 
 import cls from './LoginForm.module.scss';
 
-export const LoginFrom = () => {
+export const LoginForm = () => {
   return (
     <form className={cls.form}>
       <h1 className={cls.title}>Login</h1>
