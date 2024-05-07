@@ -41,11 +41,17 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'no-debugger': 'off',
+    'no-unused-vars': 'warn',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'max-lines-per-function': ['error', { max: 40, skipBlankLines: true }],
     'class-methods-use-this': 'off',
-    'import/extensions': 'off',
+    'react/require-default-props': 'off',
     'prettier/prettier': 'error',
+    'import/extensions': 'off',
     'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/no-unresolved': 'off',
+    "react/function-component-definition": 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/array-type': [
@@ -54,11 +60,11 @@ module.exports = {
         default: 'array',
       },
     ],
-    'max-lines-per-function': ['error', { max: 40, skipBlankLines: true }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'error',
     curly: ['error', 'all'],
     '@typescript-eslint/lines-between-class-members': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-this-alias': [
       'error',
       {
@@ -66,6 +72,5 @@ module.exports = {
         allowedNames: ['context'],
       },
     ],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };

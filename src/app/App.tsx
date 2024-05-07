@@ -1,6 +1,6 @@
+import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import './styles/index.scss';
 
-function App() {
-  return <div />;
-}
-export default App;
+export const App = () => {
+  return <LoginPage />;
+};
