@@ -1,6 +1,7 @@
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 
 import cls from './LoginForm.module.scss';
+import { Input } from '@/shared/ui/input/input';
 
 export const LoginForm = () => {
   return (
@@ -10,6 +11,7 @@ export const LoginForm = () => {
         <h2 className={cls.subtitle}> Do not have an Account yet?</h2>
         <AppLink to="/registration" text="Sign Up" className={cls.link} />
       </div>
+      <Input placeholder="name" label="Name" />
     </form>
   );
 };
