@@ -1,7 +1,6 @@
 @import '@/app/styles/mixins/mixins';
 @import '@/app/styles/variables/global';
 
-
 .AppLink{
   @include montserrat(20px, 500, 24px);
   color: $green;
