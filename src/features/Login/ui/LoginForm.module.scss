@@ -1,3 +1,28 @@
-.LoginFrom {
-  display: block;
+@import '@/app/styles/mixins/mixins';
+@import '@/app/styles/variables/global';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  @include montserrat(40px, 700, 42px)
+}
+
+.wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.subtitle,
+.link {
+  @include montserrat(15px, 400, 24px)
+}
+
+.link {
+  color: $light-green;
 }

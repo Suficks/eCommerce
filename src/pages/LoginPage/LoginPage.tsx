@@ -6,10 +6,10 @@ import cls from './LoginPage.module.scss';
 
 export const LoginPage = () => {
   return (
-    <main className={cls.main}>
+    <main className={cls.loginPage}>
       <img className={cls.background} src={AuthBackground} alt="background" />
       <Logo />
-      <div className={cls.Card}>
+      <div className={cls.card}>
         <LoginFrom />
       </div>
     </main>
