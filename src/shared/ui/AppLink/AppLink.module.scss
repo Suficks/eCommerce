@@ -1,0 +1,19 @@
+.AppLink{
+  display: flex;
+
+  @include montserrat(20px, 500);
+  height: 24px;
+
+  color: $green;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .active{
+    color:white;
+
+    cursor: default;
+  };
+}
