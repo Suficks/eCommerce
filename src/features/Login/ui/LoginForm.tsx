@@ -2,6 +2,7 @@ import { AppLink } from '@/shared/ui/AppLink/AppLink';
 
 import cls from './LoginForm.module.scss';
 import { Input } from '@/shared/ui/input/input';
+import { Button } from '@/shared/ui/button/button';
 
 export const LoginForm = () => {
   return (
@@ -12,6 +13,7 @@ export const LoginForm = () => {
         <AppLink to="/registration" text="Sign Up" className={cls.link} />
       </div>
       <Input placeholder="name" label="Name" />
+      <Button text="Login" />
     </form>
   );
 };
