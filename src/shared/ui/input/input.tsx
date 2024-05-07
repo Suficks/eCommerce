@@ -25,7 +25,6 @@ export const Input = ({
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className={cls.label}>
       {label}
       <input

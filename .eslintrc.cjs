@@ -34,6 +34,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'jsx-a11y/label-has-associated-control': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': [
@@ -51,7 +52,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
-    "react/function-component-definition": 'off',
+    'react/function-component-definition': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/array-type': [
