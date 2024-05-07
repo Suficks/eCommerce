@@ -5,6 +5,7 @@
   
   @include montserrat(20px, 500);
   height: 24px;
+
   color: $green;
   text-align: center;
   
@@ -14,6 +15,7 @@
   
   .active{
   color:white;
+
   cursor: default;
 };
 }
