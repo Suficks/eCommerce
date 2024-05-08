@@ -32,7 +32,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
 
   const onChangeEmail = useCallback(
     (value: string) => {
-      dispatch(loginActions.setUserName(value));
+      dispatch(loginActions.setEmail(value));
     },
     [dispatch],
   );

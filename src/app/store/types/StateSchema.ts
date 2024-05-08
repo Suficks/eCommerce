@@ -1,5 +1,5 @@
 import { UserSchema } from '@/entities/User';
-import { LoginSchema } from '@/features/Login/model/types/LoginSchema';
+import { LoginSchema } from '@/features/Login';
 
 export interface StateSchema {
   loginForm: LoginSchema;
