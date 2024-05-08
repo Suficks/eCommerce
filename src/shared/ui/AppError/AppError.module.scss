@@ -1,0 +1,10 @@
+@import '@/app/styles';
+
+.error {
+  @include montserrat(15px, 500, 20px);
+  width: 100%;
+  padding: 7px 0;
+
+  color: $red;
+  text-align: start;
+}
