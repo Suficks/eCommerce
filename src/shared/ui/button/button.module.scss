@@ -1,0 +1,22 @@
+@import '@/app/styles';
+
+.button {
+  width: 240px;
+  height: 66px;
+  margin: 20px;
+  border: none;
+  border-radius: 11px;
+
+  color: black;
+
+  background-color: $green;
+  cursor: pointer;
+
+  transition: background-color 0.3s ease;
+
+  @include montserrat(23px, 500, 24px);
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

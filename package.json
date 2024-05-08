@@ -4,7 +4,7 @@
   "description": "",
   "license": "ISC",
   "scripts": {
-    "start": "vite",
+    "start": "vite --open",
     "build": "vite build",
     "prettier": "npx prettier --write \"**/*.{ts,tsx,json}\"",
     "prettier:check": "npx prettier --check \"**/*.{ts,tsx,json}\"",
