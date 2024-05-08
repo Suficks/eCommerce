@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 import Logo from '@/shared/assets/images/logo.svg';
-import { LoginForm } from '@/features/Login';
+import { LoginForm } from '@/features/Login/ui/LoginForm';
 
 import cls from './LoginPage.module.scss';
 
-export const LoginPage = () => {
+export const LoginPage = memo(() => {
   return (
     <main className={cls.loginPage}>
       <div className={cls.background} />
@@ -13,4 +15,4 @@ export const LoginPage = () => {
       </div>
     </main>
   );
-};
+});
