@@ -1,5 +1,4 @@
-@import '@/app/styles/mixins/mixins';
-@import '@/app/styles/variables/global';
+@import '@/app/styles';
 
 .form {
   display: flex;
@@ -14,15 +13,29 @@
 
 .wrapper {
   display: flex;
-  gap: 5px;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 66px;
 }
 
 .subtitle,
 .link {
+  text-align: center;
+
   @include montserrat(15px, 400, 24px)
 }
 
 .link {
+  margin-left: 5px;
+
   color: $light-green;
+}
+
+.input {
+  margin-bottom: 37px;
+}
+
+.button {
+  margin-top: 15px;
 }

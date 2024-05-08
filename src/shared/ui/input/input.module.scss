@@ -10,6 +10,8 @@
   color: white;
   font-size: 1rem;
 
+  @include montserrat(23px, 500, 24px);
+
   transition: 0.2s;
 }
 

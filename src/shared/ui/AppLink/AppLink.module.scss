@@ -1,13 +1,15 @@
-@import '@/app/styles/mixins/mixins';
-@import '@/app/styles/variables/global';
+@import '@/app/styles';
 
 .AppLink{
   @include montserrat(20px, 500, 24px);
   color: $green;
   text-decoration: none;
 
+  transition: 0.2s ease;
+
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
   }
 
   .active{
