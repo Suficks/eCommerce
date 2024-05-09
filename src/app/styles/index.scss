@@ -1,14 +1,11 @@
-@import '../styles/variables/global';
-@import '../styles/fonts/fonts';
-@import '../styles/mixins/mixins';
-@import 'reset-css';
-
 body, * {
   color: white;
   font-family: Montserrat, sans-serif;
 }
 
 main {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+
+  background-color: $black;
 }
