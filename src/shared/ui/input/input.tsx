@@ -1,29 +1,25 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import cls from './input.module.scss';
 
 interface InputProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
+  value?: string;
+  type?: string;
+  register?: UseFormRegisterReturn<string>;
 }
 
-export const Input = ({
+export const Input: FC<InputProps> = ({
   className = '',
   label = '',
   placeholder = '',
-  onChange,
-}: InputProps) => {
-  const [value, setValue] = useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    if (onChange) {
-      onChange(value);
-    }
-  };
-
+  value,
+  type,
+  register,
+}) => {
   return (
     <label className={cls.label}>
       {label}
@@ -31,7 +27,8 @@ export const Input = ({
         className={classNames(cls.input, className)}
         placeholder={placeholder}
         value={value}
-        onChange={handleChange}
+        type={type}
+        {...register}
       />
     </label>
   );
