@@ -1,5 +1,5 @@
-import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { AppRouter } from '@/app/providers/ui/AppRouter';
 
 export const App = () => {
-  return <LoginPage />;
+  return <AppRouter />;
 };
