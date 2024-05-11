@@ -8,6 +8,7 @@ import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { loginActions } from '../model/slice/loginSlice';
 import { loginByUsername } from '../model/services/loginByUsername';
+import { Validation } from '@/shared/const/Validation';
 
 import cls from './LoginForm.module.scss';
 
@@ -79,7 +80,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         register={register('username', {
           required: 'Enter your Name!',
           pattern: {
-            value: /^[a-zA-Z]+$/,
+            value: Validation.username,
             message:
               'Must contain at least one character and no special characters or numbers',
           },
@@ -110,7 +111,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         register={register('email', {
           required: 'Enter your email!',
           pattern: {
-            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+            value: Validation.email,
             message: 'Invalid email address',
           },
           onChange: () => {
@@ -132,8 +133,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         register={register('password', {
           required: 'Enter your password!',
           pattern: {
-            value:
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d~`! @#$%^&*()_\-+={[}\]|:;"'<,>.?/№]{8,}$/,
+            value: Validation.password,
             message:
               'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
           },
@@ -144,6 +144,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         placeholder="password"
         label="Password"
         className={cls.input}
+        type="password"
       />
       <div className={cls.error}>
         {errors?.password && (
