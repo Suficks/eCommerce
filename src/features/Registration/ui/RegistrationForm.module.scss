@@ -5,18 +5,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(10px, 5vw, 30px);
 }
 
 .title {
   @include montserrat(40px, 700, 42px)
-}
-
-.wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 66px;
 }
 
 .subtitle,
@@ -32,23 +25,12 @@
   color: $light-green;
 }
 
-.input {
-  margin-bottom: 37px;
-}
-
-.button {
-  margin-top: 15px;
-}
-
-.error__message{
-  color: $red;
-  font-size: 12px;
-}
-
-.error{
+.input__wrapper{
+  display: flex;
+  flex-direction: column;
   width: 100%;
-
-  text-align: left;
-
-  transform: translateY(-25px);
+  gap: 5px;
+}
+input.invalid{
+  border-color: $red !important;
 }
