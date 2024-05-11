@@ -14,19 +14,21 @@
 }
 
 .card {
-  width: 90%;
-  max-width: 606px;
+  width: clamp(300px, 80%, 800px);
   margin: auto;
-  padding: 50px 40px;
+  padding: clamp(20px, 5vw, 50px) clamp(20px, 5vw, 40px);
   border: 1px solid white;
   border-radius: 34px;
+  gap: clamp(30px, 5vw, 50px);
+  display: flex;
+  flex-direction: column;
 
   background-color: rgba($gray, 0.25);
   backdrop-filter: blur(2px);
 }
 
 .title {
-  @include montserrat(40px, 700, 42px);
+  @include montserrat(clamp(25px, 5vw, 40px), 700, 42px);
   text-align: center;
 }
 
@@ -36,13 +38,9 @@
   gap: 5px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 66px;
-
-
 }
 
-.subtitle,
-.link {
+.subtitle {
   text-align: center;
 
   @include montserrat(15px, 400, 24px)

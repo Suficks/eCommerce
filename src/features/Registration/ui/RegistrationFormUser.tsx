@@ -49,7 +49,8 @@ export const RegistrationFormUser = memo(
             type="email"
             placeholder="email"
             label="Email"
-            className={cls.input}
+            className={errors.email && cls.invalid}
+            aria-invalid={errors.email ? 'true' : 'false'}
           />
           {errors?.email &&
             AppError({ text: errors.email?.message || 'Error!' })}
@@ -58,7 +59,7 @@ export const RegistrationFormUser = memo(
           <Input
             placeholder="password"
             label="Password"
-            className={cls.input}
+            className={errors.password && cls.invalid}
             type="password"
             register={register('password', {
               required: 'Enter your password!',
@@ -68,6 +69,7 @@ export const RegistrationFormUser = memo(
                   'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
               },
             })}
+            aria-invalid={errors.password ? 'true' : 'false'}
           />
           {errors?.password &&
             AppError({ text: errors.password?.message || 'Error!' })}
@@ -76,13 +78,14 @@ export const RegistrationFormUser = memo(
           <Input
             placeholder="password_repeat"
             label="Repeat password"
-            className={cls.input}
+            className={errors.passwordConfirm && cls.invalid}
             type="password"
             register={register('passwordConfirm', {
               required: 'Confirm your password!',
               validate: (value) =>
                 value === getValues('password') || 'Must match the password.',
             })}
+            aria-invalid={errors.passwordConfirm ? 'true' : 'false'}
           />
           {errors?.passwordConfirm &&
             AppError({ text: errors.passwordConfirm?.message || 'Error!' })}

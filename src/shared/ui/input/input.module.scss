@@ -10,7 +10,7 @@
   color: white;
   font-size: 1rem;
 
-  @include montserrat(23px, 500, 24px);
+  @include montserrat(clamp(20px, 5vw, 25px), 500, 24px);
 
   transition: 0.2s;
 }
@@ -38,7 +38,6 @@
 
     cursor: text;
   }
-  
   &:required,&:invalid { box-shadow:none; }
 }
 
@@ -54,7 +53,8 @@
     transition: 0.2s; 
   }
   padding-bottom: 6px;
-  border-color: $green;  
+  border-color: $green;
   border-width: 3px;
   border-image-slice: 1;
 }
+
