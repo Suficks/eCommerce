@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
+import { Validation } from '@/shared/const/Validation';
 
 import cls from './RegistrationForm.module.scss';
 
@@ -23,6 +24,7 @@ export const RegistrationFormUser = memo(
     type SubmitData = {
       email: string;
       password: string;
+      passwordConfirm: string;
     };
 
     const onSubmit: SubmitHandler<SubmitData> = () => {
@@ -38,7 +40,7 @@ export const RegistrationFormUser = memo(
           register={register('email', {
             required: 'Enter your email!',
             pattern: {
-              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              value: Validation.email,
               message: 'Invalid email address',
             },
           })}
@@ -62,8 +64,7 @@ export const RegistrationFormUser = memo(
           register={register('password', {
             required: 'Enter your password!',
             pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d~`! @#$%^&*()_\-+={[}\]|:;"'<,>.?/№]{8,}$/,
+              value: Validation.password,
               message:
                 'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
             },
@@ -81,7 +82,19 @@ export const RegistrationFormUser = memo(
           label="Repeat password"
           className={cls.input}
           type="password"
+          register={register('passwordConfirm', {
+            required: 'Confirm your password!',
+            validate: (value) =>
+              value === getValues('password') || 'Must match the password.',
+          })}
         />
+        <div className={cls.error}>
+          {errors?.passwordConfirm && (
+            <p className={cls.error__message}>
+              {errors.passwordConfirm?.message || 'Error!'}
+            </p>
+          )}
+        </div>
         <Button
           text="Login"
           className={cls.button}
