@@ -1,65 +1,56 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { routeConfig } from '@/app/providers/Router/Config/routeConfig';
 
-const {
-  login,
-  registration,
-  main,
-  catalog,
-  profile,
-  basket,
-  about,
-  base,
-  notFound,
-} = routeConfig;
+import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
+import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { NotFound } from '@/pages/NotFound/NotFound';
 
-export const router = createBrowserRouter([
+export const Approuter = createBrowserRouter([
   {
-    path: login.path,
-    element: login.element,
+    path: '/',
+    element: <LoginPage />,
   },
   {
-    path: registration.path,
-    element: registration.element,
+    path: `/registration`,
+    element: <RegistrationPage />,
   },
   {
-    path: main.path,
-    element: main.element,
+    path: `/main`,
+    element: <RegistrationPage />,
   },
   {
-    path: catalog.path,
-    element: catalog.element,
+    path: `/catalog`,
+    element: <RegistrationPage />,
     children: [
       {
         path: `:categoryId`,
-        element: catalog.element,
+        element: <NotFound />,
         children: [
           {
             path: `:productId`,
-            element: catalog.element,
+            element: <NotFound />,
           },
         ],
       },
     ],
   },
   {
-    path: profile.path,
-    element: profile.element,
+    path: `/profile`,
+    element: <RegistrationPage />,
   },
   {
-    path: basket.path,
-    element: basket.element,
+    path: `/basket`,
+    element: <RegistrationPage />,
   },
   {
-    path: about.path,
-    element: about.element,
+    path: `/about`,
+    element: <RegistrationPage />,
   },
   {
-    path: notFound.path,
-    element: notFound.element,
+    path: '/',
+    element: <LoginPage />,
   },
   {
-    path: base.path,
-    element: base.element,
+    path: `/*`,
+    element: <NotFound />,
   },
 ]);
