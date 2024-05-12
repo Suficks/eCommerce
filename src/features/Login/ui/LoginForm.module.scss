@@ -37,3 +37,16 @@
 .button {
   margin-top: 15px;
 }
+
+.error__message{
+  color: $red;
+  font-size: 12px;
+}
+
+.error{
+  width: 100%;
+
+  text-align: left;
+
+  transform: translateY(-25px);
+}
