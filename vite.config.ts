@@ -17,7 +17,7 @@ export default defineConfig({
     devSourcemap: true,
     modules: {
       localsConvention: 'camelCase',
-      generateScopedName: '[local]',
+      generateScopedName: '[local]--[hash:base64:5]',
     },
     preprocessorOptions: {
       scss: {
