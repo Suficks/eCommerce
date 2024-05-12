@@ -41,6 +41,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react/jsx-props-no-spreading": "off",
     'no-debugger': 'off',
     'no-unused-vars': 'warn',
     'no-param-reassign': 'off',

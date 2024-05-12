@@ -1,7 +1,7 @@
 
 
 .button {
-  width: 240px;
+  width: clamp(180px, 100%, 240px);
   height: 66px;
   border: none;
   border-radius: 11px;
