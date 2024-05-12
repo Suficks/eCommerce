@@ -1,18 +1,65 @@
-import { Suspense, memo, useCallback } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { routeConfig } from '@/app/providers/Router/Config/routeConfig';
-import { AppRoutesProps } from '@/shared/types/router';
 
-export const AppRouter = memo(() => {
-  const renderWithWrapper = useCallback((route: AppRoutesProps) => {
-    const element = <Suspense>{route.element}</Suspense>;
-    return <Route path={route.path} element={element} key={route.path} />;
-  }, []);
+const {
+  login,
+  registration,
+  main,
+  catalog,
+  profile,
+  basket,
+  about,
+  base,
+  notFound,
+} = routeConfig;
 
-  return (
-    <Routes>
-      {Object.values(routeConfig).map(renderWithWrapper)}
-      <Route path="*" element={routeConfig.login.element} />
-    </Routes>
-  );
-});
+export const router = createBrowserRouter([
+  {
+    path: login.path,
+    element: login.element,
+  },
+  {
+    path: registration.path,
+    element: registration.element,
+  },
+  {
+    path: main.path,
+    element: main.element,
+  },
+  {
+    path: catalog.path,
+    element: catalog.element,
+    children: [
+      {
+        path: `:categoryId`,
+        element: catalog.element,
+        children: [
+          {
+            path: `:productId`,
+            element: catalog.element,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: profile.path,
+    element: profile.element,
+  },
+  {
+    path: basket.path,
+    element: basket.element,
+  },
+  {
+    path: about.path,
+    element: about.element,
+  },
+  {
+    path: notFound.path,
+    element: notFound.element,
+  },
+  {
+    path: base.path,
+    element: base.element,
+  },
+]);

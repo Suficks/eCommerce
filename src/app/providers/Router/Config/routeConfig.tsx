@@ -1,44 +1,55 @@
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { AppRoutesProps } from '@/shared/types/router';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { NotFound } from '@/pages/NotFound/NotFound';
 
-import {
-  AppRoutes,
-  getRouteLogin,
-  getRouteRegistration,
-} from '@/shared/const/router';
+export enum AppRoutes {
+  LOGIN = 'login',
+  REGISTRATION = 'registration',
+  MAIN = 'main',
+  CATALOG = 'catalog',
+  PROFILE = 'profile',
+  BASKET = 'basket',
+  ABOUT = 'about',
+  BASE = 'base',
+  NOT_FOUND = 'notFound',
+}
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.LOGIN]: {
-    path: getRouteLogin(),
+    path: `/login`,
     element: <LoginPage />,
   },
   [AppRoutes.REGISTRATION]: {
-    path: getRouteRegistration(),
+    path: `/registration`,
     element: <RegistrationPage />,
   },
   [AppRoutes.MAIN]: {
-    path: getRouteRegistration(),
+    path: `/main`,
     element: <RegistrationPage />,
   },
   [AppRoutes.CATALOG]: {
-    path: getRouteRegistration(),
+    path: `/catalog`,
     element: <RegistrationPage />,
   },
   [AppRoutes.PROFILE]: {
-    path: getRouteRegistration(),
+    path: `/profile`,
     element: <RegistrationPage />,
   },
   [AppRoutes.BASKET]: {
-    path: getRouteRegistration(),
+    path: `/basket`,
     element: <RegistrationPage />,
   },
   [AppRoutes.ABOUT]: {
-    path: getRouteRegistration(),
+    path: `/about`,
     element: <RegistrationPage />,
   },
+  [AppRoutes.BASE]: {
+    path: '/',
+    element: <LoginPage />,
+  },
   [AppRoutes.NOT_FOUND]: {
-    path: getRouteRegistration(),
-    element: <RegistrationPage />,
+    path: `/*`,
+    element: <NotFound />,
   },
 };

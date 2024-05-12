@@ -3,9 +3,9 @@
 .form {
   display: flex;
   flex-direction: column;
+  gap: clamp(10px, 5vw, 30px);
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 5vw, 30px);
 }
 
 .title {
@@ -28,9 +28,10 @@
 .input__wrapper{
   display: flex;
   flex-direction: column;
-  width: 100%;
   gap: 5px;
+  width: 100%;
 }
+
 input.invalid{
   border-color: $red !important;
 }
