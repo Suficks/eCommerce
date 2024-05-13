@@ -14,14 +14,14 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, 5vw, 50px);
   width: clamp(300px, 80%, 800px);
   margin: auto;
   padding: clamp(20px, 5vw, 50px) clamp(20px, 5vw, 40px);
   border: 1px solid white;
   border-radius: 34px;
-  gap: clamp(30px, 5vw, 50px);
-  display: flex;
-  flex-direction: column;
 
   background-color: rgba($gray, 0.25);
   backdrop-filter: blur(2px);
