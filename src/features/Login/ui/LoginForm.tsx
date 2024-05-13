@@ -1,36 +1,67 @@
 import { memo, useCallback } from 'react';
 import classNames from 'classnames';
-
 import { useForm } from 'react-hook-form';
+
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
-import { loginActions } from '../model/slice/loginSlice';
 import { loginByUsername } from '../model/services/loginByUsername';
 import { Validation } from '@/shared/const/Validation';
-
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
+import { AppError } from '@/shared/ui/AppError/AppError';
+// import { apiRoot } from '@/shared/api/Client';
 import cls from './LoginForm.module.scss';
 
 export interface LoginFormProps {
   className?: string;
   onSuccess?: () => void;
 }
+// console.log(apiRoot);
+type SubmitData = {
+  username: string;
+  email: string;
+  password: string;
+};
 
-// eslint-disable-next-line max-lines-per-function
+const userNameOptions = {
+  required: 'Enter your Name!',
+  pattern: {
+    value: Validation.username,
+    message:
+      'Must contain at least one character and no special characters or numbers',
+  },
+  minLength: {
+    value: 1,
+    message: 'Name must be at least one character long!',
+  },
+  maxLength: {
+    value: 15,
+    message: 'Your name is too long!',
+  },
+};
+
+const emailOptions = {
+  required: 'Enter your email!',
+  pattern: {
+    value: Validation.email,
+    message: 'Invalid email address',
+  },
+};
+
+const passwordOptions = {
+  required: 'Enter your password!',
+  pattern: {
+    value: Validation.password,
+    message:
+      'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+  },
+};
+
 export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const username = useAppSelector((state) => state.loginForm.username);
-  const email = useAppSelector((state) => state.loginForm.email);
-  const password = useAppSelector((state) => state.loginForm.password);
   const isLoading = useAppSelector((state) => state.loginForm.isLoading);
   const error = useAppSelector((state) => state.loginForm.error);
-
-  type SubmitData = {
-    username: string;
-    email: string;
-    password: string;
-  };
 
   const {
     register,
@@ -39,35 +70,20 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     getValues,
   } = useForm<SubmitData>({ mode: 'onChange' });
 
-  const onChangeUsername = useCallback(
-    (value: string) => {
-      dispatch(loginActions.setUserName(value));
-    },
-    [dispatch],
-  );
-
-  const onChangeEmail = useCallback(
-    (value: string) => {
-      dispatch(loginActions.setEmail(value));
-    },
-    [dispatch],
-  );
-
-  const onChangePassword = useCallback(
-    (value: string) => {
-      dispatch(loginActions.setPassword(value));
-    },
-    [dispatch],
-  );
-
   const onLoginClick = useCallback(async () => {
-    const result = await dispatch(
-      loginByUsername({ username, email, password }),
-    );
+    const values = getValues();
+    const result = await dispatch(loginByUsername(values));
     if (result.meta.requestStatus === 'fulfilled' && onSuccess) {
       onSuccess();
     }
-  }, [dispatch, username, email, password, onSuccess]);
+  }, [dispatch, getValues, onSuccess]);
+
+  if (isLoading) {
+    <LoadingAnimation />;
+  }
+
+  // if (error) {
+  // }
 
   return (
     <form className={classNames(cls.form, className)}>
@@ -77,82 +93,42 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         <AppLink to="/registration" text="Sign Up" className={cls.link} />
       </div>
       <Input
-        register={register('username', {
-          required: 'Enter your Name!',
-          pattern: {
-            value: Validation.username,
-            message:
-              'Must contain at least one character and no special characters or numbers',
-          },
-          minLength: {
-            value: 1,
-            message: 'Name must be at least one character long!',
-          },
-          maxLength: {
-            value: 15,
-            message: 'Your name is too long!',
-          },
-          onChange: () => {
-            onChangeUsername(getValues('username'));
-          },
-        })}
+        register={register('username', userNameOptions)}
         placeholder="name"
         label="Name"
-        className={cls.input}
+        className={classNames(cls.input, errors.username && cls.invalid)}
       />
-      <div className={cls.error}>
-        {errors?.username && (
-          <p className={cls.error__message}>
-            {errors.username?.message || 'Error!'}
-          </p>
-        )}
-      </div>
+      {errors?.username && (
+        <AppError
+          text={errors.username?.message || 'Error!'}
+          className={cls.error}
+        />
+      )}
       <Input
-        register={register('email', {
-          required: 'Enter your email!',
-          pattern: {
-            value: Validation.email,
-            message: 'Invalid email address',
-          },
-          onChange: () => {
-            onChangeEmail(getValues('email'));
-          },
-        })}
+        register={register('email', emailOptions)}
         placeholder="email"
         label="Email"
-        className={cls.input}
+        className={classNames(cls.input, errors.email && cls.invalid)}
       />
-      <div className={cls.error}>
-        {errors?.email && (
-          <p className={cls.error__message}>
-            {errors.email?.message || 'Error!'}
-          </p>
-        )}
-      </div>
+      {errors?.email && (
+        <AppError
+          className={cls.error}
+          text={errors.email?.message || 'Error!'}
+        />
+      )}
       <Input
-        register={register('password', {
-          required: 'Enter your password!',
-          pattern: {
-            value: Validation.password,
-            message:
-              'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
-          },
-          onChange: () => {
-            onChangePassword(getValues('password'));
-          },
-        })}
+        register={register('password', passwordOptions)}
         placeholder="password"
         label="Password"
-        className={cls.input}
+        className={classNames(cls.input, errors.password && cls.invalid)}
         type="password"
       />
-      <div className={cls.error}>
-        {errors?.password && (
-          <p className={cls.error__message}>
-            {errors.password?.message || 'Error!'}
-          </p>
-        )}
-      </div>
+      {errors?.password && (
+        <AppError
+          text={errors.password?.message || 'Error!'}
+          className={cls.error}
+        />
+      )}
       <Button
         text="Login"
         className={cls.button}

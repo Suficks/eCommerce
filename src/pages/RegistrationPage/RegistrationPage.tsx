@@ -16,7 +16,7 @@ export const RegistrationPage = memo(() => {
           <h1 className={cls.title}>Registration</h1>
           <div className={cls.wrapper}>
             <h2 className={cls.subtitle}> Have an Account?</h2>
-            <AppLink to="/login" text="Sign In" className={cls.link} />
+            <AppLink to="/login" text="Log in" className={cls.link} />
           </div>
         </div>
         <RegistrationFormUser />

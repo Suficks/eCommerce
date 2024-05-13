@@ -6,7 +6,7 @@ import { NotFound } from '@/pages/NotFound/NotFound';
 
 export const Approuter = createBrowserRouter([
   {
-    path: '/',
+    path: '/login',
     element: <LoginPage />,
   },
   {
