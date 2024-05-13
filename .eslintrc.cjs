@@ -46,7 +46,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'no-param-reassign': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
-    'max-lines-per-function': ['error', { max: 100, skipBlankLines: true }],
     'class-methods-use-this': 'off',
     'react/require-default-props': 'off',
     'prettier/prettier': 'error',
