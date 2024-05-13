@@ -8,6 +8,7 @@ import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import cls from './RegistrationForm.module.scss';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
+import { SubmitData } from '@/shared/types/RegistrationSubmitData';
 
 export interface RegistrationFormProps {
   className?: string;
@@ -31,25 +32,6 @@ export const RegistrationFormUser =
       },
     });
 
-    type SubmitData = {
-      email: string;
-      password: string;
-      passwordConfirm: string;
-      username: string;
-      surname: string;
-      birthdate: string;
-      shippingStreet: string;
-      shippingCity: string;
-      shippingCountry: 'Belarus' | 'Ukraine' | 'Poland';
-      shippingPostal: string;
-      shippingIsDefault: boolean;
-      shippingAsBilling: boolean;
-      billingStreet: string;
-      billingCity: string;
-      billingCountry: 'Belarus' | 'Ukraine' | 'Poland';
-      billingPostal: string;
-      billingIsDefault: boolean;
-    };
     const onSubmit: SubmitHandler<SubmitData> = () => {
       console.log(getValues());
     };
