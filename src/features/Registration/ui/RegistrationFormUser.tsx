@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import classNames from 'classnames';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -14,7 +13,7 @@ export interface RegistrationFormProps {
   className?: string;
 }
 
-export const RegistrationFormUser = memo(
+export const RegistrationFormUser =
   // eslint-disable-next-line max-lines-per-function
   ({ className }: RegistrationFormProps) => {
     const {
@@ -22,10 +21,13 @@ export const RegistrationFormUser = memo(
       formState: { errors },
       handleSubmit,
       getValues,
+      setValue,
+      trigger,
     } = useForm<SubmitData>({
       mode: 'onChange',
       defaultValues: {
         shippingCountry: 'Poland',
+        billingCountry: 'Poland',
       },
     });
 
@@ -38,7 +40,7 @@ export const RegistrationFormUser = memo(
       birthdate: string;
       shippingStreet: string;
       shippingCity: string;
-      shippingCountry: 'Belarus' | 'Ukraine' | 'Poland' | '';
+      shippingCountry: 'Belarus' | 'Ukraine' | 'Poland';
       shippingPostal: string;
       shippingIsDefault: boolean;
       shippingAsBilling: boolean;
@@ -50,6 +52,14 @@ export const RegistrationFormUser = memo(
     };
     const onSubmit: SubmitHandler<SubmitData> = () => {
       console.log(getValues());
+    };
+    const handleBilling = () => {
+      if (getValues('shippingAsBilling')) {
+        setValue('billingCountry', getValues('shippingCountry'));
+        setValue('billingCity', getValues('shippingCity'));
+        setValue('billingStreet', getValues('shippingStreet'));
+        setValue('billingPostal', getValues('shippingPostal'));
+      }
     };
 
     return (
@@ -85,6 +95,11 @@ export const RegistrationFormUser = memo(
               pattern: {
                 value: Validation.password,
                 message: ValidationErrors.password.error,
+              },
+              onChange: () => {
+                setValue('passwordConfirm', `${getValues('passwordConfirm')}`, {
+                  shouldValidate: true,
+                });
               },
             })}
           />
@@ -162,7 +177,12 @@ export const RegistrationFormUser = memo(
             <Select
               label="Country"
               optionValues={['Poland', 'Russia', 'Belarus']}
-              register={register('shippingCountry', {})}
+              register={register('shippingCountry', {
+                onChange: () => {
+                  setValue('shippingPostal', '', { shouldValidate: true });
+                  handleBilling();
+                },
+              })}
             />
           </div>
           <div className={cls.input__wrapper}>
@@ -177,6 +197,9 @@ export const RegistrationFormUser = memo(
                   value: Validation.city,
                   message: ValidationErrors.shipping.city.error,
                 },
+                onChange: async () => {
+                  handleBilling();
+                },
               })}
             />
             {errors?.shippingCity &&
@@ -190,6 +213,9 @@ export const RegistrationFormUser = memo(
               type="text"
               register={register('shippingStreet', {
                 required: ValidationErrors.shipping.street.required,
+                onChange: async () => {
+                  handleBilling();
+                },
               })}
             />
             {errors?.shippingStreet &&
@@ -205,10 +231,118 @@ export const RegistrationFormUser = memo(
                 required: ValidationErrors.shipping.postal.required,
                 validate: (value) =>
                   Validation.postalCode(value, getValues('shippingCountry')),
+                onChange: async () => {
+                  handleBilling();
+                },
               })}
             />
             {errors?.shippingPostal &&
               AppError({ text: errors.shippingPostal?.message || 'Error!' })}
+          </div>
+          <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
+            <Input
+              label="Use as default address"
+              classNameLabel={`${cls.label__checkbox} ${getValues('shippingIsDefault') && cls.label__checkbox_checked}`}
+              className={cls.input__checkbox}
+              type="checkbox"
+              register={register('shippingIsDefault', {
+                onChange: async () => {
+                  await trigger('shippingIsDefault'); // need this to force rerender component on state change
+                },
+              })}
+            />
+            <Input
+              label="Use as Billing address"
+              classNameLabel={`${cls.label__checkbox} ${getValues('shippingAsBilling') && cls.label__checkbox_checked}`}
+              className={cls.input__checkbox}
+              type="checkbox"
+              register={register('shippingAsBilling', {
+                onChange: async () => {
+                  handleBilling();
+                  await trigger('shippingAsBilling'); // need this to force rerender component on state change
+                },
+              })}
+            />
+          </div>
+        </fieldset>
+        <fieldset className={`${cls.field__wrapper}`}>
+          <legend className={cls.field__heading}>Billing address</legend>
+          <div
+            className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
+          >
+            <Select
+              label="Country"
+              optionValues={['Poland', 'Russia', 'Belarus']}
+              register={register('billingCountry', {
+                onChange: () => {
+                  setValue('billingPostal', '', { shouldValidate: true });
+                },
+              })}
+            />
+          </div>
+          <div
+            className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
+          >
+            <Input
+              placeholder="Moskow"
+              label="City"
+              className={errors.billingCity && cls.invalid}
+              type="text"
+              register={register('billingCity', {
+                required: ValidationErrors.shipping.city.required,
+                pattern: {
+                  value: Validation.city,
+                  message: ValidationErrors.shipping.city.error,
+                },
+              })}
+            />
+            {errors?.billingCity &&
+              AppError({ text: errors.billingCity?.message || 'Error!' })}
+          </div>
+          <div
+            className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
+          >
+            <Input
+              placeholder="Y. Kolasa, 24, 18"
+              label="Street"
+              className={errors.billingStreet && cls.invalid}
+              type="text"
+              register={register('billingStreet', {
+                required: ValidationErrors.shipping.street.required,
+              })}
+            />
+            {errors?.billingStreet &&
+              AppError({ text: errors.billingStreet?.message || 'Error!' })}
+          </div>
+          <div
+            className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
+          >
+            <Input
+              placeholder="247123"
+              label="Postal code"
+              className={errors.billingPostal && cls.invalid}
+              type="text"
+              register={register('billingPostal', {
+                required: ValidationErrors.shipping.postal.required,
+                validate: (value) =>
+                  Validation.postalCode(value, getValues('billingCountry')),
+              })}
+            />
+            {errors?.billingPostal &&
+              AppError({ text: errors.billingPostal?.message || 'Error!' })}
+          </div>
+          <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
+            <Input
+              label="Use as default address"
+              classNameLabel={`${cls.label__checkbox} ${getValues('billingIsDefault') && cls.label__checkbox_checked}`}
+              className={cls.input__checkbox}
+              type="checkbox"
+              register={register('billingIsDefault', {
+                onChange: async () => {
+                  await trigger('billingIsDefault'); // need this to force rerender component on state change
+                },
+              })}
+            />
           </div>
         </fieldset>
         <Button
@@ -218,5 +352,4 @@ export const RegistrationFormUser = memo(
         />
       </form>
     );
-  },
-);
+  };

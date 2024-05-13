@@ -30,7 +30,7 @@ export const ValidationErrors = {
   },
   shipping: {
     city: {
-      required: 'Please enter your shipping city!',
+      required: 'Please enter your city!',
       error: 'Must contain only english letters!',
     },
     street: {
@@ -66,37 +66,17 @@ const validationConfirmPassword = (
   );
 };
 
-const postalCodeTests = {
-  Russia: /^\\d{6}$/,
-  Belarus: /^\\d{6}$/,
-  Poland: /^\\d{2}[- ]{0,1}\\d{3}$/,
+const postalCodeTests: { [index: string]: RegExp } = {
+  Russia: /^\d{6}$/,
+  Belarus: /^\d{6}$/,
+  Poland: /^\d{2}[- ]{0,1}\d{3}$/,
 };
 
 const validationPostalCode = (postalCode: string, country: string) => {
-  console.log(country, postalCode);
-  switch (country) {
-    case 'Poland': {
-      const result = /^\d{2}[-]{0,1}\d{3}$/.test(postalCode);
-      console.log(result);
-      return (
-        result || `${ValidationErrors.shipping.postal.error} for ${country}`
-      );
-    }
-    case 'Belarus': {
-      const result = /^\d{6}$/.test(postalCode);
-      return (
-        result || `${ValidationErrors.shipping.postal.error} for ${country}`
-      );
-    }
-    case 'Russia': {
-      const result = /^\d{6}$/.test(postalCode);
-      return (
-        result || `${ValidationErrors.shipping.postal.error} for ${country}`
-      );
-    }
-    default:
-      return true;
-  }
+  return (
+    postalCodeTests[country].test(postalCode) ||
+    `${ValidationErrors.shipping.postal.error} for ${country}`
+  );
 };
 
 export const Validation = {
