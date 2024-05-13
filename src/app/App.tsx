@@ -1,5 +1,6 @@
-import { LoginPage } from '@/pages/LoginPage/LoginPage';
+import { RouterProvider } from 'react-router-dom';
+import { Approuter } from '@/app/providers/ui/AppRouter';
 
 export const App = () => {
-  return <LoginPage />;
+  return <RouterProvider router={Approuter} />;
 };
