@@ -9,7 +9,9 @@ export const LoginPage = memo(() => {
   return (
     <main className={cls.loginPage}>
       <div className={cls.background} />
-      <Logo />
+      <div className={cls.logo}>
+        <Logo />
+      </div>
       <div className={cls.card}>
         <LoginForm />
       </div>
