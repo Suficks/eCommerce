@@ -15,16 +15,15 @@ export const loginByUsername = createAsyncThunk<User, LoginProps>(
     const { rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await apiRoot.get().execute();
-
-      console.log(response.statusCode);
-      if (!response) {
-        throw new Error();
-      }
-
-      // dispatch(userActions.setAuthData(response.data));
+      const response = await apiRoot
+        .login()
+        .post({
+          body: authData,
+        })
+        .execute();
 
       return response;
+      // dispatch(userActions.setAuthData(response.data));
     } catch (e) {
       return rejectWithValue('error');
     }

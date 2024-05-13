@@ -25,6 +25,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
     clientId: VITE_CTP_CLIENT_ID || '',
     clientSecret: VITE_CTP_CLIENT_SECRET || '',
   },
+  oauthUri: `/oauth/${VITE_CTP_PROJECT_KEY}/customers/token`,
   scopes,
   fetch,
 };
