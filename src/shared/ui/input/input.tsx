@@ -10,6 +10,7 @@ interface InputProps {
   value?: string;
   type?: string;
   register?: UseFormRegisterReturn<string>;
+  classNameLabel?: string;
 }
 
 export const Input: FC<InputProps> = ({
@@ -19,9 +20,10 @@ export const Input: FC<InputProps> = ({
   value,
   type,
   register,
+  classNameLabel,
 }) => {
   return (
-    <label className={cls.label}>
+    <label className={classNames(cls.label, classNameLabel)}>
       {label}
       <input
         className={classNames(cls.input, className)}
