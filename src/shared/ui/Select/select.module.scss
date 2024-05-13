@@ -13,7 +13,7 @@
   transition: 0.2s;
 }
 
-.input {
+.select {
   @include montserrat(20px, 500, 24px);
   width: 100%;
   padding: 7px 0;
@@ -27,28 +27,24 @@
 
   transition: border-color 0.2s;
 
-  &:placeholder-shown ~ .label {
-    top: 20px;
-
-    cursor: text;
-  }
   &:required,&:invalid { box-shadow:none; }
 }
 
-.input:focus {
-  ~ .label {
-    position: absolute;
-    top: 0;
-
-    display: block;
-
-    color: $green;
-
-    transition: 0.2s; 
-  }
+.select:focus {
   padding-bottom: 6px;
   border-color: $green;
   border-width: 3px;
   border-image-slice: 1;
 }
 
+.option {
+  color: black;
+
+  cursor: pointer;
+}
+
+.select::before, .select::after {
+  color: $gray;
+
+  background-color: $gray;
+}

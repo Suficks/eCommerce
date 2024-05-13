@@ -38,15 +38,14 @@
   margin-top: 15px;
 }
 
-.error__message{
-  color: $red;
-  font-size: 12px;
+.error{
+  transform: translateY(-25px);
 }
 
-.error{
-  width: 100%;
+.invalid{
+  border-color: $red;
 
-  text-align: left;
-
-  transform: translateY(-25px);
+  &:focus{
+    border-color: $red;
+  }
 }
