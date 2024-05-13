@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import { User } from '@/entities/User';
+import { apiRoot } from '@/shared/api';
 
 interface LoginProps {
   username: string;
@@ -15,15 +15,16 @@ export const loginByUsername = createAsyncThunk<User, LoginProps>(
     const { rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await axios.post<User>('/login', authData);
+      const response = await apiRoot.get().execute();
 
-      if (!response.data) {
+      console.log(response.statusCode);
+      if (!response) {
         throw new Error();
       }
 
       // dispatch(userActions.setAuthData(response.data));
 
-      return response.data;
+      return response;
     } catch (e) {
       return rejectWithValue('error');
     }

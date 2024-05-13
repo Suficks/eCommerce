@@ -10,14 +10,14 @@ import { loginByUsername } from '../model/services/loginByUsername';
 import { Validation } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
-// import { apiRoot } from '@/shared/api/Client';
+
 import cls from './LoginForm.module.scss';
 
 export interface LoginFormProps {
   className?: string;
   onSuccess?: () => void;
 }
-// console.log(apiRoot);
+
 type SubmitData = {
   username: string;
   email: string;
