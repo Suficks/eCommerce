@@ -25,13 +25,30 @@
   color: $light-green;
 }
 
-.input__wrapper{
+.input__wrapper {
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 100%;
 }
 
-input.invalid{
+input.invalid {
   border-color: $red !important;
+}
+
+.field__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 5vw, 30px);
+  width: 100%;
+  padding: 20px 10px;
+  border: 2px solid #cbcbcb;
+}
+
+.field__heading {
+  @include montserrat(clamp(25px, 5vw, 30px), 400, 24px);
+}
+
+.input__date {
+  color-scheme: dark;
 }

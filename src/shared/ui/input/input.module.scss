@@ -1,5 +1,3 @@
-
-
 .label {
   position: relative;
   top: 0;
@@ -28,11 +26,7 @@
   outline: 0;
 
   transition: border-color 0.2s;
-  
-  &::placeholder {
-    color: transparent;
-  }
-  
+
   &:placeholder-shown ~ .label {
     top: 20px;
 
