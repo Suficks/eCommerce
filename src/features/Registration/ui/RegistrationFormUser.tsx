@@ -4,11 +4,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
-
-import cls from './RegistrationForm.module.scss';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
-import { SubmitData } from '@/shared/types/RegistrationSubmitData';
+import { SubmitData } from '../model/types/Registration';
+
+import cls from './RegistrationForm.module.scss';
 
 export interface RegistrationFormProps {
   className?: string;

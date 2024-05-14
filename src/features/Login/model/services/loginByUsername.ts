@@ -1,28 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '@/entities/User';
-import { apiRoot } from '@/shared/api';
+import { LoginSubmitData } from '../types/LoginSchema';
 
-interface LoginProps {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export const loginByUsername = createAsyncThunk<User, LoginProps>(
+export const loginByUsername = createAsyncThunk<User, LoginSubmitData>(
   'login/loginByUsername',
   async (authData, thunkApi) => {
     const { rejectWithValue, dispatch } = thunkApi;
 
     try {
-      const response = await apiRoot
-        .login()
-        .post({
-          body: authData,
-        })
-        .execute();
-
-      return response;
+      return true;
       // dispatch(userActions.setAuthData(response.data));
     } catch (e) {
       return rejectWithValue('error');
