@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
+import { MainPage } from '@/pages/MainPage/MainPage';
 
 export const Approuter = createBrowserRouter([
   {
@@ -14,8 +15,8 @@ export const Approuter = createBrowserRouter([
     element: <RegistrationPage />,
   },
   {
-    path: `/main`,
-    element: <RegistrationPage />,
+    path: `/`,
+    element: <MainPage />,
   },
   {
     path: `/catalog`,
