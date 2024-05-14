@@ -1,0 +1,74 @@
+.MainPage  {
+  background-color: $black;
+}
+
+.mainBlock {
+  position: relative;
+  z-index: 2;
+
+  padding: clamp(100px, 13vw, 198px) clamp(15px, 4vw, 90px);
+
+  .title {
+    @include montserrat(80px, 700, 84px);
+  }
+  
+  .subtitle {
+    @include montserrat(clamp(80px, 15vw, 140px), 700, clamp(130px, 15vw, 180px));
+    margin-bottom: 50px;
+  
+    color: $green;
+  }
+  
+  .button {
+    @include montserrat(28px, 500, 32px);
+    color: $button-green;
+  }
+  
+  
+  .mainLeaf {
+    position: absolute;
+    top: 115px;
+    right: 0;
+    z-index: -1;
+  
+    filter: brightness(80%);
+  }
+}
+
+.infoBlock {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(75px, 10vw, 150px);
+  padding: clamp(200px, 13vw, 250px) clamp(30px, 4vw, 90px);
+
+  &::before {
+    position: absolute;
+    top: -185px;
+    left: 0;
+
+    width: 100%;
+    height: 185px;
+
+    background: linear-gradient(to top, $black, transparent); 
+
+    content: '';
+  }
+
+  .infoBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: brightness(50%) hue-rotate(35deg);
+    mask-image: url('../../shared/assets/images/mask.svg');
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+  }
+}

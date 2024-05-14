@@ -1,0 +1,23 @@
+.Card {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  border: 0.5px solid #898989;
+  border-radius: 13px;
+
+  text-align: center;
+
+  backdrop-filter: blur(3px);
+
+  @include montserrat(30px, 500, 33px);
+}
+
+.green {
+  @include montserrat(33px, 700, 35px);
+  color: $green;
+}
