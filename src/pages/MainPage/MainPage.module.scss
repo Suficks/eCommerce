@@ -40,6 +40,7 @@
 
   display: flex;
   justify-content: center;
+  margin-bottom: clamp(75px, 10vw, 150px);
   padding: clamp(200px, 13vw, 250px) clamp(30px, 4vw, 90px);
 
   &::before {
@@ -59,9 +60,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    mask-image: url('../../shared/assets/images/mask.svg');
-    mask-size: 100%;
-    mask-repeat: no-repeat;
 
     width: 100%;
     height: 100%;
@@ -69,5 +67,8 @@
     object-fit: cover;
 
     filter: brightness(50%) hue-rotate(35deg);
+    mask-image: url('../../shared/assets/images/mask.svg');
+    mask-size: 100%;
+    mask-repeat: no-repeat;
   }
 }
