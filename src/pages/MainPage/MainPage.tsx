@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import Background from '@/shared/assets/images/info_background.jpg';
+import Background from '@/shared/assets/images/info_background.webp';
 import { Button } from '@/shared/ui/button/button';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Card } from '@/shared/ui/Card/Card';
