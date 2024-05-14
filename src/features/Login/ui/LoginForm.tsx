@@ -10,6 +10,7 @@ import { loginByUsername } from '../model/services/loginByUsername';
 import { Validation } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
+import { LoginSubmitData } from '../model/types/LoginSchema';
 
 import cls from './LoginForm.module.scss';
 
@@ -17,12 +18,6 @@ export interface LoginFormProps {
   className?: string;
   onSuccess?: () => void;
 }
-
-type SubmitData = {
-  username: string;
-  email: string;
-  password: string;
-};
 
 const userNameOptions = {
   required: 'Enter your Name!',
@@ -68,7 +63,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     formState: { errors },
     handleSubmit,
     getValues,
-  } = useForm<SubmitData>({ mode: 'onChange' });
+  } = useForm<LoginSubmitData>({ mode: 'onChange' });
 
   const onLoginClick = useCallback(async () => {
     const values = getValues();
