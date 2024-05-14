@@ -6,7 +6,7 @@ import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
-import { SubmitData } from '../model/types/Registration';
+import { SubmitData } from '@/features/Registration';
 
 import cls from './RegistrationForm.module.scss';
 
