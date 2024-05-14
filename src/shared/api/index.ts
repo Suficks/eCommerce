@@ -1,5 +1,5 @@
 export {
-  // createUser,
+  createUser,
   getUser,
   getAnonymousUser,
   getProductsList,
