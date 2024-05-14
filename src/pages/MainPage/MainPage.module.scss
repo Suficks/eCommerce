@@ -1,4 +1,6 @@
 .MainPage  {
+  height: 100%;
+
   background-color: $black;
 }
 
@@ -70,5 +72,63 @@
     mask-image: url('../../shared/assets/images/mask.svg');
     mask-size: 100%;
     mask-repeat: no-repeat;
+  }
+}
+
+.addInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.question{
+  @include montserrat(clamp(40px, 5vw, 80px), 700, 84px);
+  color: $green;
+  text-align: center;
+}
+
+.why-us{
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+
+
+  .ecological-benefits{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: center;
+
+    .oneBenefit{
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      justify-content: center;
+      width: 205px;
+
+      text-align: center;
+
+      p{
+        @include montserrat(clamp 16px, 500, 20px);
+      }
+    }
+  }
+}
+
+.featuredProducts{
+  width: 100%;
+  height: 672px;
+
+  text-align: center;
+
+  background: radial-gradient(ellipse at center, rgba($black, 0.3) 0%, rgba($black, 0) 70%);
+  background-image: url('../../shared/assets/images/shop_more_background.png');
+  background-position: center;
+  background-size: cover;
+  
+  .buttonMore{
+   color: $green;
   }
 }
