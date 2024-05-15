@@ -13,6 +13,11 @@ import Hands from '@/shared/assets/images/hands.svg';
 import Product_1 from '@/shared/assets/images/product_1.png';
 import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
+import animation_background from '@/shared/assets/video/background_video.mp4';
+import Icon_ln from '@/shared/assets/images/icon_ln.png';
+import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
+import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
+import Icon_insta from '@/shared/assets/images/icon_insta.png';
 
 import cls from './MainPage.module.scss';
 
@@ -68,6 +73,18 @@ export const MainPage = (props: MainPageProps) => {
               <Card image={Product_3} alt="product_3" width={210} />
             </div>
             <Button text="Shop more" className={cls.buttonMore} />
+          </div>
+        </div>
+        <div className={cls.socialMedia}>
+          <video autoPlay loop muted className={cls.videoBackground}>
+            <source src={animation_background} type="video/mp4" />
+          </video>
+          <p>Let’s get Social!</p>
+          <div className={cls.iconWrapper}>
+            <img src={Icon_facebook} alt="icon" />
+            <img src={Icon_insta} alt="icon" />
+            <img src={Icon_ln} alt="icon" />
+            <img src={Icon_youtube} alt="icon" />
           </div>
         </div>
       </section>

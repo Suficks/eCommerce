@@ -95,6 +95,35 @@
   text-align: center;
 }
 
+.socialMedia {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+
+  .videoBackground {
+    object-fit: cover;
+  }
+
+  p{
+    position: absolute;
+       top: 30%;
+
+       text-align: center;
+
+     @include montserrat(23px, 500, 24px);
+  }
+
+  .iconWrapper {
+  position: absolute;
+  top: 50%;
+
+    display: flex;
+    gap: 30px;
+    }
+  }
+  
 .benefitsSection{
   display: flex;
   flex-direction: column;
@@ -130,7 +159,6 @@
   flex-direction: column;
   gap: 50px;
   width: 100%;
-  height: clamp(400px, 80vh, 672px);
 
   text-align: center;
 
@@ -145,6 +173,7 @@ background: linear-gradient(
   
   
   .buttonMore{
+    @include montserrat(23px, 600, 24px);
     align-self: center;
 
    color: $green;
