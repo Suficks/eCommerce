@@ -3,6 +3,7 @@ import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
+import { MainPage } from '@/pages/MainPage/MainPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -41,7 +42,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.MAIN,
-    element: <NotFound />,
+    element: <MainPage />,
   },
   {
     path: Routes.CATALOG,

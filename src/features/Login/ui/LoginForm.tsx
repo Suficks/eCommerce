@@ -19,23 +19,6 @@ export interface LoginFormProps {
   onSuccess?: () => void;
 }
 
-const userNameOptions = {
-  required: 'Enter your Name!',
-  pattern: {
-    value: Validation.username,
-    message:
-      'Must contain at least one character and no special characters or numbers',
-  },
-  minLength: {
-    value: 1,
-    message: 'Name must be at least one character long!',
-  },
-  maxLength: {
-    value: 15,
-    message: 'Your name is too long!',
-  },
-};
-
 const emailOptions = {
   required: 'Enter your email!',
   pattern: {
@@ -87,18 +70,6 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         <h2 className={cls.subtitle}> Do not have an Account yet?</h2>
         <AppLink to="/registration" text="Sign Up" className={cls.link} />
       </div>
-      <Input
-        register={register('username', userNameOptions)}
-        placeholder="name"
-        label="Name"
-        className={classNames(cls.input, errors.username && cls.invalid)}
-      />
-      {errors?.username && (
-        <AppError
-          text={errors.username?.message || 'Error!'}
-          className={cls.error}
-        />
-      )}
       <Input
         register={register('email', emailOptions)}
         placeholder="email"
