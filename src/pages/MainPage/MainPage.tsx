@@ -35,7 +35,7 @@ export const MainPage = (props: MainPageProps) => {
         <img src={Background} className={cls.infoBackground} alt="background" />
       </div>
       <section className={cls.addInfo}>
-        <div className={cls.whyUs}>
+        <div className={cls.benefitsSection}>
           <p className={cls.question}>Why Buy from Us?</p>
           <div className={cls.ecologicalBenefits}>
             <div className={cls.oneBenefit}>
