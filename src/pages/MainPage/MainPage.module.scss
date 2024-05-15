@@ -100,7 +100,7 @@
 
   display: flex;
   flex-direction: column;
- align-items: center;
+  align-items: center;
 
   .videoBackground {
     object-fit: cover;
@@ -108,9 +108,9 @@
 
   p{
     position: absolute;
-       top: 30%;
+    top: 30%;
 
-       text-align: center;
+    text-align: center;
 
      @include montserrat(23px, 500, 24px);
   }
@@ -119,9 +119,9 @@
   position: absolute;
   top: 50%;
 
-    display: flex;
-    gap: 30px;
-    }
+  display: flex;
+  gap: 30px;
+  }
   }
   
 .benefitsSection{
@@ -157,7 +157,7 @@
 .featuredProducts{
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 10px;
   width: 100%;
 
   text-align: center;
@@ -175,13 +175,16 @@ background: linear-gradient(
   .buttonMore{
     @include montserrat(23px, 600, 24px);
     align-self: center;
+    margin-bottom: 40px;
+    border: 0.5px solid #898989;
 
-   color: $green;
+    color: $green;
 
-   background-color: $black;
-      opacity: 0.8; 
+    background-color: $black;
+    opacity: 0.8;
+    backdrop-filter: blur(3px); 
 
-  &:hover {
+    &:hover {
     color: white;
 
     background-color: $green;
@@ -189,7 +192,7 @@ background: linear-gradient(
   }
 
 .products{
-      display: flex;
+    display: flex;
     flex-direction: column;
     gap: 30px;
 }
