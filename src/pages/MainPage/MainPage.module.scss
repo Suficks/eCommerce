@@ -76,7 +76,7 @@
 
     object-fit: cover;
 
-    filter: brightness(60%) hue-rotate(35deg);
+    filter: brightness(60%);
     mask-image: url('../../shared/assets/images/mask.svg');
     mask-size: 100%;
     mask-repeat: no-repeat;
