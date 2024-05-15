@@ -14,7 +14,7 @@
   position: relative;
   z-index: 2;
 
-  padding: clamp(100px, 13vw, 198px) clamp(15px, 4vw, 90px);
+  padding: clamp(130px, 13vw, 198px) clamp(15px, 4vw, 90px);
 
   .title {
     @include montserrat(80px, 700, 84px);
@@ -32,28 +32,30 @@
     color: $button-green;
   }
   
-  
   .mainLeaf {
     position: absolute;
-    top: 115px;
+    top: 50%;
     right: 0;
     z-index: -1;
-  
+
+    transform: translateY(-50%);
+    mask-image: linear-gradient(to bottom, $black 40%, transparent);
     filter: brightness(80%);
   }
 }
 
 .infoBlock {
   position: relative;
+  top: clamp(-80px, -5vw, 0px);
+  z-index: 2;
 
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
-  padding: clamp(50px, 19vw, 360px) 30px;
+  padding: clamp(50px, 30vw, 300px) 30px;
 
-  &::before {
+  &::after {
     position: absolute;
-    top: -185px;
+    bottom: 0;
     left: 0;
 
     width: 100%;
@@ -74,7 +76,7 @@
 
     object-fit: cover;
 
-    filter: brightness(60%) hue-rotate(35deg);
+    filter: brightness(60%);
     mask-image: url('../../shared/assets/images/mask.svg');
     mask-size: 100%;
     mask-repeat: no-repeat;
@@ -136,5 +138,13 @@
   
   .buttonMore{
    color: $green;
+  }
+}
+
+@media screen and (width <= 440px) {
+  .infoBlock {
+    .infoBackground {
+      mask-size: unset;
+    }
   }
 }
