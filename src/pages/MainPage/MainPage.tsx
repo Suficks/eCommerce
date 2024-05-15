@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 
-import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import Background from '@/shared/assets/images/info_background.webp';
+import { Header } from '@/widgets/Header/Header';
 import { Button } from '@/shared/ui/button/button';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Card } from '@/shared/ui/Card/Card';
+import MainLeaf from '@/shared/assets/images/main_leaf.svg';
+import Background from '@/shared/assets/images/info_background.webp';
+import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
@@ -19,13 +21,15 @@ export const MainPage = (props: MainPageProps) => {
   const { className } = props;
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
-      <div className={cls.mainBlock}>
+      <img src={HeaderImage} alt="headerImage" className={cls.headerImage} />
+      <Header />
+      <section className={cls.mainBlock}>
         <h1 className={cls.title}>Don’t Panic, it’s</h1>
         <h1 className={cls.subtitle}>Organic</h1>
         <Button text="Explore More" transparent className={cls.button} />
         <Icon Svg={MainLeaf} className={cls.mainLeaf} />
-      </div>
-      <div className={cls.infoBlock}>
+      </section>
+      <section className={cls.infoBlock}>
         <Card
           width={1200}
           className={cls.card}
@@ -33,7 +37,7 @@ export const MainPage = (props: MainPageProps) => {
           impact and promoting sustainable practices in every step of the shopping process"
         />
         <img src={Background} className={cls.infoBackground} alt="background" />
-      </div>
+      </section>
       <section className={cls.addInfo}>
         <div className={cls.benefitsSection}>
           <p className={cls.question}>Why Buy from Us?</p>

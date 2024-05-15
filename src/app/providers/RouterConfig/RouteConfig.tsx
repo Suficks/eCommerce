@@ -74,7 +74,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.ROOT,
-    element: <LoginPage />, // change for Main page
+    element: <MainPage />,
   },
   {
     path: Routes.NOT_FOUND,
