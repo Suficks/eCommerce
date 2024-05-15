@@ -10,6 +10,9 @@ import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
+import Product_1 from '@/shared/assets/images/product_1.png';
+import Product_2 from '@/shared/assets/images/product_2.png';
+import Product_3 from '@/shared/assets/images/product_3.png';
 
 import cls from './MainPage.module.scss';
 
@@ -43,15 +46,15 @@ export const MainPage = (props: MainPageProps) => {
           <p className={cls.question}>Why Buy from Us?</p>
           <div className={cls.ecologicalBenefits}>
             <div className={cls.oneBenefit}>
-              <Card image={Bottle} width={205} text="641,698 +" green />
+              <Card svg={Bottle} width={205} text="641,698 +" green />
               <p>Zero Plastic Products Sold</p>
             </div>
             <div className={cls.oneBenefit}>
-              <Card image={Cloud} width={205} text="42,780" green />
+              <Card svg={Cloud} width={205} text="42,780" green />
               <p>Tons Carbon Emission Prevented</p>
             </div>
             <div className={cls.oneBenefit}>
-              <Card image={Hands} width={205} text="50+" green />
+              <Card svg={Hands} width={205} text="50+" green />
               <p>Livelihoods Created</p>
             </div>
           </div>
@@ -59,7 +62,12 @@ export const MainPage = (props: MainPageProps) => {
         <div className={cls.featuredProducts}>
           <p className={cls.question}>Featured Products</p>
           <div className={cls.products}>
-            <Button text="Shop more" className="buttonMore" />
+            <div className={cls.productsWrapper}>
+              <Card image={Product_1} alt="product_1" width={210} />
+              <Card image={Product_2} alt="product_2" width={210} />
+              <Card image={Product_3} alt="product_3" width={210} />
+            </div>
+            <Button text="Shop more" className={cls.buttonMore} />
           </div>
         </div>
       </section>
