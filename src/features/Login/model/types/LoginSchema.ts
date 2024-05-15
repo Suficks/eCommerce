@@ -4,7 +4,6 @@ export interface LoginSchema {
 }
 
 export interface LoginSubmitData {
-  username?: string;
   email: string;
   password: string;
 }
