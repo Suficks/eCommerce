@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import classNames from 'classnames';
 
 import { Header } from '@/widgets/Header/Header';
@@ -26,6 +27,7 @@ interface MainPageProps {
 }
 
 export const MainPage = (props: MainPageProps) => {
+  const navigate = useNavigate();
   const { className } = props;
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
@@ -34,7 +36,7 @@ export const MainPage = (props: MainPageProps) => {
       <section className={cls.mainBlock}>
         <h1 className={cls.title}>Don’t Panic, it’s</h1>
         <h1 className={cls.subtitle}>Organic</h1>
-        <Button text="Explore More" transparent className={cls.button} />
+        <Button text="Explore More" transparent className={cls.button} green />
         <Icon Svg={MainLeaf} className={cls.mainLeaf} />
       </section>
       <section className={cls.infoBlock}>
@@ -72,7 +74,15 @@ export const MainPage = (props: MainPageProps) => {
               <Card image={Product_2} alt="product_2" width={210} />
               <Card image={Product_3} alt="product_3" width={210} />
             </div>
-            <Button text="Shop more" className={cls.buttonMore} />
+            <Button
+              text="Shop more"
+              className={cls.buttonMore}
+              transparent
+              green
+              onClick={() => {
+                navigate('/catalog');
+              }}
+            />
           </div>
         </div>
         <div className={cls.socialMedia}>
