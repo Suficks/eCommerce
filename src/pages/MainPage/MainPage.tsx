@@ -55,16 +55,13 @@ export const MainPage = (props: MainPageProps) => {
           <div className={cls.ecologicalBenefits}>
             <div className={cls.oneBenefit}>
               <Card svg={Bottle} width={205} text="641,698 +" green />
-              <Card svg={Bottle} width={205} text="641,698 +" green />
               <p>Zero Plastic Products Sold</p>
             </div>
             <div className={cls.oneBenefit}>
               <Card svg={Cloud} width={205} text="42,780" green />
-              <Card svg={Cloud} width={205} text="42,780" green />
               <p>Tons Carbon Emission Prevented</p>
             </div>
             <div className={cls.oneBenefit}>
-              <Card svg={Hands} width={205} text="50+" green />
               <Card svg={Hands} width={205} text="50+" green />
               <p>Livelihoods Created</p>
             </div>
