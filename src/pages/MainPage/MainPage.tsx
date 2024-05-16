@@ -75,10 +75,10 @@ export const MainPage = (props: MainPageProps) => {
                 <Card image={Product_1} alt="product_1" width={210} />
               </NavLink>
               <NavLink to="/catalog">
-                <Card image={Product_2} alt="product_2" width={210} />
+                <Card image={Product_3} alt="product_3" width={230} />
               </NavLink>
               <NavLink to="/catalog">
-                <Card image={Product_3} alt="product_3" width={210} />
+                <Card image={Product_2} alt="product_2" width={210} />
               </NavLink>
             </div>
             <Button
