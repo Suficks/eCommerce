@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Header } from '@/widgets/Header/Header';
@@ -14,8 +16,8 @@ import Product_1 from '@/shared/assets/images/product_1.png';
 import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
 import animation_background from '@/shared/assets/video/background_video.mp4';
-import Icon_ln from '@/shared/assets/images/icon_ln.png';
 import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
+import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
 import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Icon_insta from '@/shared/assets/images/icon_insta.png';
 
@@ -26,6 +28,7 @@ interface MainPageProps {
 }
 
 export const MainPage = (props: MainPageProps) => {
+  const navigate = useNavigate();
   const { className } = props;
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
@@ -34,7 +37,7 @@ export const MainPage = (props: MainPageProps) => {
       <section className={cls.mainBlock}>
         <h1 className={cls.title}>Don’t Panic, it’s</h1>
         <h1 className={cls.subtitle}>Organic</h1>
-        <Button text="Explore More" transparent className={cls.button} />
+        <Button text="Explore More" transparent className={cls.button} green />
         <Icon Svg={MainLeaf} className={cls.mainLeaf} />
       </section>
       <section className={cls.infoBlock}>
@@ -68,11 +71,25 @@ export const MainPage = (props: MainPageProps) => {
           <p className={cls.question}>Featured Products</p>
           <div className={cls.products}>
             <div className={cls.productsWrapper}>
-              <Card image={Product_1} alt="product_1" width={210} />
-              <Card image={Product_2} alt="product_2" width={210} />
-              <Card image={Product_3} alt="product_3" width={210} />
+              <NavLink to="/catalog">
+                <Card image={Product_1} alt="product_1" width={210} />
+              </NavLink>
+              <NavLink to="/catalog">
+                <Card image={Product_3} alt="product_3" width={230} />
+              </NavLink>
+              <NavLink to="/catalog">
+                <Card image={Product_2} alt="product_2" width={210} />
+              </NavLink>
             </div>
-            <Button text="Shop more" className={cls.buttonMore} />
+            <Button
+              text="Shop more"
+              className={cls.buttonMore}
+              transparent
+              green
+              onClick={() => {
+                navigate('/catalog');
+              }}
+            />
           </div>
         </div>
         <div className={cls.socialMedia}>
@@ -81,10 +98,18 @@ export const MainPage = (props: MainPageProps) => {
           </video>
           <p>Let’s get Social!</p>
           <div className={cls.iconWrapper}>
-            <img src={Icon_facebook} alt="icon" />
-            <img src={Icon_insta} alt="icon" />
-            <img src={Icon_ln} alt="icon" />
-            <img src={Icon_youtube} alt="icon" />
+            <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
+              <img src={Icon_insta} alt="icon" />
+            </NavLink>
+            <NavLink to="https://t.me/noplasticitsfantastic_store">
+              <img src={Icon_telegram} alt="icon" />
+            </NavLink>
+            <NavLink to="https://www.facebook.com/ecobarby/">
+              <img src={Icon_facebook} alt="icon" />
+            </NavLink>
+            <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
+              <img src={Icon_youtube} alt="icon" />
+            </NavLink>
           </div>
         </div>
       </section>

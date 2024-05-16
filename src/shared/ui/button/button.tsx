@@ -5,6 +5,7 @@ interface ButtonProps {
   text: string;
   className?: string;
   transparent?: boolean;
+  green?: boolean;
   onClick?: () => void;
 }
 
@@ -12,6 +13,7 @@ export const Button = ({
   text,
   className = '',
   transparent = false,
+  green,
   onClick,
 }: ButtonProps) => {
   return (
@@ -19,6 +21,7 @@ export const Button = ({
       type="button"
       className={classNames(cls.button, className, {
         [cls.transparent]: transparent,
+        [cls.green]: green,
       })}
       onClick={onClick}
     >

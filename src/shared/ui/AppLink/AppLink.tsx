@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import cls from './AppLink.module.scss';
@@ -11,8 +11,13 @@ interface AppLinkProps {
 
 export const AppLink = ({ to, text, className = '' }: AppLinkProps) => {
   return (
-    <Link to={to} className={classNames(cls.AppLink, className)}>
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        classNames(cls.AppLink, { [cls.active]: isActive }, className)
+      }
+    >
       {text}
-    </Link>
+    </NavLink>
   );
 };
