@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Header } from '@/widgets/Header/Header';
@@ -70,9 +71,15 @@ export const MainPage = (props: MainPageProps) => {
           <p className={cls.question}>Featured Products</p>
           <div className={cls.products}>
             <div className={cls.productsWrapper}>
-              <Card image={Product_1} alt="product_1" width={210} />
-              <Card image={Product_2} alt="product_2" width={210} />
-              <Card image={Product_3} alt="product_3" width={210} />
+              <NavLink to="/catalog">
+                <Card image={Product_1} alt="product_1" width={210} />
+              </NavLink>
+              <NavLink to="/catalog">
+                <Card image={Product_2} alt="product_2" width={210} />
+              </NavLink>
+              <NavLink to="/catalog">
+                <Card image={Product_3} alt="product_3" width={210} />
+              </NavLink>
             </div>
             <Button
               text="Shop more"
