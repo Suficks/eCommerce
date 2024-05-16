@@ -16,8 +16,8 @@ import Product_1 from '@/shared/assets/images/product_1.png';
 import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
 import animation_background from '@/shared/assets/video/background_video.mp4';
-import Icon_ln from '@/shared/assets/images/icon_ln.png';
 import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
+import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
 import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Icon_insta from '@/shared/assets/images/icon_insta.png';
 
@@ -98,10 +98,18 @@ export const MainPage = (props: MainPageProps) => {
           </video>
           <p>Let’s get Social!</p>
           <div className={cls.iconWrapper}>
-            <img src={Icon_facebook} alt="icon" />
-            <img src={Icon_insta} alt="icon" />
-            <img src={Icon_ln} alt="icon" />
-            <img src={Icon_youtube} alt="icon" />
+            <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
+              <img src={Icon_insta} alt="icon" />
+            </NavLink>
+            <NavLink to="https://t.me/noplasticitsfantastic_store">
+              <img src={Icon_telegram} alt="icon" />
+            </NavLink>
+            <NavLink to="https://www.facebook.com/ecobarby/">
+              <img src={Icon_facebook} alt="icon" />
+            </NavLink>
+            <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
+              <img src={Icon_youtube} alt="icon" />
+            </NavLink>
           </div>
         </div>
       </section>
