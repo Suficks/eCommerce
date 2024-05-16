@@ -19,14 +19,10 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={classNames(
-        cls.button,
-        className,
-        {
-          [cls.transparent]: transparent,
-        },
-        { [cls.green]: green },
-      )}
+      className={classNames(cls.button, className, {
+        [cls.transparent]: transparent,
+        [cls.green]: green,
+      })}
       onClick={onClick}
     >
       {text}
