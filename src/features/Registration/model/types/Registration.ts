@@ -1,3 +1,5 @@
+import { CountryType } from '@/shared/const/Countries';
+
 export type SubmitData = {
   email: string;
   password: string;
@@ -7,13 +9,13 @@ export type SubmitData = {
   birthdate: string;
   shippingStreet: string;
   shippingCity: string;
-  shippingCountry: 'Belarus' | 'Ukraine' | 'Poland';
+  shippingCountry: CountryType;
   shippingPostal: string;
   shippingIsDefault: boolean;
   shippingAsBilling: boolean;
   billingStreet: string;
   billingCity: string;
-  billingCountry: 'Belarus' | 'Ukraine' | 'Poland';
+  billingCountry: CountryType;
   billingPostal: string;
   billingIsDefault: boolean;
 };

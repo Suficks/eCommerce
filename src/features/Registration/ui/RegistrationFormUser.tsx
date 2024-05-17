@@ -7,6 +7,8 @@ import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
 import { SubmitData } from '@/features/Registration';
+import { signUpUserThunk } from '../model/services/signUpUser';
+import { useAppDispatch } from '@/shared/hooks/redux';
 
 import cls from './RegistrationForm.module.scss';
 
@@ -15,6 +17,7 @@ export interface RegistrationFormProps {
 }
 
 export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
+  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
@@ -30,9 +33,11 @@ export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
     },
   });
 
-  const onSubmit: SubmitHandler<SubmitData> = () => {
-    console.log(getValues());
+  const onSubmit: SubmitHandler<SubmitData> = async () => {
+    const values = getValues();
+    await dispatch(signUpUserThunk(values));
   };
+
   const handleBilling = () => {
     if (getValues('shippingAsBilling')) {
       setValue('billingCountry', getValues('shippingCountry'));

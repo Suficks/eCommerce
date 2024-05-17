@@ -3,11 +3,14 @@ import {
   combineReducers,
   configureStore,
 } from '@reduxjs/toolkit';
+
 import { StateSchema } from '../types/StateSchema';
-import { loginReducer } from '@/features/Login/model/slice/loginSlice';
+import { loginReducer } from '@/features/Login';
+import { userReducer } from '@/entities/User';
 
 const reducers: ReducersMapObject<StateSchema> = {
   loginForm: loginReducer,
+  user: userReducer,
 };
 
 const rootReducer = combineReducers(reducers);
@@ -15,6 +18,10 @@ const rootReducer = combineReducers(reducers);
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
   });
 };
 

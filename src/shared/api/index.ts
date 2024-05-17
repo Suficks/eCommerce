@@ -1,6 +1,2 @@
-export {
-  createUser,
-  getUser,
-  getAnonymousUser,
-  getProductsList,
-} from './requests';
+export { signUpUser } from './requests/signUpUser';
+export { loginUser } from './requests/loginUser';

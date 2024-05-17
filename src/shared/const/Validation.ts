@@ -1,12 +1,16 @@
+import { countriesList } from './Countries';
+
 export const ValidationErrors = {
   email: {
     required: 'Enter your email!',
     error: 'Invalid email address!',
+    notExist: 'This e-mail was not found in the system',
   },
   password: {
     required: 'Enter your password!',
     error:
       'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+    wrongPassword: 'You entered the wrong password',
   },
   passwordConfirm: {
     required: 'Confirm your password!',
@@ -41,6 +45,12 @@ export const ValidationErrors = {
       error: 'Must use pattern',
     },
   },
+  alreadyExist: {
+    error: 'A user with this email already exists',
+  },
+  serverError: {
+    error: 'The server is thinking, try again later',
+  },
 };
 
 const validateBirthDate = (date: string) => {
@@ -66,16 +76,11 @@ const validationConfirmPassword = (
   );
 };
 
-const postalCodeTests: { [index: string]: RegExp } = {
-  Russia: /^\d{6}$/,
-  Belarus: /^\d{6}$/,
-  Poland: /^\d{2}[- ]{0,1}\d{3}$/,
-};
-
 const validationPostalCode = (postalCode: string, country: string) => {
+  const currentCountry = countriesList.find((item) => item.name === country);
   return (
-    postalCodeTests[country].test(postalCode) ||
-    `${ValidationErrors.shipping.postal.error} for ${country}`
+    currentCountry?.regularForIndex?.test(postalCode) ||
+    `${currentCountry?.indexError}`
   );
 };
 

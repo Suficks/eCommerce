@@ -6,7 +6,7 @@ import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
-import { loginByUsername } from '../model/services/loginByUsername';
+import { loginThunk } from '../model/services/loginThunk';
 import { Validation } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
@@ -50,7 +50,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
 
   const onLoginClick = useCallback(async () => {
     const values = getValues();
-    const result = await dispatch(loginByUsername(values));
+    const result = await dispatch(loginThunk(values));
     if (result.meta.requestStatus === 'fulfilled' && onSuccess) {
       onSuccess();
     }
