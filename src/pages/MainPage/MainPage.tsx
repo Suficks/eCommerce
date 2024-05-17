@@ -32,87 +32,98 @@ export const MainPage = (props: MainPageProps) => {
   const { className } = props;
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
-      <img src={HeaderImage} alt="headerImage" className={cls.headerImage} />
-      <Header />
-      <section className={cls.mainBlock}>
-        <h1 className={cls.title}>Don’t Panic, it’s</h1>
-        <h1 className={cls.subtitle}>Organic</h1>
-        <Button text="Explore More" transparent className={cls.button} green />
-        <Icon Svg={MainLeaf} className={cls.mainLeaf} />
-      </section>
-      <section className={cls.infoBlock}>
-        <Card
-          width={1200}
-          className={cls.card}
-          text="Shop guilt-free knowing that our eco-friendly e-commerce platform is committed to reducing environmental 
+      <div className={cls.wrapper}>
+        <img src={HeaderImage} alt="headerImage" className={cls.headerImage} />
+        <Header />
+        <section className={cls.mainBlock}>
+          <h1 className={cls.title}>Don’t Panic, it’s</h1>
+          <h1 className={cls.subtitle}>Organic</h1>
+          <Button
+            text="Explore More"
+            transparent
+            className={cls.button}
+            green
+          />
+          <Icon Svg={MainLeaf} className={cls.mainLeaf} />
+        </section>
+        <section className={cls.infoBlock}>
+          <Card
+            width={1200}
+            className={cls.card}
+            text="Shop guilt-free knowing that our eco-friendly e-commerce platform is committed to reducing environmental 
           impact and promoting sustainable practices in every step of the shopping process"
-        />
-        <img src={Background} className={cls.infoBackground} alt="background" />
-      </section>
-      <section className={cls.addInfo}>
-        <div className={cls.benefitsSection}>
-          <p className={cls.question}>Why Buy from Us?</p>
-          <div className={cls.ecologicalBenefits}>
-            <div className={cls.oneBenefit}>
-              <Card svg={Bottle} width={205} text="641,698 +" green />
-              <p>Zero Plastic Products Sold</p>
-            </div>
-            <div className={cls.oneBenefit}>
-              <Card svg={Cloud} width={205} text="42,780" green />
-              <p>Tons Carbon Emission Prevented</p>
-            </div>
-            <div className={cls.oneBenefit}>
-              <Card svg={Hands} width={205} text="50+" green />
-              <p>Livelihoods Created</p>
+          />
+          <img
+            src={Background}
+            className={cls.infoBackground}
+            alt="background"
+          />
+        </section>
+        <section className={cls.addInfo}>
+          <div className={cls.benefitsSection}>
+            <p className={cls.question}>Why Buy from Us?</p>
+            <div className={cls.ecologicalBenefits}>
+              <div className={cls.oneBenefit}>
+                <Card svg={Bottle} width={205} text="641,698 +" green />
+                <p>Zero Plastic Products Sold</p>
+              </div>
+              <div className={cls.oneBenefit}>
+                <Card svg={Cloud} width={205} text="42,780" green />
+                <p>Tons Carbon Emission Prevented</p>
+              </div>
+              <div className={cls.oneBenefit}>
+                <Card svg={Hands} width={205} text="50+" green />
+                <p>Livelihoods Created</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={cls.featuredProducts}>
-          <p className={cls.question}>Featured Products</p>
-          <div className={cls.products}>
-            <div className={cls.productsWrapper}>
-              <NavLink to="/catalog">
-                <Card image={Product_1} alt="product_1" width={210} />
+          <div className={cls.featuredProducts}>
+            <p className={cls.question}>Featured Products</p>
+            <div className={cls.products}>
+              <div className={cls.productsWrapper}>
+                <NavLink to="/catalog">
+                  <Card image={Product_1} alt="product_1" width={210} />
+                </NavLink>
+                <NavLink to="/catalog">
+                  <Card image={Product_3} alt="product_3" width={230} />
+                </NavLink>
+                <NavLink to="/catalog">
+                  <Card image={Product_2} alt="product_2" width={210} />
+                </NavLink>
+              </div>
+              <Button
+                text="Shop more"
+                className={cls.buttonMore}
+                transparent
+                green
+                onClick={() => {
+                  navigate('/catalog');
+                }}
+              />
+            </div>
+          </div>
+          <div className={cls.socialMedia}>
+            <video autoPlay loop muted className={cls.videoBackground}>
+              <source src={animation_background} type="video/mp4" />
+            </video>
+            <p>Let’s get Social!</p>
+            <div className={cls.iconWrapper}>
+              <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
+                <img src={Icon_insta} alt="icon" />
               </NavLink>
-              <NavLink to="/catalog">
-                <Card image={Product_3} alt="product_3" width={230} />
+              <NavLink to="https://t.me/noplasticitsfantastic_store">
+                <img src={Icon_telegram} alt="icon" />
               </NavLink>
-              <NavLink to="/catalog">
-                <Card image={Product_2} alt="product_2" width={210} />
+              <NavLink to="https://www.facebook.com/ecobarby/">
+                <img src={Icon_facebook} alt="icon" />
+              </NavLink>
+              <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
+                <img src={Icon_youtube} alt="icon" />
               </NavLink>
             </div>
-            <Button
-              text="Shop more"
-              className={cls.buttonMore}
-              transparent
-              green
-              onClick={() => {
-                navigate('/catalog');
-              }}
-            />
           </div>
-        </div>
-        <div className={cls.socialMedia}>
-          <video autoPlay loop muted className={cls.videoBackground}>
-            <source src={animation_background} type="video/mp4" />
-          </video>
-          <p>Let’s get Social!</p>
-          <div className={cls.iconWrapper}>
-            <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-              <img src={Icon_insta} alt="icon" />
-            </NavLink>
-            <NavLink to="https://t.me/noplasticitsfantastic_store">
-              <img src={Icon_telegram} alt="icon" />
-            </NavLink>
-            <NavLink to="https://www.facebook.com/ecobarby/">
-              <img src={Icon_facebook} alt="icon" />
-            </NavLink>
-            <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
-              <img src={Icon_youtube} alt="icon" />
-            </NavLink>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 };

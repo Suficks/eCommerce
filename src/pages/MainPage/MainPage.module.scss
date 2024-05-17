@@ -1,3 +1,8 @@
+.wrapper {
+  max-width: 1440px;
+  margin: auto;
+}
+
 .MainPage {
   background-color: $black;
 }
@@ -14,6 +19,7 @@
   position: relative;
   z-index: 2;
 
+  margin-bottom: 50px;
   padding: clamp(130px, 13vw, 198px) clamp(15px, 4vw, 90px);
 
   .title {
@@ -45,11 +51,10 @@
 
 .infoBlock {
   position: relative;
-  top: clamp(-80px, -5vw, 0px);
-  z-index: 2;
 
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
   padding: clamp(50px, 30vw, 300px) 30px;
 
   &::after {
@@ -85,7 +90,7 @@
 .addInfo {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 
 .question {
