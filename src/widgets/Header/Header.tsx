@@ -10,6 +10,7 @@ import Logo from '@/shared/assets/images/headerLogo.png';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { userActions } from '@/entities/User';
 import { useAppDispatch } from '@/shared/hooks/redux';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
 import cls from './Header.module.scss';
 
@@ -19,10 +20,10 @@ export const Header = () => {
   const dispatch = useAppDispatch();
 
   const exit = useCallback(() => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('version');
+    localStorage.removeItem(LocalStorageKeys.USER);
+    localStorage.removeItem(LocalStorageKeys.TOKEN);
+    localStorage.removeItem(LocalStorageKeys.REFRESH_TOKEN);
+    localStorage.removeItem(LocalStorageKeys.VERSION);
     dispatch(userActions.logout());
   }, [dispatch]);
 

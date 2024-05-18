@@ -16,6 +16,7 @@ export const signUpUserThunk = createAsyncThunk(
       const error = e as Error;
       switch (error.message) {
         case 'The provided value is not a valid email': {
+          // скорее всего cause можно вообще убрать
           throw new Error(email.error, {
             cause: 'emailError',
           });

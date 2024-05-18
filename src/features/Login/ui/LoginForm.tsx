@@ -1,7 +1,8 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 
+import { unwrapResult } from '@reduxjs/toolkit';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
@@ -39,8 +40,8 @@ const passwordOptions = {
 
 export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.loginForm.isLoading);
-  const error = useAppSelector((state) => state.loginForm.error);
+  const { isLoading } = useAppSelector((state) => state.loginForm);
+  const [error, setError] = useState('');
 
   const {
     register,
@@ -49,15 +50,15 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     getValues,
   } = useForm<LoginSubmitData>({ mode: 'onChange' });
 
-  const removeError = useCallback(() => {
-    dispatch(loginActions.removeError());
-  }, [dispatch]);
-
   const onLoginClick = useCallback(async () => {
-    const values = getValues();
-    const result = await dispatch(loginThunk(values));
-    if (result.meta.requestStatus === 'fulfilled' && onSuccess) {
-      onSuccess();
+    try {
+      const values = getValues();
+      const result = await dispatch(loginThunk(values)).unwrap();
+      if (result && onSuccess) {
+        onSuccess();
+      }
+    } catch (e) {
+      setError(e as string);
     }
   }, [dispatch, getValues, onSuccess]);
 
@@ -77,7 +78,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       <Input
         register={register('email', {
           ...emailOptions,
-          onChange: () => error && removeError(),
+          onChange: () => setError(''),
         })}
         placeholder="email"
         label="Email"
@@ -92,7 +93,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       <Input
         register={register('password', {
           ...passwordOptions,
-          onChange: () => error && removeError(),
+          onChange: () => setError(''),
         })}
         placeholder="password"
         label="Password"
