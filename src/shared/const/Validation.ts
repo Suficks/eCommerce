@@ -77,7 +77,7 @@ const validationConfirmPassword = (
 };
 
 const validationPostalCode = (postalCode: string, country: string) => {
-  const currentCountry = countriesList.find((item) => item.name === country);
+  const currentCountry = countriesList.find(({ name }) => name === country);
   return (
     currentCountry?.regularForIndex?.test(postalCode) ||
     `${currentCountry?.indexError}`

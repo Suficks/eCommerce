@@ -18,15 +18,13 @@ export const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.pending, (state) => {
-        state.error = undefined;
         state.isLoading = true;
       })
       .addCase(loginThunk.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(loginThunk.rejected, (state, action) => {
+      .addCase(loginThunk.rejected, (state) => {
         state.isLoading = false;
-        state.error = action.payload;
       });
   },
 });

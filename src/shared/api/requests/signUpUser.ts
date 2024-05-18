@@ -16,17 +16,13 @@ export async function signUpUser(props: SubmitData): Promise<void> {
     billingStreet,
     birthdate,
   } = props;
-  let countryShippingAbbr = '';
-  let countryBillingAbbr = '';
 
-  countriesList.forEach((el) => {
-    if (el.name === shippingCountry) {
-      countryShippingAbbr = el.abbr;
-    }
-    if (el.name === billingCountry) {
-      countryBillingAbbr = el.abbr;
-    }
-  });
+  const countryShippingAbbr = countriesList.find(
+    ({ name }) => name === shippingCountry,
+  )?.abbr;
+  const countryBillingAbbr = countriesList.find(
+    ({ name }) => name === billingCountry,
+  )?.abbr;
 
   await apiRoot
     .customers()
@@ -36,12 +32,12 @@ export async function signUpUser(props: SubmitData): Promise<void> {
         password,
         addresses: [
           {
-            country: countryShippingAbbr,
+            country: countryShippingAbbr || '',
             city: shippingCity,
             streetName: shippingStreet,
           },
           {
-            country: countryBillingAbbr,
+            country: countryBillingAbbr || '',
             city: billingCity,
             streetName: billingStreet,
           },

@@ -34,7 +34,7 @@ export const MainPage = (props: MainPageProps) => {
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
       <div className={cls.wrapper}>
-        <img src={HeaderImage} alt="headerImage" className={cls.headerImage} />
+        <img src={HeaderImage} alt="" className={cls.headerImage} />
         <Header />
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
@@ -57,11 +57,7 @@ export const MainPage = (props: MainPageProps) => {
             text="Shop guilt-free knowing that our eco-friendly e-commerce platform is committed to reducing environmental 
           impact and promoting sustainable practices in every step of the shopping process"
           />
-          <img
-            src={Background}
-            className={cls.infoBackground}
-            alt="background"
-          />
+          <img src={Background} className={cls.infoBackground} alt="" />
         </section>
         <section className={cls.addInfo}>
           <div className={cls.benefitsSection}>
@@ -113,16 +109,16 @@ export const MainPage = (props: MainPageProps) => {
             <p>Let’s get Social!</p>
             <div className={cls.iconWrapper}>
               <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-                <img src={Icon_insta} alt="icon" />
+                <img src={Icon_insta} alt="icon_insta" />
               </NavLink>
               <NavLink to="https://t.me/noplasticitsfantastic_store">
-                <img src={Icon_telegram} alt="icon" />
+                <img src={Icon_telegram} alt="icon_telegram" />
               </NavLink>
               <NavLink to="https://www.facebook.com/ecobarby/">
-                <img src={Icon_facebook} alt="icon" />
+                <img src={Icon_facebook} alt="icon_facebook" />
               </NavLink>
               <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
-                <img src={Icon_youtube} alt="icon" />
+                <img src={Icon_youtube} alt="icon_youtube" />
               </NavLink>
             </div>
           </div>

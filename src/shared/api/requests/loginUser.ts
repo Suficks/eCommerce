@@ -11,25 +11,28 @@ import {
 } from '../BuildClient';
 import { tokenInstance } from '../tokenHandlers';
 import { ValidationErrors } from '@/shared/const/Validation';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
-function setLocalStorage(allTokens: boolean): void {
+const mergeAnonymousCartWithCurrentUserCart = 'MergeWithExistingCustomerCart';
+
+function setLocalStorage(isAllTokens: boolean): void {
   if (tokenInstance.get().token) {
-    localStorage.setItem('token', tokenInstance.get().token);
+    localStorage.setItem(LocalStorageKeys.TOKEN, tokenInstance.get().token);
   }
   if (
     tokenInstance.get().refreshToken &&
-    (allTokens || !localStorage.getItem('refreshToken'))
+    (isAllTokens || !localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN))
   ) {
     localStorage.setItem(
-      'refreshToken',
+      LocalStorageKeys.REFRESH_TOKEN,
       tokenInstance.get().refreshToken || '',
     );
   }
 }
 
 async function getCorrectApiRoot(): Promise<ByProjectKeyRequestBuilder> {
-  const user = localStorage.getItem('user');
-  const refreshToken = localStorage.getItem('refreshToken');
+  const user = localStorage.getItem(LocalStorageKeys.USER);
+  const refreshToken = localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN);
   let result;
 
   if (user && apirootPassword) {
@@ -74,7 +77,7 @@ export async function loginUser(
     const body: MyCustomerSignin = {
       email,
       password,
-      activeCartSignInMode: 'MergeWithExistingCustomerCart',
+      activeCartSignInMode: mergeAnonymousCartWithCurrentUserCart,
       updateProductData: true,
     };
 
@@ -83,14 +86,17 @@ export async function loginUser(
       .login()
       .post({ body })
       .execute();
-    localStorage.setItem('token', tokenInstance.get().token);
+    localStorage.setItem(LocalStorageKeys.TOKEN, tokenInstance.get().token);
     localStorage.setItem(
-      'refreshToken',
+      LocalStorageKeys.REFRESH_TOKEN,
       tokenInstance.get().refreshToken || '',
     );
-    localStorage.setItem('user', JSON.stringify(response.body.customer));
     localStorage.setItem(
-      'version',
+      LocalStorageKeys.USER,
+      JSON.stringify(response.body.customer),
+    );
+    localStorage.setItem(
+      LocalStorageKeys.VERSION,
       JSON.stringify(response.body.customer.version),
     );
     changeApiRootToPassword();
@@ -103,13 +109,9 @@ export async function loginUser(
       .get({ queryArgs: { where: `email="${email}"` } })
       .execute();
     if (checkEmailExistResponse.body.count === 0) {
-      throw new Error(ValidationErrors.email.notExist, {
-        cause: 'emailError',
-      });
+      throw new Error(ValidationErrors.email.notExist);
     } else if (checkEmailExistResponse.body.count === 1) {
-      throw new Error(ValidationErrors.password.wrongPassword, {
-        cause: 'passwordError',
-      });
+      throw new Error(ValidationErrors.password.wrongPassword);
     }
   }
   return undefined;

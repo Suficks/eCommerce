@@ -12,6 +12,7 @@ import {
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
 import { tokenInstance } from './tokenHandlers';
+import { LocalStorageKeys } from '../const/LocalStorage';
 
 const {
   VITE_CTP_CLIENT_ID,
@@ -111,7 +112,7 @@ export function constructClientRefresh(): ByProjectKeyRequestBuilder {
       clientId: VITE_CTP_CLIENT_ID,
       clientSecret: VITE_CTP_CLIENT_SECRET,
     },
-    refreshToken: localStorage.getItem('refreshToken') || '',
+    refreshToken: localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN) || '',
     fetch,
   };
 
