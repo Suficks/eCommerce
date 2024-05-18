@@ -1,4 +1,8 @@
-export type CountryType = 'Belarus' | 'Russia' | 'Poland';
+export enum CountryType {
+  Belarus = 'Belarus',
+  Russia = 'Russia',
+  Poland = 'Poland',
+}
 
 interface Country {
   name: CountryType;
@@ -11,19 +15,19 @@ type CountriesList = Country[];
 
 export const countriesList: CountriesList = [
   {
-    name: 'Poland',
+    name: CountryType.Poland,
     abbr: 'PL',
     indexError: 'Index format 5 digits XY-ZZZ',
     regularForIndex: /^\d{2}[- ]{0,1}\d{3}$/,
   },
   {
-    name: 'Russia',
+    name: CountryType.Russia,
     abbr: 'RU',
     indexError: 'Index format 6 digits XXXYYY',
     regularForIndex: /^\d{6}$/,
   },
   {
-    name: 'Belarus',
+    name: CountryType.Belarus,
     abbr: 'BY',
     indexError: 'Index format 6 digits XXXYYY',
     regularForIndex: /^\d{6}$/,
