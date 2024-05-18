@@ -33,10 +33,6 @@
     color: $green;
   }
 
-  .button {
-    @include montserrat(28px, 500, 32px);
-  }
-
   .mainLeaf {
     position: absolute;
     top: 50%;
@@ -46,6 +42,37 @@
     transform: translateY(-50%);
     mask-image: linear-gradient(to bottom, $black 40%, transparent);
     filter: brightness(80%);
+  }
+}
+
+.linkAsButton {
+  align-self: center;
+  width: clamp(180px, 100%, 240px);
+  height: 66px;
+  padding: 20px 30px;
+  border: none;
+
+  border: 0.5px solid #898989;
+  border-radius: 11px;
+
+
+  color: $green;
+  text-align: center;
+  text-decoration: none;
+
+  background: linear-gradient(.47turn, #3f3d3d 0%, $black 100%);
+
+  background-color: $green;
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  @include montserrat(28px, 500, 32px);
+
+  &:hover {
+    color: white;
+
+    opacity: 0.7;
   }
 }
 
@@ -187,11 +214,6 @@
     url('../../shared/assets/images/products_back.webp');
   background-position: center;
   background-size: cover;
-
-  .buttonMore {
-    align-self: center;
-    margin-bottom: 40px;
-  }
 
   .products {
     display: flex;

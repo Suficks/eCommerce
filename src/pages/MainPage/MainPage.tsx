@@ -1,25 +1,24 @@
+import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import classNames from 'classnames';
 
-import { Header } from '@/widgets/Header/Header';
-import { Button } from '@/shared/ui/button/button';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { Card } from '@/shared/ui/Card/Card';
-import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import Background from '@/shared/assets/images/info_background.webp';
-import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
+import HeaderImage from '@/shared/assets/images/header1.jpg';
+import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
+import Icon_insta from '@/shared/assets/images/icon_insta.png';
+import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
+import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
+import Background from '@/shared/assets/images/info_background.webp';
+import MainLeaf from '@/shared/assets/images/main_leaf.svg';
 import Product_1 from '@/shared/assets/images/product_1.png';
 import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
 import animation_background from '@/shared/assets/video/background_video.mp4';
-import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
-import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
-import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
-import Icon_insta from '@/shared/assets/images/icon_insta.png';
+import { Card } from '@/shared/ui/Card/Card';
+import { Icon } from '@/shared/ui/Icon/Icon';
+import { Header } from '@/widgets/Header/Header';
 
 import cls from './MainPage.module.scss';
 
@@ -39,15 +38,9 @@ export const MainPage = (props: MainPageProps) => {
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
           <h1 className={cls.subtitle}>Organic</h1>
-          <Button
-            text="Explore More"
-            transparent
-            className={cls.button}
-            onClick={() => {
-              navigate('/catalog');
-            }}
-            green
-          />
+          <NavLink to="/catalog" className={cls.linkAsButton}>
+            Explore More
+          </NavLink>
           <Icon Svg={MainLeaf} className={cls.mainLeaf} />
         </section>
         <section className={cls.infoBlock}>
@@ -95,15 +88,9 @@ export const MainPage = (props: MainPageProps) => {
                   <Card image={Product_2} alt="product_2" width={210} />
                 </NavLink>
               </div>
-              <Button
-                text="Shop more"
-                className={cls.buttonMore}
-                transparent
-                green
-                onClick={() => {
-                  navigate('/catalog');
-                }}
-              />
+              <NavLink to="/catalog" className={cls.linkAsButton}>
+                Shop more
+              </NavLink>
             </div>
           </div>
           <div className={cls.socialMedia}>
