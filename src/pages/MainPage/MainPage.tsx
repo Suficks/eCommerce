@@ -30,6 +30,7 @@ interface MainPageProps {
 export const MainPage = (props: MainPageProps) => {
   const navigate = useNavigate();
   const { className } = props;
+
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
       <div className={cls.wrapper}>
@@ -42,6 +43,9 @@ export const MainPage = (props: MainPageProps) => {
             text="Explore More"
             transparent
             className={cls.button}
+            onClick={() => {
+              navigate('/catalog');
+            }}
             green
           />
           <Icon Svg={MainLeaf} className={cls.mainLeaf} />

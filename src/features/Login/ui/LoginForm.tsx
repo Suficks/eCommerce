@@ -11,6 +11,7 @@ import { Validation } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
+import { loginActions } from '../model/slice/loginSlice';
 
 import cls from './LoginForm.module.scss';
 
@@ -48,6 +49,10 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     getValues,
   } = useForm<LoginSubmitData>({ mode: 'onChange' });
 
+  const removeError = useCallback(() => {
+    dispatch(loginActions.removeError());
+  }, [dispatch]);
+
   const onLoginClick = useCallback(async () => {
     const values = getValues();
     const result = await dispatch(loginThunk(values));
@@ -60,18 +65,20 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     <LoadingAnimation />;
   }
 
-  // if (error) {
-  // }
-
   return (
     <form className={classNames(cls.form, className)}>
       <h1 className={cls.title}>Login</h1>
       <div className={cls.wrapper}>
         <h2 className={cls.subtitle}> Do not have an Account yet?</h2>
-        <AppLink to="/registration" text="Sign Up" className={cls.link} />
+        <AppLink to="/registration" className={cls.link}>
+          Sign Up
+        </AppLink>
       </div>
       <Input
-        register={register('email', emailOptions)}
+        register={register('email', {
+          ...emailOptions,
+          onChange: () => error && removeError(),
+        })}
         placeholder="email"
         label="Email"
         className={classNames(cls.input, errors.email && cls.invalid)}
@@ -83,7 +90,10 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         />
       )}
       <Input
-        register={register('password', passwordOptions)}
+        register={register('password', {
+          ...passwordOptions,
+          onChange: () => error && removeError(),
+        })}
         placeholder="password"
         label="Password"
         className={classNames(cls.input, errors.password && cls.invalid)}
@@ -95,6 +105,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           className={cls.error}
         />
       )}
+      {error && <AppError text={error} className={cls.error} />}
       <Button
         text="Login"
         className={cls.button}

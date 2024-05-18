@@ -1,16 +1,30 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { FaCartShopping, FaUser, FaUserPlus } from 'react-icons/fa6';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import classNames from 'classnames';
-import cls from './Header.module.scss';
+
 import { Button } from '@/shared/ui/button/button';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Logo from '@/shared/assets/images/headerLogo.png';
+import { AppLink } from '@/shared/ui/AppLink/AppLink';
+import { userActions } from '@/entities/User';
+import { useAppDispatch } from '@/shared/hooks/redux';
+
+import cls from './Header.module.scss';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [nav, setNav] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const exit = useCallback(() => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('version');
+    dispatch(userActions.logout());
+  }, [dispatch]);
 
   const isLogged = () => {
     const login = false;
@@ -31,12 +45,12 @@ export const Header = () => {
               navigate('/registration');
             }}
           />
-          <NavLink
+          <AppLink
             to={Routes.LOGIN}
             className={classNames(cls.icon, cls.mobile__visible)}
           >
             <FaUserPlus size={30} />
-          </NavLink>
+          </AppLink>
         </div>
       );
     }
@@ -49,42 +63,42 @@ export const Header = () => {
             navigate('/login');
           }}
         />
-        <NavLink to={Routes.PROFILE} className={cls.icon}>
+        <AppLink to={Routes.PROFILE} className={cls.icon}>
           <FaUser size={30} />
-        </NavLink>
+        </AppLink>
       </div>
     );
   }; // change to normal function, when we will have isLogged state
   return (
     <header className={cls.header}>
       <div className={cls.header__wrapper}>
-        <NavLink to="/main" className={cls.logo}>
+        <AppLink to="/main" className={cls.logo}>
           <img src={Logo} alt="Prakriti Logo" className={cls.logo__image} />
-        </NavLink>
+        </AppLink>
         <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
           <ul className={cls.nav__list}>
             <li>
-              <NavLink to={Routes.MAIN} className={cls.nav__link}>
+              <AppLink to={Routes.MAIN} className={cls.nav__link}>
                 Home
-              </NavLink>
+              </AppLink>
             </li>
             <li>
-              <NavLink to={Routes.CATALOG} className={cls.nav__link}>
+              <AppLink to={Routes.CATALOG} className={cls.nav__link}>
                 Catalog
-              </NavLink>
+              </AppLink>
             </li>
             <li>
-              <NavLink to={Routes.ABOUT} className={cls.nav__link}>
+              <AppLink to={Routes.ABOUT} className={cls.nav__link}>
                 About
-              </NavLink>
+              </AppLink>
             </li>
           </ul>
         </nav>
         <div className={cls.controls}>
           {isLogged()}{' '}
-          <NavLink to="/cart" className={cls.icon}>
+          <AppLink to="/cart" className={cls.icon}>
             <FaCartShopping size={30} />
-          </NavLink>
+          </AppLink>
           {!nav ? (
             <AiOutlineMenu
               className={`${cls.icon} ${cls.burger__icon}`}

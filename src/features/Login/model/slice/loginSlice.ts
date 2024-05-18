@@ -10,7 +10,11 @@ const initialState: LoginSchema = {
 export const loginSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    removeError: (state) => {
+      state.error = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.pending, (state) => {
@@ -22,10 +26,9 @@ export const loginSlice = createSlice({
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.isLoading = false;
-        // state.error = action.payload;
+        state.error = action.payload;
       });
   },
 });
 
-export const { actions: loginActions } = loginSlice;
-export const { reducer: loginReducer } = loginSlice;
+export const { actions: loginActions, reducer: loginReducer } = loginSlice;

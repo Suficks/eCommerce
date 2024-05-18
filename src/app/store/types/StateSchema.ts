@@ -5,3 +5,8 @@ export interface StateSchema {
   loginForm: LoginSchema;
   user: UserSchema;
 }
+
+export interface ThunkConfig<T> {
+  rejectValue: T;
+  state: StateSchema;
+}
