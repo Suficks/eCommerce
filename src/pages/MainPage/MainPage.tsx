@@ -96,16 +96,32 @@ export const MainPage = (props: MainPageProps) => {
             <p>Let’s get Social!</p>
             <div className={cls.iconWrapper}>
               <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-                <img src={Icon_instagram} alt="our_instagram" />
+                <img
+                  src={Icon_instagram}
+                  alt="our_instagram"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://t.me/noplasticitsfantastic_store">
-                <img src={Icon_telegram} alt="our_telegram" />
+                <img
+                  src={Icon_telegram}
+                  alt="our_telegram"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://www.facebook.com/ecobarby/">
-                <img src={Icon_facebook} alt="our_facebook" />
+                <img
+                  src={Icon_facebook}
+                  alt="our_facebook"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
-                <img src={Icon_youtube} alt="our_youtube" />
+                <img
+                  src={Icon_youtube}
+                  alt="our_youtube"
+                  className={cls.icon}
+                />
               </NavLink>
             </div>
           </div>
