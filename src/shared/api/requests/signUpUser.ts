@@ -29,40 +29,46 @@ export async function signUpUser(props: SubmitData): Promise<void> {
   const countryBillingAbbr = countriesList.find(
     ({ name }) => name === billingCountry,
   )?.abbr;
-
-  await apiRoot
-    .customers()
-    .post({
-      body: {
-        email,
-        password,
-        addresses: [
-          {
-            country: countryShippingAbbr || '',
-            city: shippingCity,
-            streetName: shippingStreet,
-            postalCode: shippingPostal,
-          },
-          {
-            country: countryBillingAbbr || '',
-            city: billingCity,
-            streetName: billingStreet,
-            postalCode: billingPostal,
-          },
-        ],
-        shippingAddresses: [0],
-        billingAddresses: [1],
-        defaultShippingAddress: shippingIsDefault
-          ? DEFAULT_SHIPPING_INDEX
-          : undefined,
-        defaultBillingAddress: billingIsDefault
-          ? DEFAULT_BILLING_INDEX
-          : undefined,
-        firstName: username,
-        lastName: surname,
-        salutation: `Hello, ${username}!`,
-        dateOfBirth: `${birthdate}`,
-      },
-    })
-    .execute();
+  try {
+    await apiRoot
+      .customers()
+      .post({
+        body: {
+          email,
+          password,
+          addresses: [
+            {
+              country: countryShippingAbbr || '',
+              city: shippingCity,
+              streetName: shippingStreet,
+              postalCode: shippingPostal,
+            },
+            {
+              country: countryBillingAbbr || '',
+              city: billingCity,
+              streetName: billingStreet,
+              postalCode: billingPostal,
+            },
+          ],
+          shippingAddresses: [0],
+          billingAddresses: [1],
+          defaultShippingAddress: shippingIsDefault
+            ? DEFAULT_SHIPPING_INDEX
+            : undefined,
+          defaultBillingAddress: billingIsDefault
+            ? DEFAULT_BILLING_INDEX
+            : undefined,
+          firstName: username,
+          lastName: surname,
+          salutation: `Hello, ${username}!`,
+          dateOfBirth: `${birthdate}`,
+        },
+      })
+      .execute();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      const { message } = error;
+      throw new Error(message);
+    }
+  }
 }

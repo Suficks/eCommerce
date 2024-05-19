@@ -8,11 +8,11 @@ import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
 import { SubmitData } from '@/features/Registration';
-import { signUpUserThunk } from '../model/services/signUpUser';
-import { useAppDispatch } from '@/shared/hooks/redux';
 
 import cls from './RegistrationForm.module.scss';
 import { CountryType } from '@/shared/const/Countries';
+import { signUpUser } from '@/shared/api';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { loginThunk } from '@/features/Login/model/services/loginThunk';
 
 export interface RegistrationFormProps {
@@ -42,24 +42,19 @@ export const RegistrationFormUser = ({
   const [serverError, setServerError] = useState('');
 
   const onSubmit = useCallback(async () => {
-    try {
-      const values = getValues();
-      const result = await dispatch(signUpUserThunk(values));
-      // @ts-expect-error any ideas how to fix this?
-      if (!result.error && onSuccess) {
-        await dispatch(
-          loginThunk({ email: values.email, password: values.password }),
-        );
-        onSuccess();
-      }
-      // @ts-expect-error any ideas how to fix this?
-      if (result.error) {
-        // @ts-expect-error any ideas how to fix this?
-        setServerError(result.error.message);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    const values = getValues();
+    await signUpUser(values)
+      .then(() => {
+        if (onSuccess) {
+          dispatch(
+            loginThunk({ email: values.email, password: values.password }),
+          );
+          onSuccess();
+        }
+      })
+      .catch((err) => {
+        setServerError(err.message);
+      });
   }, [dispatch, getValues, onSuccess]);
 
   const handleBilling = () => {
@@ -356,12 +351,12 @@ export const RegistrationFormUser = ({
           />
         </div>
       </fieldset>
+      {serverError && <AppError text={serverError} className={cls.error} />}
       <Button
         text="Register"
         className={cls.button}
         onClick={handleSubmit(onSubmit)}
       />
-      {serverError && <AppError text={serverError} className={cls.error} />}
     </form>
   );
 };
