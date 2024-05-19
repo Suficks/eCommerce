@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import Bottle from '@/shared/assets/images/bottle.svg';
@@ -20,6 +19,7 @@ import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Header } from '@/widgets/Header/Header';
 
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import cls from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -27,7 +27,6 @@ interface MainPageProps {
 }
 
 export const MainPage = (props: MainPageProps) => {
-  const navigate = useNavigate();
   const { className } = props;
 
   return (
@@ -38,7 +37,7 @@ export const MainPage = (props: MainPageProps) => {
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
           <h1 className={cls.subtitle}>Organic</h1>
-          <NavLink to="/catalog" className={cls.linkAsButton}>
+          <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>
             Explore More
           </NavLink>
           <Icon Svg={MainLeaf} className={cls.mainLeaf} />
@@ -74,17 +73,17 @@ export const MainPage = (props: MainPageProps) => {
             <p className={cls.question}>Featured Products</p>
             <div className={cls.products}>
               <div className={cls.productsWrapper}>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_1} alt="product_1" width={210} />
                 </NavLink>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_3} alt="product_3" width={230} />
                 </NavLink>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_2} alt="product_2" width={210} />
                 </NavLink>
               </div>
-              <NavLink to="/catalog" className={cls.linkAsButton}>
+              <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>
                 Shop more
               </NavLink>
             </div>

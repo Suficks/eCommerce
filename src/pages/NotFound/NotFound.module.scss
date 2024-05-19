@@ -23,8 +23,19 @@
   right: 0;
 }
 
+.linkToMain {
+  margin: 30px;
+
+  &:hover {
+    color: white;
+
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+
 .additionalMessage {
-  @include montserrat(90px, 600, 100px);
+  @include montserrat(clamp(30px, 5vw, 80px), 600, clamp(35px, 5vw, 85px), );
   text-align: center;
 }
 
