@@ -11,11 +11,17 @@ export async function signUpUser(props: SubmitData): Promise<void> {
     shippingCountry,
     shippingCity,
     shippingStreet,
+    shippingPostal,
+    shippingIsDefault,
     billingCountry,
     billingCity,
     billingStreet,
+    billingPostal,
+    billingIsDefault,
     birthdate,
   } = props;
+  const DEFAULT_SHIPPING_INDEX = 0;
+  const DEFAULT_BILLING_INDEX = 1;
 
   const countryShippingAbbr = countriesList.find(
     ({ name }) => name === shippingCountry,
@@ -35,15 +41,23 @@ export async function signUpUser(props: SubmitData): Promise<void> {
             country: countryShippingAbbr || '',
             city: shippingCity,
             streetName: shippingStreet,
+            postalCode: shippingPostal,
           },
           {
             country: countryBillingAbbr || '',
             city: billingCity,
             streetName: billingStreet,
+            postalCode: billingPostal,
           },
         ],
         shippingAddresses: [0],
         billingAddresses: [1],
+        defaultShippingAddress: shippingIsDefault
+          ? DEFAULT_SHIPPING_INDEX
+          : undefined,
+        defaultBillingAddress: billingIsDefault
+          ? DEFAULT_BILLING_INDEX
+          : undefined,
         firstName: username,
         lastName: surname,
         salutation: `Hello, ${username}!`,
