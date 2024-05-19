@@ -13,7 +13,7 @@ import { tokenInstance } from '../tokenHandlers';
 import { ValidationErrors } from '@/shared/const/Validation';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
-const mergeAnonymousCartWithCurrentUserCart = 'MergeWithExistingCustomerCart';
+const MERGE_ANONYMOUS_CART_WITH_USER_CART = 'MergeWithExistingCustomerCart';
 
 function setLocalStorage(isAllTokens: boolean): void {
   if (tokenInstance.get().token) {
@@ -77,7 +77,7 @@ export async function loginUser(
     const body: MyCustomerSignin = {
       email,
       password,
-      activeCartSignInMode: mergeAnonymousCartWithCurrentUserCart,
+      activeCartSignInMode: MERGE_ANONYMOUS_CART_WITH_USER_CART,
       updateProductData: true,
     };
 
