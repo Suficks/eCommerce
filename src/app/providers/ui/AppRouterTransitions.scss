@@ -1,0 +1,53 @@
+#root {
+  background-color: $black;
+}
+
+// Вариант с появлением:
+
+.page-enter {
+  transform: scaleX(80%);
+  opacity: 0;
+}
+
+.page-enter-active {
+  transform: scaleX(100%);
+  opacity: 1;
+
+  transition: all 200ms
+}
+
+.page-exit {
+  transform: scaleX(100%);
+  opacity: 1;
+}
+
+.page-exit-active {
+  transform: scaleX(80%);
+  opacity: 0;
+
+  transition: all 200ms;
+}
+
+// вариант с перелистыванием
+
+// .page-enter {
+//   opacity: 0;
+//   transform: translateX(-100%);
+// }
+
+// .page-enter-active {
+//   opacity: 1;
+//   transform: translateX(0);
+//   transition: opacity 300ms, transform 200ms;
+// }
+
+// .page-exit {
+//   opacity: 1;
+//   transform: translateX(0);
+// }
+
+// .page-exit-active {
+//   opacity: 0;
+//   transform: translateX(100%);
+//   transition: opacity 300ms, transform 200ms;
+// }
