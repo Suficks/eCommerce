@@ -59,7 +59,7 @@ export const routeConfig: RouteConfig[] = [
   {
     path: Routes.CATALOG,
     element: (
-      <NotFound additionalMessage="The CATALOG page will be created during the next sprint." />
+      <NotFound additionalMessage="The CATALOG page will be created during the next sprint" />
     ),
     nodeRef: createRef<HTMLDivElement>(),
     children: [
