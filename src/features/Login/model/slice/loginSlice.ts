@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginByUsername } from '../services/loginByUsername';
+import { loginThunk } from '../services/loginThunk';
 import { LoginSchema } from '../types/LoginSchema';
 
 const initialState: LoginSchema = {
@@ -10,22 +10,23 @@ const initialState: LoginSchema = {
 export const loginSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    removeError: (state) => {
+      state.error = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loginByUsername.pending, (state) => {
-        state.error = undefined;
+      .addCase(loginThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginByUsername.fulfilled, (state) => {
+      .addCase(loginThunk.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(loginByUsername.rejected, (state, action) => {
+      .addCase(loginThunk.rejected, (state) => {
         state.isLoading = false;
-        // state.error = action.payload;
       });
   },
 });
 
-export const { actions: loginActions } = loginSlice;
-export const { reducer: loginReducer } = loginSlice;
+export const { actions: loginActions, reducer: loginReducer } = loginSlice;

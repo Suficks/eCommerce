@@ -1,16 +1,18 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 
+import { unwrapResult } from '@reduxjs/toolkit';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
-import { loginByUsername } from '../model/services/loginByUsername';
+import { loginThunk } from '../model/services/loginThunk';
 import { Validation } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
+import { loginActions } from '../model/slice/loginSlice';
 
 import cls from './LoginForm.module.scss';
 
@@ -38,8 +40,8 @@ const passwordOptions = {
 
 export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.loginForm.isLoading);
-  const error = useAppSelector((state) => state.loginForm.error);
+  const { isLoading } = useAppSelector((state) => state.loginForm);
+  const [error, setError] = useState('');
 
   const {
     register,
@@ -49,10 +51,14 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   } = useForm<LoginSubmitData>({ mode: 'onChange' });
 
   const onLoginClick = useCallback(async () => {
-    const values = getValues();
-    const result = await dispatch(loginByUsername(values));
-    if (result.meta.requestStatus === 'fulfilled' && onSuccess) {
-      onSuccess();
+    try {
+      const values = getValues();
+      const result = await dispatch(loginThunk(values)).unwrap();
+      if (result && onSuccess) {
+        onSuccess();
+      }
+    } catch (e) {
+      setError(e as string);
     }
   }, [dispatch, getValues, onSuccess]);
 
@@ -60,18 +66,20 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     <LoadingAnimation />;
   }
 
-  // if (error) {
-  // }
-
   return (
     <form className={classNames(cls.form, className)}>
       <h1 className={cls.title}>Login</h1>
       <div className={cls.wrapper}>
         <h2 className={cls.subtitle}> Do not have an Account yet?</h2>
-        <AppLink to="/registration" text="Sign Up" className={cls.link} />
+        <AppLink to="/registration" className={cls.link}>
+          Sign Up
+        </AppLink>
       </div>
       <Input
-        register={register('email', emailOptions)}
+        register={register('email', {
+          ...emailOptions,
+          onChange: () => setError(''),
+        })}
         placeholder="email"
         label="Email"
         className={classNames(cls.input, errors.email && cls.invalid)}
@@ -83,7 +91,10 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         />
       )}
       <Input
-        register={register('password', passwordOptions)}
+        register={register('password', {
+          ...passwordOptions,
+          onChange: () => setError(''),
+        })}
         placeholder="password"
         label="Password"
         className={classNames(cls.input, errors.password && cls.invalid)}
@@ -95,6 +106,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           className={cls.error}
         />
       )}
+      {error && <AppError text={error} className={cls.error} />}
       <Button
         text="Login"
         className={cls.button}
