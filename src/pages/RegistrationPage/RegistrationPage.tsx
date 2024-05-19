@@ -1,13 +1,20 @@
 import { memo } from 'react';
+import { useNavigate } from 'react-router';
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Logo from '@/shared/assets/images/logo.svg';
 
 import cls from './RegistrationPage.module.scss';
 import { RegistrationFormUser } from '@/features/Registration/ui/RegistrationFormUser';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 
+import { isLogged } from '@/shared/util/isLogged';
+
 export const RegistrationPage = memo(() => {
+  const navigate = useNavigate();
+  if (isLogged()) {
+    return <Navigate to="/main" replace />;
+  }
   return (
     <main className={cls.registrationPage}>
       <Link to="/main" className={`${cls.link__image}`}>
@@ -23,7 +30,7 @@ export const RegistrationPage = memo(() => {
             </AppLink>
           </div>
         </div>
-        <RegistrationFormUser />
+        <RegistrationFormUser onSuccess={() => navigate('/')} />
       </div>
     </main>
   );
