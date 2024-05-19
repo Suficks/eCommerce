@@ -1,44 +1,60 @@
-.notFound{
+.notFound {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   width: 100vw;
-  height:100vh;
+  height: 100vh;
 
   background-color: $black;
 }
 
-.headerImg{
- width: 100%;
- height: 90px;
+.headerImg {
+  width: 100%;
+  height: 90px;
 
- background-image: url('../../shared/assets/images/header1.jpg');
- background-position: top;
- filter: brightness(60%) hue-rotate(35deg);
+  background-image: url('../../shared/assets/images/header1.jpg');
+  background-position: top;
+  filter: brightness(60%) hue-rotate(35deg);
 }
 
-.lianaTop{
-position: fixed;
-top: 0;
-right: 0;
+.lianaTop {
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
-.lianaFooter{
-position: fixed;
-bottom: 0;
-left: 0;
+.linkToMain {
+  margin: 30px;
 
-transform: translateY(21px) rotate(90deg);
+  &:hover {
+    color: white;
+
+    cursor: pointer;
+    opacity: 0.7;
+  }
 }
 
-.content{
-color: $green;
-
-@include montserrat(120px, 600, 150px);
+.additionalMessage {
+  @include montserrat(clamp(30px, 5vw, 80px), 600, clamp(35px, 5vw, 85px), );
+  text-align: center;
 }
 
-.signature{
+.lianaFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  transform: translateY(21px) rotate(90deg);
+}
+
+.content {
+  color: $green;
+
+  @include montserrat(120px, 600, 150px);
+}
+
+.signature {
   color: white;
 
-@include montserrat(50px, 500, 70px);
+  @include montserrat(50px, 500, 70px);
 }

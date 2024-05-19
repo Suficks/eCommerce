@@ -1,9 +1,9 @@
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
-import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
-import { NotFound } from '@/pages/NotFound/NotFound';
 import { MainPage } from '@/pages/MainPage/MainPage';
+import { NotFound } from '@/pages/NotFound/NotFound';
+import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -46,15 +46,21 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.CATALOG,
-    element: <NotFound />,
+    element: (
+      <NotFound additionalMessage="The CATALOG page will be created during the next sprint." />
+    ),
     children: [
       {
         path: Routes.CATEGORY_ID,
-        element: <NotFound />,
+        element: (
+          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
+        ),
         children: [
           {
             path: Routes.PRODUCT_ID,
-            element: <NotFound />,
+            element: (
+              <NotFound additionalMessage="The PRODUCT_ID page will be created during the next sprint." />
+            ),
           },
         ],
       },
@@ -62,15 +68,21 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.PROFILE,
-    element: <NotFound />,
+    element: (
+      <NotFound additionalMessage="The PROFILE page will be created during the next sprint." />
+    ),
   },
   {
     path: Routes.CART,
-    element: <NotFound />,
+    element: (
+      <NotFound additionalMessage="The CART page will be created during the next sprint." />
+    ),
   },
   {
     path: Routes.ABOUT,
-    element: <NotFound />,
+    element: (
+      <NotFound additionalMessage="The ABOUT page will be created during the next sprint." />
+    ),
   },
   {
     path: Routes.ROOT,

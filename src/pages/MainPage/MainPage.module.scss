@@ -165,7 +165,16 @@
     top: 50%;
 
     display: flex;
-    gap: clamp(30px, 8vw, 120px)
+
+    gap: clamp(30px, 8vw, 120px);
+
+    .icon {
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
   }
 }
 
@@ -197,6 +206,7 @@
     }
   }
 }
+
 
 .featuredProducts {
   display: flex;

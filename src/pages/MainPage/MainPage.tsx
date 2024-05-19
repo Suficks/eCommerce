@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import Bottle from '@/shared/assets/images/bottle.svg';
@@ -7,7 +6,7 @@ import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
 import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
-import Icon_insta from '@/shared/assets/images/icon_insta.png';
+import Icon_instagram from '@/shared/assets/images/icon_instagram.png';
 import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
 import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Background from '@/shared/assets/images/info_background.webp';
@@ -20,6 +19,7 @@ import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Header } from '@/widgets/Header/Header';
 
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import cls from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -27,7 +27,6 @@ interface MainPageProps {
 }
 
 export const MainPage = (props: MainPageProps) => {
-  const navigate = useNavigate();
   const { className } = props;
 
   return (
@@ -38,7 +37,7 @@ export const MainPage = (props: MainPageProps) => {
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
           <h1 className={cls.subtitle}>Organic</h1>
-          <NavLink to="/catalog" className={cls.linkAsButton}>
+          <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>
             Explore More
           </NavLink>
           <Icon Svg={MainLeaf} className={cls.mainLeaf} />
@@ -74,17 +73,17 @@ export const MainPage = (props: MainPageProps) => {
             <p className={cls.question}>Featured Products</p>
             <div className={cls.products}>
               <div className={cls.productsWrapper}>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_1} alt="product_1" width={210} />
                 </NavLink>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_3} alt="product_3" width={230} />
                 </NavLink>
-                <NavLink to="/catalog">
+                <NavLink to={Routes.CATALOG}>
                   <Card image={Product_2} alt="product_2" width={210} />
                 </NavLink>
               </div>
-              <NavLink to="/catalog" className={cls.linkAsButton}>
+              <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>
                 Shop more
               </NavLink>
             </div>
@@ -96,16 +95,32 @@ export const MainPage = (props: MainPageProps) => {
             <p>Let’s get Social!</p>
             <div className={cls.iconWrapper}>
               <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-                <img src={Icon_insta} alt="our_instagram" />
+                <img
+                  src={Icon_instagram}
+                  alt="our_instagram"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://t.me/noplasticitsfantastic_store">
-                <img src={Icon_telegram} alt="our_telegram" />
+                <img
+                  src={Icon_telegram}
+                  alt="our_telegram"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://www.facebook.com/ecobarby/">
-                <img src={Icon_facebook} alt="our_facebook" />
+                <img
+                  src={Icon_facebook}
+                  alt="our_facebook"
+                  className={cls.icon}
+                />
               </NavLink>
               <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
-                <img src={Icon_youtube} alt="our_youtube" />
+                <img
+                  src={Icon_youtube}
+                  alt="our_youtube"
+                  className={cls.icon}
+                />
               </NavLink>
             </div>
           </div>
