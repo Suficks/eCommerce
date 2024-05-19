@@ -6,7 +6,9 @@ import { Button } from '@/shared/ui/button/button';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { setupStore } from '@/app/store/config/store';
 import { LoginForm } from '@/features/Login';
+import cls from '@/widgets/Header/Header.module.scss';
 
+// TODO add more tests, fix env problem
 describe('Components render test', () => {
   it('should render a button', () => {
     render(<Button text="Valera" />);
@@ -16,7 +18,9 @@ describe('Components render test', () => {
   it('should render a link', () => {
     render(
       <BrowserRouter>
-        <AppLink text="Valera" to="/registration" />
+        <AppLink to="/main" className={cls.logo}>
+          <span>Link</span>
+        </AppLink>
       </BrowserRouter>,
     );
     expect(screen.getByText('Valera')).toHaveRole('link');
