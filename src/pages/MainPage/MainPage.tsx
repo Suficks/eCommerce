@@ -7,7 +7,7 @@ import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
 import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
-import Icon_insta from '@/shared/assets/images/icon_insta.png';
+import Icon_instagram from '@/shared/assets/images/icon_instagram.png';
 import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
 import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Background from '@/shared/assets/images/info_background.webp';
@@ -96,7 +96,7 @@ export const MainPage = (props: MainPageProps) => {
             <p>Let’s get Social!</p>
             <div className={cls.iconWrapper}>
               <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-                <img src={Icon_insta} alt="our_instagram" />
+                <img src={Icon_instagram} alt="our_instagram" />
               </NavLink>
               <NavLink to="https://t.me/noplasticitsfantastic_store">
                 <img src={Icon_telegram} alt="our_telegram" />
