@@ -2,7 +2,9 @@ import { SubmitData } from '@/features/Registration';
 import { apiRoot } from '../BuildClient';
 import { countriesList } from '@/shared/const/Countries';
 
-export async function signUpUser(props: SubmitData): Promise<void> {
+export async function signUpUser(
+  props: SubmitData,
+): Promise<unknown | undefined> {
   const {
     username,
     surname,
@@ -30,7 +32,7 @@ export async function signUpUser(props: SubmitData): Promise<void> {
     ({ name }) => name === billingCountry,
   )?.abbr;
   try {
-    await apiRoot
+    const result = await apiRoot
       .customers()
       .post({
         body: {
@@ -65,10 +67,12 @@ export async function signUpUser(props: SubmitData): Promise<void> {
         },
       })
       .execute();
+    return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
       const { message } = error;
       throw new Error(message);
     }
+    return undefined;
   }
 }

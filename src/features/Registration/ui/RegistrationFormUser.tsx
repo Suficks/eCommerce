@@ -11,7 +11,7 @@ import { SubmitData } from '@/features/Registration';
 
 import cls from './RegistrationForm.module.scss';
 import { CountryType } from '@/shared/const/Countries';
-import { signUpUser } from '@/shared/api';
+import { signUpUserThunk } from '@/features/Registration/model/services/signUpThunk';
 import { useAppDispatch } from '@/shared/hooks/redux';
 import { loginThunk } from '@/features/Login/model/services/loginThunk';
 
@@ -43,18 +43,19 @@ export const RegistrationFormUser = ({
 
   const onSubmit = useCallback(async () => {
     const values = getValues();
-    await signUpUser(values)
-      .then(() => {
-        if (onSuccess) {
-          dispatch(
-            loginThunk({ email: values.email, password: values.password }),
-          );
-          onSuccess();
-        }
-      })
-      .catch((err) => {
-        setServerError(err.message);
-      });
+    try {
+      const result = await dispatch(signUpUserThunk(values)).unwrap();
+      if (result && onSuccess) {
+        await dispatch(
+          loginThunk({ email: values.email, password: values.password }),
+        );
+        onSuccess();
+      }
+    } catch (error) {
+      if (typeof error === 'string') {
+        setServerError(error);
+      }
+    }
   }, [dispatch, getValues, onSuccess]);
 
   const handleBilling = () => {
@@ -80,10 +81,11 @@ export const RegistrationFormUser = ({
               message: ValidationErrors.email.error,
             },
             onChange: () => {
+              // setValue('email', `${getValues('email').trim()}`);
               setServerError('');
             },
           })}
-          type="email"
+          type="text"
           placeholder="example@google.com"
           label="Email"
           className={errors.email && cls.invalid}
@@ -229,7 +231,7 @@ export const RegistrationFormUser = ({
         </div>
         <div className={cls.input__wrapper}>
           <Input
-            placeholder="247123"
+            placeholder={`${(getValues('shippingCountry') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
             label="Postal code"
             className={errors.shippingPostal && cls.invalid}
             type="text"
@@ -324,7 +326,7 @@ export const RegistrationFormUser = ({
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
         >
           <Input
-            placeholder="247123"
+            placeholder={`${(getValues('shippingCountry') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
             label="Postal code"
             className={errors.billingPostal && cls.invalid}
             type="text"
