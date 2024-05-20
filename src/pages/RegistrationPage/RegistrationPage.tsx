@@ -17,7 +17,7 @@ export const RegistrationPage = memo(() => {
   }
   return (
     <main className={cls.registrationPage}>
-      <Logo left />
+      <Logo left className={cls.logo} />
       <div className={cls.card}>
         <div>
           <h1 className={cls.title}>Registration</h1>
