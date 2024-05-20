@@ -1,3 +1,4 @@
+import { LegacyRef, createRef } from 'react';
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
@@ -22,12 +23,20 @@ export enum Routes {
 type IndexRouteObjectWithPath = Exclude<
   IndexRouteObject,
   'path' | 'children'
-> & { path: Routes; children?: RouteConfig[] };
+> & {
+  path: Routes;
+  nodeRef: LegacyRef<HTMLDivElement> | undefined;
+  children?: RouteConfig[];
+};
 
 type NonIndexRouteObjectWithPath = Exclude<
   NonIndexRouteObject,
   'path' | 'children'
-> & { path: Routes; children?: RouteConfig[] };
+> & {
+  path: Routes;
+  nodeRef: LegacyRef<HTMLDivElement> | undefined;
+  children?: RouteConfig[];
+};
 
 type RouteConfig = NonIndexRouteObjectWithPath | IndexRouteObjectWithPath;
 
@@ -35,32 +44,38 @@ export const routeConfig: RouteConfig[] = [
   {
     path: Routes.LOGIN,
     element: <LoginPage />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.REGISTRATION,
     element: <RegistrationPage />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.MAIN,
     element: <MainPage />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.CATALOG,
     element: (
-      <NotFound additionalMessage="The CATALOG page will be created during the next sprint." />
+      <NotFound additionalMessage="The CATALOG page will be created during the next sprint" />
     ),
+    nodeRef: createRef<HTMLDivElement>(),
     children: [
       {
         path: Routes.CATEGORY_ID,
         element: (
           <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
         ),
+        nodeRef: createRef<HTMLDivElement>(),
         children: [
           {
             path: Routes.PRODUCT_ID,
             element: (
               <NotFound additionalMessage="The PRODUCT_ID page will be created during the next sprint." />
             ),
+            nodeRef: createRef<HTMLDivElement>(),
           },
         ],
       },
@@ -71,25 +86,30 @@ export const routeConfig: RouteConfig[] = [
     element: (
       <NotFound additionalMessage="The PROFILE page will be created during the next sprint." />
     ),
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.CART,
     element: (
       <NotFound additionalMessage="The CART page will be created during the next sprint." />
     ),
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.ABOUT,
     element: (
       <NotFound additionalMessage="The ABOUT page will be created during the next sprint." />
     ),
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.ROOT,
     element: <MainPage />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.NOT_FOUND,
     element: <NotFound />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
 ];
