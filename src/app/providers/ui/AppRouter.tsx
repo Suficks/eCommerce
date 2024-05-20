@@ -34,4 +34,20 @@ export const AppPage = () => {
   );
 };
 
-export const AppRouter = createBrowserRouter(routeConfig);
+export const AppRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppPage />,
+    children: [
+      ...routeConfig.map((route) => ({
+        index: route.path === '/',
+        path: route.path === '/' ? undefined : route.path,
+        element: route.element,
+      })),
+      {
+        path: '/*',
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
