@@ -221,6 +221,10 @@ export const RegistrationFormUser = ({
             type="text"
             register={register('shippingStreet', {
               required: ValidationErrors.shipping.street.required,
+              pattern: {
+                value: Validation.street,
+                message: ValidationErrors.shipping.street.error,
+              },
               onChange: async () => {
                 handleBilling();
               },
@@ -317,6 +321,10 @@ export const RegistrationFormUser = ({
             type="text"
             register={register('billingStreet', {
               required: ValidationErrors.shipping.street.required,
+              pattern: {
+                value: Validation.street,
+                message: ValidationErrors.shipping.street.error,
+              },
             })}
           />
           {errors?.billingStreet &&
