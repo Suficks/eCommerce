@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
@@ -11,7 +12,6 @@ import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
-
 import cls from './LoginForm.module.scss';
 
 export interface LoginFormProps {
@@ -39,6 +39,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.loginForm);
   const [error, setError] = useState('');
+  const [inputType, setInputType] = useState<'password' | 'text'>('password');
 
   const {
     register,
@@ -77,7 +78,8 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           ...emailOptions,
           onChange: () => setError(''),
         })}
-        placeholder="email"
+        placeholder="example@google.com"
+        type="text"
         label="Email"
         className={classNames(cls.input, errors.email && cls.invalid)}
       />
@@ -92,10 +94,25 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           ...passwordOptions,
           onChange: () => setError(''),
         })}
-        placeholder="password"
+        placeholder="Strongpassword21"
         label="Password"
+        type={inputType}
         className={classNames(cls.input, errors.password && cls.invalid)}
-        type="password"
+        icon={
+          inputType === 'password' ? (
+            <AiFillEye
+              size={25}
+              className={cls.eye_icon}
+              onClick={() => setInputType('text')}
+            />
+          ) : (
+            <AiFillEyeInvisible
+              size={25}
+              className={cls.eye_icon}
+              onClick={() => setInputType('password')}
+            />
+          )
+        }
       />
       {errors?.password && (
         <AppError
