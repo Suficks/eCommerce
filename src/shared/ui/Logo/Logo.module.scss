@@ -1,8 +1,10 @@
 .logo {
-  z-index: 2;
+  position: relative;
+  z-index: 10;
 
   display: flex;
   align-items: center;
+  margin-left: 50px;
 
   transition: .3s;
 
