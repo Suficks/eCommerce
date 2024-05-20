@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import { LoginForm } from '@/features/Login';
 
@@ -15,9 +15,6 @@ export const LoginPage = memo(() => {
   }
   return (
     <main className={cls.loginPage}>
-      <Link to="/main" className={`${cls.link__image}`}>
-        <Logo />
-      </Link>
       <div className={cls.background} />
       <Logo className={cls.logo} left />
       <div className={cls.card}>

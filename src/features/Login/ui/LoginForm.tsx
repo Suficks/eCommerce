@@ -63,7 +63,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   }, [dispatch, getValues, onSuccess]);
 
   if (isLoading) {
-    <LoadingAnimation />;
+    return <LoadingAnimation />;
   }
 
   return (
