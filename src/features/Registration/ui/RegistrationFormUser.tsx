@@ -370,7 +370,7 @@ export const RegistrationFormUser = ({
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
         >
           <Input
-            placeholder={`${(getValues('shippingCountry') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
+            placeholder={`${(getValues('billingCountry') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
             label="Postal code"
             className={errors.billingPostal && cls.invalid}
             type="text"
