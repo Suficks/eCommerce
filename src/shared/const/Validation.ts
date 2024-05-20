@@ -3,7 +3,8 @@ import { countriesList } from './Countries';
 export const ValidationErrors = {
   email: {
     required: 'Enter your email!',
-    error: 'Invalid email address!',
+    error:
+      'An incorrect email was entered. It must start from letter/number and contain only Latin letters, numbers, underscores, dots and minus signs.',
     notExist: 'This e-mail was not found in the system',
   },
   password: {
@@ -35,10 +36,12 @@ export const ValidationErrors = {
   shipping: {
     city: {
       required: 'Please enter your city!',
-      error: 'Must contain only english letters!',
+      error:
+        'Cant start and end with whitespace. Must contain only Latin letters!',
     },
     street: {
       required: 'Please enter your street!',
+      error: 'Cant start with whitespace!',
     },
     postal: {
       required: 'Please enter your postal code!',
@@ -88,8 +91,9 @@ export const Validation = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S+]{8,}$/,
   username: /^[a-zA-Z]+$/,
   surname: /^[a-zA-Z]+$/,
-  email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-  city: /^[a-zA-Z]+$/,
+  email: /^[a-zA-Z0-9]+[a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+  city: /^[a-zA-Z]+ *[a-zA-Z]*$/,
+  street: /^\S/,
   birthDate: validateBirthDate,
   confirmPassword: validationConfirmPassword,
   postalCode: validationPostalCode,

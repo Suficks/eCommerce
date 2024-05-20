@@ -15,6 +15,9 @@ export const LoginPage = memo(() => {
   }
   return (
     <main className={cls.loginPage}>
+      <Link to="/main" className={`${cls.link__image}`}>
+        <Logo />
+      </Link>
       <div className={cls.background} />
       <Logo className={cls.logo} left />
       <div className={cls.card}>
