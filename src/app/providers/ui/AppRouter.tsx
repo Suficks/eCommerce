@@ -1,8 +1,10 @@
-import '@/app/providers/ui/AppRouterTransitions.scss';
 import { useRef } from 'react';
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { routeConfig } from '../RouterConfig/RouteConfig';
+
+import '@/app/providers/ui/AppRouterTransitions.scss';
+import { NotFound } from '@/pages/NotFound/NotFound';
 
 export const AppPage = () => {
   const location = useLocation();
@@ -11,7 +13,7 @@ export const AppPage = () => {
   const selectedRoute = routeConfig.find(
     (route) => route.path === location.pathname,
   );
-  const element = selectedRoute?.element;
+  const element = selectedRoute?.element || <NotFound />;
 
   return (
     <SwitchTransition>
@@ -36,10 +38,16 @@ export const AppRouter = createBrowserRouter([
   {
     path: '/',
     element: <AppPage />,
-    children: routeConfig.map((route) => ({
-      index: route.path === '/',
-      path: route.path === '/' ? undefined : route.path,
-      element: route.element,
-    })),
+    children: [
+      ...routeConfig.map((route) => ({
+        index: route.path === '/',
+        path: route.path === '/' ? undefined : route.path,
+        element: route.element,
+      })),
+      {
+        path: '/*',
+        element: <NotFound />,
+      },
+    ],
   },
 ]);

@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
-
 import { Navigate } from 'react-router-dom';
-import Logo from '@/shared/assets/images/logo.svg';
-import { LoginForm } from '@/features/Login';
-import { Icon } from '@/shared/ui/Icon/Icon';
 
-import cls from './LoginPage.module.scss';
+import { LoginForm } from '@/features/Login';
+
+import { Logo } from '@/shared/ui/Logo/Logo';
 import { isLogged } from '@/shared/util/isLogged';
+import cls from './LoginPage.module.scss';
 
 export const LoginPage = memo(() => {
   const navigate = useNavigate();
@@ -16,8 +15,11 @@ export const LoginPage = memo(() => {
   }
   return (
     <main className={cls.loginPage}>
+      <Link to="/main" className={`${cls.link__image}`}>
+        <Logo />
+      </Link>
       <div className={cls.background} />
-      <Icon Svg={Logo} className={cls.logo} />
+      <Logo className={cls.logo} left />
       <div className={cls.card}>
         <LoginForm onSuccess={() => navigate('/')} />
       </div>

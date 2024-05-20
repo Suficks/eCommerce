@@ -1,4 +1,7 @@
 .loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100vw;
   height: 100vh;
 }
@@ -15,16 +18,10 @@
   filter: brightness(45%);
 }
 
-.logo{
-  position: relative;
-}
-
 .card {
   width: 90%;
   max-width: 606px;
-  margin: auto;
-  padding: 50px 40px;
-  padding-bottom: 30px;
+  padding: 50px 40px 30px;
   border: 1px solid white;
   border-radius: 34px;
 

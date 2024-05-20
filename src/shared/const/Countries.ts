@@ -18,7 +18,7 @@ export const countriesList: CountriesList = [
     name: CountryType.Poland,
     abbr: 'PL',
     indexError: 'Index format 5 digits XY-ZZZ',
-    regularForIndex: /^\d{2}[- ]{0,1}\d{3}$/,
+    regularForIndex: /^\d{2}-\d{3}$/,
   },
   {
     name: CountryType.Russia,
