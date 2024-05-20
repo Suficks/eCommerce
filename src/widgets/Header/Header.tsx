@@ -19,7 +19,7 @@ export const Header = () => {
   const [nav, setNav] = useState(false);
   const dispatch = useAppDispatch();
 
-  const exit = useCallback(() => {
+  const logOut = useCallback(() => {
     localStorage.removeItem(LocalStorageKeys.USER);
     localStorage.removeItem(LocalStorageKeys.TOKEN);
     localStorage.removeItem(LocalStorageKeys.REFRESH_TOKEN);
@@ -27,8 +27,8 @@ export const Header = () => {
     dispatch(userActions.logout());
   }, [dispatch]);
 
-  const isLogged = () => {
-    const login = false;
+  const setControls = () => {
+    const login = localStorage.getItem(LocalStorageKeys.USER) || false;
     if (!login) {
       return (
         <div className={cls.button__wrapper}>
@@ -61,6 +61,7 @@ export const Header = () => {
           text="Logout"
           className={cls.header__button}
           onClick={() => {
+            logOut();
             navigate('/login');
           }}
         />
@@ -96,7 +97,7 @@ export const Header = () => {
           </ul>
         </nav>
         <div className={cls.controls}>
-          {isLogged()}{' '}
+          {setControls()}
           <AppLink to="/cart" className={cls.icon}>
             <FaCartShopping size={30} />
           </AppLink>

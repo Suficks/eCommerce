@@ -1,22 +1,29 @@
 import classNames from 'classnames';
 
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useCallback, useState } from 'react';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
 import { SubmitData } from '@/features/Registration';
-import { signUpUserThunk } from '../model/services/signUpUser';
-import { useAppDispatch } from '@/shared/hooks/redux';
 
 import cls from './RegistrationForm.module.scss';
+import { CountryType } from '@/shared/const/Countries';
+import { signUpUser } from '@/shared/api';
+import { useAppDispatch } from '@/shared/hooks/redux';
+import { loginThunk } from '@/features/Login/model/services/loginThunk';
 
 export interface RegistrationFormProps {
   className?: string;
+  onSuccess?: () => void;
 }
 
-export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
+export const RegistrationFormUser = ({
+  className,
+  onSuccess,
+}: RegistrationFormProps) => {
   const dispatch = useAppDispatch();
   const {
     register,
@@ -28,15 +35,27 @@ export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
   } = useForm<SubmitData>({
     mode: 'onChange',
     defaultValues: {
-      shippingCountry: 'Poland',
-      billingCountry: 'Poland',
+      shippingCountry: CountryType.Poland,
+      billingCountry: CountryType.Poland,
     },
   });
+  const [serverError, setServerError] = useState('');
 
-  const onSubmit: SubmitHandler<SubmitData> = async () => {
+  const onSubmit = useCallback(async () => {
     const values = getValues();
-    await dispatch(signUpUserThunk(values));
-  };
+    await signUpUser(values)
+      .then(() => {
+        if (onSuccess) {
+          dispatch(
+            loginThunk({ email: values.email, password: values.password }),
+          );
+          onSuccess();
+        }
+      })
+      .catch((err) => {
+        setServerError(err.message);
+      });
+  }, [dispatch, getValues, onSuccess]);
 
   const handleBilling = () => {
     if (getValues('shippingAsBilling')) {
@@ -59,6 +78,9 @@ export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
             pattern: {
               value: Validation.email,
               message: ValidationErrors.email.error,
+            },
+            onChange: () => {
+              setServerError('');
             },
           })}
           type="email"
@@ -329,6 +351,7 @@ export const RegistrationFormUser = ({ className }: RegistrationFormProps) => {
           />
         </div>
       </fieldset>
+      {serverError && <AppError text={serverError} className={cls.error} />}
       <Button
         text="Register"
         className={cls.button}

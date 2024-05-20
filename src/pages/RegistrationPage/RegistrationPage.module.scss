@@ -1,10 +1,15 @@
 @import '../../app/styles';
 
 .registrationPage {
+  background-color: $black;
   background-image: url("@/shared/assets/images/reg_background.webp");
   background-position: center;
   background-size: cover;
   background-blend-mode: overlay;
+}
+
+input{
+  background-color: transparent !important;
 }
 
 .card {
