@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
+import { useEffect } from 'react';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
@@ -28,6 +29,9 @@ interface MainPageProps {
 
 export const MainPage = (props: MainPageProps) => {
   const { className } = props;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
