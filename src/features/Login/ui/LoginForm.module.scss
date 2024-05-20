@@ -34,6 +34,21 @@
   margin-bottom: 37px;
 }
 
+.eye_icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+
+  transform: translateY(-70%);
+  cursor: pointer;
+  
+  transition: 0.3s ease;
+  
+  &:hover {
+    fill: $light-green
+  }
+}
+
 .button {
   margin-top: 15px;
 }

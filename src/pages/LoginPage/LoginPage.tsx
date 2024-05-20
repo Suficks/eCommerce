@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { LoginForm } from '@/features/Login';
 

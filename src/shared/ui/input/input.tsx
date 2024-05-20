@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { ReactElement } from 'react';
 import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import cls from './input.module.scss';
@@ -11,17 +11,19 @@ interface InputProps {
   type?: string;
   register?: UseFormRegisterReturn<string>;
   classNameLabel?: string;
+  icon?: ReactElement;
 }
 
-export const Input: FC<InputProps> = ({
+export const Input = ({
   className = '',
   label = '',
   placeholder = '',
   value,
   type,
   register,
+  icon,
   classNameLabel,
-}) => {
+}: InputProps) => {
   return (
     <label className={classNames(cls.label, classNameLabel)}>
       {label}
@@ -32,6 +34,7 @@ export const Input: FC<InputProps> = ({
         type={type}
         {...register}
       />
+      {icon}
     </label>
   );
 };

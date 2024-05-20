@@ -1,19 +1,17 @@
 import { memo, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
-import { unwrapResult } from '@reduxjs/toolkit';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { loginThunk } from '../model/services/loginThunk';
-import { Validation } from '@/shared/const/Validation';
+import { Validation, ValidationErrors } from '@/shared/const/Validation';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
-import { loginActions } from '../model/slice/loginSlice';
-
 import cls from './LoginForm.module.scss';
 
 export interface LoginFormProps {
@@ -22,19 +20,18 @@ export interface LoginFormProps {
 }
 
 const emailOptions = {
-  required: 'Enter your email!',
+  required: ValidationErrors.email.required,
   pattern: {
     value: Validation.email,
-    message: 'Invalid email address',
+    message: ValidationErrors.email.error,
   },
 };
 
 const passwordOptions = {
-  required: 'Enter your password!',
+  required: ValidationErrors.password.required,
   pattern: {
     value: Validation.password,
-    message:
-      'English only. Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+    message: ValidationErrors.password.error,
   },
 };
 
@@ -42,6 +39,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.loginForm);
   const [error, setError] = useState('');
+  const [inputType, setInputType] = useState<'password' | 'text'>('password');
 
   const {
     register,
@@ -80,7 +78,8 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           ...emailOptions,
           onChange: () => setError(''),
         })}
-        placeholder="email"
+        placeholder="example@google.com"
+        type="text"
         label="Email"
         className={classNames(cls.input, errors.email && cls.invalid)}
       />
@@ -95,10 +94,25 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           ...passwordOptions,
           onChange: () => setError(''),
         })}
-        placeholder="password"
+        placeholder="Strongpassword21"
         label="Password"
+        type={inputType}
         className={classNames(cls.input, errors.password && cls.invalid)}
-        type="password"
+        icon={
+          inputType === 'password' ? (
+            <AiFillEye
+              size={25}
+              className={cls.eye_icon}
+              onClick={() => setInputType('text')}
+            />
+          ) : (
+            <AiFillEyeInvisible
+              size={25}
+              className={cls.eye_icon}
+              onClick={() => setInputType('password')}
+            />
+          )
+        }
       />
       {errors?.password && (
         <AppError
