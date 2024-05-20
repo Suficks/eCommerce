@@ -2,6 +2,7 @@ import classNames from 'classnames';
 
 import { useForm } from 'react-hook-form';
 import { useCallback, useState } from 'react';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
@@ -40,6 +41,12 @@ export const RegistrationFormUser = ({
     },
   });
   const [serverError, setServerError] = useState('');
+  const [inputPassType, setInputPassType] = useState<'password' | 'text'>(
+    'password',
+  );
+  const [inputRepeatPassType, setInputRepeatPassType] = useState<
+    'password' | 'text'
+  >('password');
 
   const onSubmit = useCallback(async () => {
     const values = getValues();
@@ -81,7 +88,6 @@ export const RegistrationFormUser = ({
               message: ValidationErrors.email.error,
             },
             onChange: () => {
-              // setValue('email', `${getValues('email').trim()}`);
               setServerError('');
             },
           })}
@@ -97,7 +103,22 @@ export const RegistrationFormUser = ({
           placeholder="Strongpassword21"
           label="Password"
           className={errors.password && cls.invalid}
-          type="password"
+          type={inputPassType}
+          icon={
+            inputPassType === 'password' ? (
+              <AiFillEye
+                size={25}
+                className={cls.eye_icon}
+                onClick={() => setInputPassType('text')}
+              />
+            ) : (
+              <AiFillEyeInvisible
+                size={25}
+                className={cls.eye_icon}
+                onClick={() => setInputPassType('password')}
+              />
+            )
+          }
           register={register('password', {
             required: ValidationErrors.password.required,
             pattern: {
@@ -119,7 +140,22 @@ export const RegistrationFormUser = ({
           placeholder="Strongpassword21"
           label="Repeat password"
           className={errors.passwordConfirm && cls.invalid}
-          type="password"
+          type={inputRepeatPassType}
+          icon={
+            inputRepeatPassType === 'password' ? (
+              <AiFillEye
+                size={25}
+                className={cls.eye_icon}
+                onClick={() => setInputRepeatPassType('text')}
+              />
+            ) : (
+              <AiFillEyeInvisible
+                size={25}
+                className={cls.eye_icon}
+                onClick={() => setInputRepeatPassType('password')}
+              />
+            )
+          }
           register={register('passwordConfirm', {
             required: ValidationErrors.password.required,
             validate: (value) =>
