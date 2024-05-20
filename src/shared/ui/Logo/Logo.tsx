@@ -7,11 +7,15 @@ import cls from './Logo.module.scss';
 
 interface LogoProps {
   className?: string;
+  left?: boolean;
 }
 
-export const Logo = ({ className }: LogoProps) => {
+export const Logo = ({ className, left }: LogoProps) => {
   return (
-    <Link to={Routes.MAIN} className={classNames(cls.logo, className)}>
+    <Link
+      to={Routes.MAIN}
+      className={classNames(cls.logo, { [cls.left]: left }, className)}
+    >
       <LogoSVG />
     </Link>
   );

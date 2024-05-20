@@ -16,7 +16,7 @@ export const LoginPage = memo(() => {
   return (
     <main className={cls.loginPage}>
       <div className={cls.background} />
-      <Logo />
+      <Logo className={cls.logo} left />
       <div className={cls.card}>
         <LoginForm onSuccess={() => navigate('/')} />
       </div>
