@@ -1,17 +1,17 @@
-import { useNavigate } from 'react-router-dom';
-import { AiOutlineMenu, AiOutlineClose, AiOutlineIdcard } from 'react-icons/ai';
-import { FaCartShopping, FaUser, FaUserPlus } from 'react-icons/fa6';
-import { useCallback, useState } from 'react';
 import classNames from 'classnames';
+import { useCallback, useState } from 'react';
+import { AiOutlineClose, AiOutlineIdcard, AiOutlineMenu } from 'react-icons/ai';
+import { FaCartShopping, FaUser, FaUserPlus } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@/shared/ui/button/button';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
-import Logo from '@/shared/assets/images/headerLogo.png';
-import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { userActions } from '@/entities/User';
-import { useAppDispatch } from '@/shared/hooks/redux';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { useAppDispatch } from '@/shared/hooks/redux';
+import { AppLink } from '@/shared/ui/AppLink/AppLink';
+import { Button } from '@/shared/ui/button/button';
 
+import { Logo } from '@/shared/ui/Logo/Logo';
 import cls from './Header.module.scss';
 
 export const Header = () => {
@@ -78,9 +78,7 @@ export const Header = () => {
   return (
     <header className={cls.header}>
       <div className={cls.header__wrapper}>
-        <AppLink to="/main" className={cls.logo}>
-          <img src={Logo} alt="Prakriti Logo" className={cls.logo__image} />
-        </AppLink>
+        <Logo />
         <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
           <ul className={cls.nav__list}>
             <li>
