@@ -1,4 +1,7 @@
 .loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100vw;
   height: 100vh;
 }
@@ -13,10 +16,6 @@
   background-position: center;
   background-size: cover;
   filter: brightness(45%);
-}
-
-.logo{
-  position: relative;
 }
 
 .card {
