@@ -1,17 +1,9 @@
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
-import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: './',
   build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        nested: resolve(__dirname, 'index.html'),
-      },
-    },
     target: 'es2022',
   },
   plugins: [
