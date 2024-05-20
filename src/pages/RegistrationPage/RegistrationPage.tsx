@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Link, Navigate } from 'react-router-dom';
-import Logo from '@/shared/assets/images/logo.svg';
+import { Navigate } from 'react-router-dom';
 
-import cls from './RegistrationPage.module.scss';
 import { RegistrationFormUser } from '@/features/Registration/ui/RegistrationFormUser';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
+import cls from './RegistrationPage.module.scss';
 
+import { Logo } from '@/shared/ui/Logo/Logo';
 import { isLogged } from '@/shared/util/isLogged';
 
 export const RegistrationPage = memo(() => {
@@ -17,9 +17,7 @@ export const RegistrationPage = memo(() => {
   }
   return (
     <main className={cls.registrationPage}>
-      <Link to="/main" className={`${cls.link__image}`}>
-        <Logo />
-      </Link>
+      <Logo left />
       <div className={cls.card}>
         <div>
           <h1 className={cls.title}>Registration</h1>
