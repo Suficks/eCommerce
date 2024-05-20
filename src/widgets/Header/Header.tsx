@@ -78,7 +78,7 @@ export const Header = () => {
   return (
     <header className={cls.header}>
       <div className={cls.header__wrapper}>
-        <Logo />
+        <Logo className={cls.logo} />
         <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
           <ul className={cls.nav__list}>
             <li>

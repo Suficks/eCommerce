@@ -13,12 +13,6 @@
   background-blend-mode: overlay;
 }
 
-.logo {
-  @media screen and (width <=600px) {
-    display: none;
-  }
-}
-
 input {
   background-color: transparent !important;
 }

@@ -36,6 +36,12 @@
   background-color: $black;
 }
 
+.logo {
+  @media screen and (width <=600px) {
+    display: none;
+  }
+}
+
 .nav {
   display: flex;
   align-items: center;
