@@ -1,0 +1,14 @@
+.modal-wrapper{
+  position: fixed;
+  top: 166px;
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  min-height: 100px;
+  padding: 30px;
+  border-radius: 34px;
+  background-color: rgba($gray, 0.25);
+}
