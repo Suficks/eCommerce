@@ -13,6 +13,7 @@ export const Footer = () => {
       <video autoPlay loop muted className={cls.videoBackground}>
         <source src={animation_background} type="video/mp4" />
       </video>
+
       <p>Let’s get Social!</p>
       <div className={cls.iconWrapper}>
         <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
