@@ -13,11 +13,12 @@
     "selector-class-pattern": null,
     "custom-property-pattern": null,
     "order/properties-order": [],
-    "declaration-empty-line-before": "never",
+    "declaration-empty-line-before": null,
     "plugin/rational-order": [
       true,
       {
-        "border-in-box-model": true
+        "border-in-box-model": true,
+        "empty-line-between-groups": true
       }
     ]
   }

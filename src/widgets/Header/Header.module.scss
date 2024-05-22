@@ -1,0 +1,161 @@
+.header {
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+  width: clamp(300px, 100%, 1440px);
+
+  height: 120px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 32px;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.header__wrapper {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  height: 90%;
+  padding: clamp(10px, 4vw, 20px) clamp(10px, 5vw, 30px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  background-color: $black;
+}
+
+.logo {
+  @media screen and (width <=600px) {
+    display: none;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav__list {
+  display: flex;
+  gap: clamp(20px, 4vw, 30px);
+}
+
+.nav__link {
+  &:hover {
+    color: white;
+
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+
+.button__wrapper {
+  display: flex;
+  gap: clamp(5px, 4vw, 20px);
+  align-items: center;
+  height: 100%;
+}
+
+.header__button {
+  height: 60%;
+  padding: 5px 15px;
+
+  font-size: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  @media screen and (width <=600px) {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: .7s;
+  aspect-ratio: 1/1;
+}
+
+.icon:hover {
+  filter: invert(49%) sepia(9%) saturate(3244%) hue-rotate(77deg) brightness(118%) contrast(86%);
+
+  transition: .5s;
+}
+
+.burger__icon {
+  display: none;
+}
+
+.mobile__visible {
+  display: none;
+}
+
+
+@media screen and (width <=1100px) {
+  .burger__icon {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 120px 0 0 -100%;
+
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 120px);
+
+    background-color: $black;
+
+    transition: left 1s;
+
+    &.active {
+      inset: 120px 0 0;
+    }
+
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav__link {
+    font-size: 25px;
+
+    &:hover {
+      color: white;
+
+      opacity: 1;
+    }
+  }
+
+  .mobile__hidden {
+    display: none;
+  }
+
+  .mobile__visible {
+    display: flex;
+  }
+
+}

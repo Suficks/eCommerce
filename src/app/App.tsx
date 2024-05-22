@@ -1,6 +1,7 @@
-import './styles/index.scss';
+import { RouterProvider } from 'react-router-dom';
 
-function App() {
-  return <div />;
-}
-export default App;
+import { AppRouter } from '@/app/providers/ui/AppRouter';
+
+export const App = () => {
+  return <RouterProvider router={AppRouter} />;
+};
