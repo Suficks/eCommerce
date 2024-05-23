@@ -52,15 +52,6 @@
   gap: clamp(20px, 4vw, 30px);
 }
 
-.nav__link {
-  &:hover {
-    color: white;
-
-    cursor: pointer;
-    opacity: 0.7;
-  }
-}
-
 .button__wrapper {
   display: flex;
   gap: clamp(5px, 4vw, 20px);

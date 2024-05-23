@@ -6,13 +6,19 @@
   transition: 0.2s ease;
 
   &:hover {
+    color: white;
+
     cursor: pointer;
+
     opacity: 0.7;
   }
-
-  .active{
-    color:white;
-
-    cursor: default;
-  };
 }
+
+.active{
+  color:white;
+
+  &:hover {
+    cursor: default;
+    opacity: 1;
+  }
+};
