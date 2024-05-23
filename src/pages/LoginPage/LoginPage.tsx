@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router';
 import { Navigate } from 'react-router-dom';
 
 import { LoginForm } from '@/features/Login';
-
 import { Logo } from '@/shared/ui/Logo/Logo';
 import { isLogged } from '@/shared/util/isLogged';
+
 import cls from './LoginPage.module.scss';
 
 export const LoginPage = memo(() => {
