@@ -1,0 +1,103 @@
+.MainBlock {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 50px;
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 1px;
+
+    background-color: $separator-green;
+
+    content: '';
+  }
+}
+
+.list {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  width: 40%;
+
+  text-align: center;
+
+  @include montserrat(20px, 400, 24px);
+}
+
+.separator {
+  width: 1px;
+  height: 300px;
+  margin: 0 60px 0 10px ;
+
+  background-color: white;
+}
+
+.item {
+  position: relative;
+
+  color: white;
+
+  cursor: pointer;
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+
+    width: 0;
+    height: 1px;
+
+    background-color: white;
+    transform: translateX(-50%);
+
+    transition: 0.3s ease;
+
+    content: '';
+  }
+
+  &:hover {
+    opacity: 1;
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.card {
+  flex-direction: row;
+  min-height: 235px;
+}
+
+.title {
+  color: $green;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  text-align: start;
+
+}
+
+.subtitle {
+  font-weight: 700;
+  text-align: start;
+}
+
+.text_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+  margin: auto;
+
+  text-align: center;
+}

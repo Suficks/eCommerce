@@ -14,7 +14,7 @@
   @include montserrat(23px, 500, 24px);
 
   &:hover {
-      color: white;
+    color: white;
 
     opacity: 0.7;
   }
@@ -23,7 +23,7 @@
 .transparent {
   border: 0.5px solid #898989;
 
-  background: linear-gradient(.47turn, #3f3d3d 0%, $black 100%);
+  background: linear-gradient(.47turn, #3f3d3d 0%, $black 70%);
 }
 
 .green {
