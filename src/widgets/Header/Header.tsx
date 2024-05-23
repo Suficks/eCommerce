@@ -10,8 +10,9 @@ import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { useAppDispatch } from '@/shared/hooks/redux';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Button } from '@/shared/ui/button/button';
-
+import HeaderImage from '@/shared/assets/images/header1.jpg';
 import { Logo } from '@/shared/ui/Logo/Logo';
+
 import cls from './Header.module.scss';
 
 export const Header = () => {
@@ -76,54 +77,57 @@ export const Header = () => {
     );
   }; // change to normal function, when we will have isLogged state
   return (
-    <header className={cls.header}>
-      <div className={cls.header__wrapper}>
-        <Logo className={cls.logo} />
-        <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
-          <ul className={cls.nav__list}>
-            <li>
-              <AppLink to={Routes.MAIN} className={cls.nav__link}>
-                Home
-              </AppLink>
-            </li>
-            <li>
-              <AppLink to={Routes.CATALOG} className={cls.nav__link}>
-                Catalog
-              </AppLink>
-            </li>
-            <li>
-              <AppLink to={Routes.ABOUT} className={cls.nav__link}>
-                About
-              </AppLink>
-            </li>
-          </ul>
-        </nav>
-        <div className={cls.controls}>
-          {setControls()}
-          <AppLink to="/cart" className={cls.icon}>
-            <FaCartShopping size={25} />
-          </AppLink>
-          {!nav ? (
-            <AiOutlineMenu
-              className={`${cls.icon} ${cls.burger__icon}`}
-              size={30}
-              onClick={() => {
-                setNav(!nav);
-                document.body.style.overflow = 'hidden';
-              }}
-            />
-          ) : (
-            <AiOutlineClose
-              className={`${cls.icon} ${cls.burger__icon}`}
-              size={30}
-              onClick={() => {
-                setNav(!nav);
-                document.body.style.overflow = 'unset';
-              }}
-            />
-          )}
+    <>
+      <img src={HeaderImage} alt="" className={cls.headerImage} />
+      <header className={cls.header}>
+        <div className={cls.header__wrapper}>
+          <Logo className={cls.logo} />
+          <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
+            <ul className={cls.nav__list}>
+              <li>
+                <AppLink to={Routes.MAIN} className={cls.nav__link}>
+                  Home
+                </AppLink>
+              </li>
+              <li>
+                <AppLink to={Routes.CATALOG} className={cls.nav__link}>
+                  Catalog
+                </AppLink>
+              </li>
+              <li>
+                <AppLink to={Routes.ABOUT} className={cls.nav__link}>
+                  About
+                </AppLink>
+              </li>
+            </ul>
+          </nav>
+          <div className={cls.controls}>
+            {setControls()}
+            <AppLink to="/cart" className={cls.icon}>
+              <FaCartShopping size={25} />
+            </AppLink>
+            {!nav ? (
+              <AiOutlineMenu
+                className={`${cls.icon} ${cls.burger__icon}`}
+                size={30}
+                onClick={() => {
+                  setNav(!nav);
+                  document.body.style.overflow = 'hidden';
+                }}
+              />
+            ) : (
+              <AiOutlineClose
+                className={`${cls.icon} ${cls.burger__icon}`}
+                size={30}
+                onClick={() => {
+                  setNav(!nav);
+                  document.body.style.overflow = 'unset';
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };

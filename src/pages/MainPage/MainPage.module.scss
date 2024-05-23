@@ -1,18 +1,5 @@
-.wrapper {
-  max-width: 1440px;
-  margin: auto;
-}
-
 .MainPage {
   background-color: $black;
-}
-
-.headerImage {
-  width: 100%;
-  height: 20px;
-  object-fit: cover;
-
-  filter: brightness(60%) hue-rotate(35deg);
 }
 
 .mainBlock {

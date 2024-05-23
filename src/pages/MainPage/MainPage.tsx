@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-
 import { useEffect } from 'react';
+
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
-import HeaderImage from '@/shared/assets/images/header1.jpg';
 import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
 import Icon_instagram from '@/shared/assets/images/icon_instagram.png';
 import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
@@ -20,7 +20,6 @@ import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Header } from '@/widgets/Header/Header';
 
-import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import cls from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -36,7 +35,6 @@ export const MainPage = (props: MainPageProps) => {
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
       <div className={cls.wrapper}>
-        <img src={HeaderImage} alt="" className={cls.headerImage} />
         <Header />
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
