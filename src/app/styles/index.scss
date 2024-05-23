@@ -9,3 +9,29 @@ body, * {
   max-width: 1440px;
   margin: auto;
 }
+
+.slick-slider {
+  width: 60%;
+  padding-bottom: 20px;
+}
+
+.slick-track {
+  display: flex;
+  gap: 30px;
+}
+
+.slick-dots li button::before {
+  content: ''
+}
+
+.slick-dots li button {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+
+  background-color: white;
+}
+
+.slick-dots li.slick-active button{
+  background-color: $green;
+}

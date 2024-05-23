@@ -3,7 +3,7 @@
 
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 20px 20px 50px;
 
   &::after {
     position: absolute;
@@ -35,7 +35,7 @@
 
 .separator {
   width: 1px;
-  height: 240px;
+  height: 300px;
   margin: 0 60px 0 10px ;
 
   background-color: white;
@@ -43,6 +43,8 @@
 
 .item {
   position: relative;
+
+  color: white;
 
   cursor: pointer;
 
@@ -63,6 +65,8 @@
   }
 
   &:hover {
+    opacity: 1;
+
     &::after {
       width: 100%;
     }
@@ -71,8 +75,7 @@
 
 .card {
   flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+  min-height: 235px;
 }
 
 .title {
@@ -80,15 +83,21 @@
   font-weight: 700;
   font-style: italic;
   letter-spacing: 1px;
+  text-align: start;
+
 }
 
 .subtitle {
   font-weight: 700;
+  text-align: start;
 }
 
-.wrapper {
+.text_wrapper {
   display: flex;
   flex-direction: column;
   gap: 15px;
   align-items: flex-start;
+  margin: auto;
+
+  text-align: center;
 }
