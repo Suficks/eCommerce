@@ -76,13 +76,28 @@ export const MainPage = (props: MainPageProps) => {
             <div className={cls.products}>
               <div className={cls.productsWrapper}>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_1} alt="product_1" width={210} />
+                  <Card
+                    image={Product_1}
+                    alt="product_1"
+                    width={210}
+                    transparent
+                  />
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_3} alt="product_3" width={230} />
+                  <Card
+                    image={Product_3}
+                    alt="product_3"
+                    width={230}
+                    transparent
+                  />
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_2} alt="product_2" width={210} />
+                  <Card
+                    image={Product_2}
+                    alt="product_2"
+                    width={210}
+                    transparent
+                  />
                 </NavLink>
               </div>
               <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>

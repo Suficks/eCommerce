@@ -5,6 +5,7 @@ import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage/MainPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
+import { CatalogPage } from '@/pages/CatalogPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -58,9 +59,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.CATALOG,
-    element: (
-      <NotFound additionalMessage="The CATALOG page will be created during the next sprint" />
-    ),
+    element: <CatalogPage />,
     nodeRef: createRef<HTMLDivElement>(),
     children: [
       {
