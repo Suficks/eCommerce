@@ -37,7 +37,7 @@ export const Card = ({
       )}
       style={{ maxWidth: width }}
     >
-      {image && <img src={image} alt={alt} />}
+      {image && <img src={image} className={cls.image} alt={alt} />}
       {svg && <Icon Svg={svg} />}
       {text && (
         <p
