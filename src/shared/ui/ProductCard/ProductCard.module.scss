@@ -1,0 +1,36 @@
+.ProductCard {
+  @include montserrat(16px, 400, 20px);
+}
+
+.card {
+  margin-bottom: 25px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wrap {
+  display: flex;
+  gap: 12px;
+}
+
+.sale {
+  color: $red;
+}
+
+.price {
+  color: $gray;
+  text-decoration: line-through;
+}
+
+.stars_wrap {
+  display: flex;
+  gap: 3px;
+}
+
+.reviews {
+  color: $gray;
+}

@@ -1,2 +1,12 @@
-.SalesBlock {display: block;
+.SalesBlock {
+  position: relative;
+
+  padding: 60px 30px 150px;
+}
+
+.leaf {
+  position: absolute;
+  top: -60px;
+  right: 0;
+  z-index: 1;
 }

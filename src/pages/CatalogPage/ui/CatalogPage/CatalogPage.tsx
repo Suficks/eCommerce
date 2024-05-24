@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
+import { SalesBlock } from '../SalesBlock/SalesBlock';
 
 import cls from './CatalogPage.module.scss';
 
@@ -16,6 +17,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
       <div className="wrapper">
         <Header />
         <MainBlock />
+        <SalesBlock />
       </div>
     </main>
   );
