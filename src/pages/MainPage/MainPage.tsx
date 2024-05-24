@@ -1,16 +1,11 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
-import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
-import Icon_instagram from '@/shared/assets/images/icon_instagram.png';
-import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
-import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Background from '@/shared/assets/images/info_background.webp';
 import MainLeaf from '@/shared/assets/images/main_leaf.svg';
 import Product_1 from '@/shared/assets/images/product_1.png';
@@ -18,8 +13,8 @@ import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
 import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
-import { Header } from '@/widgets/Header/Header';
 import { Footer } from '@/widgets/Footer/Footer';
+import { Header } from '@/widgets/Header/Header';
 
 import cls from './MainPage.module.scss';
 

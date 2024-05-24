@@ -1,0 +1,23 @@
+  .productImage img {
+
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    margin: 0 auto;
+    border-radius: 15px;
+  }
+
+  .sliderWrapper {
+    position: relative;
+
+    width: 400px;
+    height: 400px;
+
+    .productSlider {
+      width: 380px;
+      margin-left: 25px;
+    }
+
+  }
