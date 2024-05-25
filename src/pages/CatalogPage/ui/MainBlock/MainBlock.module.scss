@@ -3,12 +3,14 @@
 
   display: flex;
   align-items: center;
-  padding: 20px 20px 50px;
+  padding: 20px 30px 80px;
 
   &::after {
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 2;
+
 
     width: 100vw;
     height: 1px;
