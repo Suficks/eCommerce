@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Bottle from '@/shared/assets/images/bottle.svg';
