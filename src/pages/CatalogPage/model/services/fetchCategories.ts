@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
-import { getCategories } from '@/shared/api/requests/getCategories';
-import { CategoryCustom } from '@/shared/api/types/apiTypes';
+import { getCategories, CategoryCustom } from '@/shared/api';
 
 export const fetchCategories = createAsyncThunk<
   CategoryCustom[],
