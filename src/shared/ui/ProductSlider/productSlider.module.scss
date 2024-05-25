@@ -1,5 +1,4 @@
   .productImage img {
-
     display: block;
     width: auto;
     max-width: 100%;
@@ -12,12 +11,24 @@
   .sliderWrapper {
     position: relative;
 
-    width: 400px;
-    height: 400px;
+    display: flex;
+    flex: 0 1 550px;
+    align-items: flex-start;
+    justify-content: center;
+
+    // height: 400px;
+    padding-bottom: 30px;
 
     .productSlider {
-      width: 380px;
-      margin-left: 25px;
+      width: 500px;
+
+      .slick-prev {
+        left: -8px;
+      }
+
+      .slick-next {
+        right: 12px;
+      }
     }
 
   }

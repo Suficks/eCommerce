@@ -20,6 +20,7 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    fullscreen: true,
   };
 
   return (

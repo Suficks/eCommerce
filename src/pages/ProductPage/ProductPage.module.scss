@@ -3,3 +3,70 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.buttonBack {
+  @include flex(center, flex-start);
+  margin-bottom: 10px;
+  padding: 5px 20px;
+  border: 1px solid $green;
+  border-left: none;
+  border-radius: 0 50px 50px 0;
+
+  font-size: 20px;
+
+  background-color: transparent;
+}
+
+.productCard {
+  @include flex(null, null, row, 10px);
+  flex-wrap: wrap;
+
+  .productData {
+    @include flex(null, null, column, 30px);
+    flex: 1 1 400px;
+    padding-left: 5px;
+
+    .productName {
+      @include montserrat(35px, 600, 40px);
+    }
+
+    .productDescription {
+      @include montserrat(16px, 400, 20px);
+    }
+
+    .price {
+      @include montserrat(30px, 600, 40px);
+      padding: 0 40px;
+      border: 1px solid white;
+      border-radius: 50px;
+    }
+
+    .crossed {
+      @include montserrat(20px, 600, 40px);
+      border: none;
+
+      color: $gray;
+      text-decoration: line-through;
+    }
+
+    .discountedPrice {
+      color: $red;
+    }
+  }
+
+}
+
+.buttonsWrapper,
+.priceWrapper {
+  @include flex(null, null, row, 30px);
+  justify-content: space-between;
+  width: 350px;
+}
+
+.buyButtons {
+  @include montserrat(20px, 600, 25px);
+  width: 160px;
+  height: 50px;
+
+  color: white;
+}
