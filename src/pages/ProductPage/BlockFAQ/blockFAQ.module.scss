@@ -26,6 +26,7 @@
 }
 
 .faqItemAnswer {
+  @include montserrat(20px, 400, 35px);
   width: 70%;
   margin-top: 0.5rem;
 }

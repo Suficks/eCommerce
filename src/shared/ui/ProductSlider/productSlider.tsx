@@ -20,7 +20,9 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    fullscreen: true,
+    focusOnSelect: true,
+    centerMode: true,
+    centerPadding: '6px 0px 0px',
   };
 
   return (
