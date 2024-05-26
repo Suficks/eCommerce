@@ -28,7 +28,7 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
       <Slider {...settings} className={cls.productSlider}>
         {images.map((image) => (
           <div key={image.url}>
-            <Card width={380} image={image.url} className={cls.productImage} />
+            <Card width={330} image={image.url} className={cls.productImage} />
           </div>
         ))}
       </Slider>

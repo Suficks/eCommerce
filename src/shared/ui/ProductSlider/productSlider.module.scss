@@ -12,15 +12,13 @@
     position: relative;
 
     display: flex;
-    flex: 0 1 550px;
+    flex: 0 1 400px;
     align-items: flex-start;
     justify-content: center;
-
-    // height: 400px;
     padding-bottom: 30px;
 
     .productSlider {
-      width: 500px;
+      width: 330px;
 
       .slick-prev {
         left: -8px;

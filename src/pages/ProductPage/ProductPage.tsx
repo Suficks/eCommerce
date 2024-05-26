@@ -4,16 +4,35 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 
 import { getProductByKey } from '@/shared/api/requests/getProduct';
+import noImage from '@/shared/assets/images/No-Image.webp';
+import plantFromProductPage from '@/shared/assets/images/plantFromProductPage.png';
+import { Card } from '@/shared/ui/Card/Card';
 import { ProductSlider } from '@/shared/ui/ProductSlider/productSlider';
 import { Button } from '@/shared/ui/button/button';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
+import { FAQ } from './BlockFAQ/FAQ';
 import cls from './ProductPage.module.scss';
 
 export const ProductPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
+  // const productTypeId = product?.productType.id;
+  const imagesArr =
+    product?.masterData?.current?.masterVariant?.images?.length === 0 ||
+    product?.masterData?.current?.masterVariant?.images === undefined
+      ? [
+          {
+            url: noImage,
+            dimensions: {
+              w: 1665,
+              h: 2048,
+            },
+          },
+        ]
+      : product?.masterData?.current?.masterVariant?.images;
+
   const price: string = product?.masterData.current.masterVariant.prices
     ? ConverterPrice(
         product?.masterData.current.masterVariant.prices[0].value.centAmount,
@@ -29,7 +48,9 @@ export const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductByKey('cotton-bag');
+        const fetchedProduct = await getProductByKey('safety-razor-set');
+        // const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
+        // const fetchedProduct = await getProductByKey('carbon-water-filter');
         setProduct(fetchedProduct);
       } catch (error) {
         console.error('Failed to fetch product:', error);
@@ -48,11 +69,18 @@ export const ProductPage = () => {
       >
         &larr;
       </button>
-      <div className={cls.main}>
+      <main className={cls.main}>
         <div className={cls.productCard}>
-          <ProductSlider
-            images={product?.masterData?.current?.masterVariant?.images || []}
-          />{' '}
+          <img src={plantFromProductPage} alt="" className={cls.plantImage} />
+          {imagesArr.length === 1 ? (
+            <Card
+              width={300}
+              image={imagesArr[0].url}
+              className={cls.imageCard}
+            />
+          ) : (
+            <ProductSlider images={imagesArr} />
+          )}
           {product ? (
             <div className={cls.productData}>
               <h1 className={cls.productName}>
@@ -93,10 +121,11 @@ export const ProductPage = () => {
             <LoadingAnimation />
           )}
         </div>
-        <div className={cls.SimilarPrompts}>
-          <p>Similar Prompts</p>
-        </div>
-      </div>
+        <section className={cls.SimilarPrompts}>
+          <div className={cls.similarTitle}>Similar Prompts</div>
+        </section>
+        <FAQ />
+      </main>
       <Footer />
     </div>
   );
