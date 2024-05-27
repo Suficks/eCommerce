@@ -5,6 +5,8 @@
   border: 2px solid $green;
   border-radius: 100%;
 
+  background: transparent;
+  transform: translateY(-50%);
   cursor: pointer;
 
   transition: 0.3s ease;

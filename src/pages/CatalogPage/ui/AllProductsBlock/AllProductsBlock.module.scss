@@ -2,9 +2,14 @@
   padding: 60px 30px 80px;
 }
 
+.title {
+  margin-bottom: 80px;
+}
+
 .image {
+  height: 360px;
   margin-bottom: 20px;
-  border-radius: 20px;
+  border-radius: 20px
 }
 
 .name {
@@ -12,6 +17,8 @@
 }
 
 .products {
+  position: relative;
+
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns:  repeat(auto-fill, 360px);
