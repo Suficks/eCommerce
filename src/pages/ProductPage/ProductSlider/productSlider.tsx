@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { Card } from '../Card/Card';
+import { Card } from '../../../shared/ui/Card/Card';
 import cls from './productSlider.module.scss';
 
 interface Image {
@@ -21,8 +21,6 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     focusOnSelect: true,
-    centerMode: true,
-    centerPadding: '6px 0px 0px',
   };
 
   return (

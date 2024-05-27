@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Plant from '@/shared/assets/images/Group 17.webp';
 import cls from './blockFAQ.module.scss';
 
 interface FAQItem {
@@ -72,6 +73,14 @@ export const FAQ: React.FC = () => {
     <section className={cls.faqWrapper}>
       <div className={cls.faqTitle}>FAQ</div>
       {faqItems.map((item) => (
+        // <Card
+        //   transparent
+        //   key={item.id}
+        //   className={cls.faqItem}
+        //   text={item.question}
+        //   clickable
+        //   onClick={() => toggleAnswer(item.id)}
+        // >
         <div key={item.id} className={cls.faqItem}>
           <button
             type="button"
@@ -86,6 +95,7 @@ export const FAQ: React.FC = () => {
           )}
         </div>
       ))}
+      <img src={Plant} alt="" className={cls.plantImage} />
     </section>
   );
 };
