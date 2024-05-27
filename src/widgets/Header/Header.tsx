@@ -14,6 +14,8 @@ import HeaderImage from '@/shared/assets/images/header1.jpg';
 import { Logo } from '@/shared/ui/Logo/Logo';
 
 import cls from './Header.module.scss';
+import { HideScroll } from '@/widgets/Header/util/HideScroll';
+import { ShowScroll } from '@/widgets/Header/util/ShowScroll';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -75,7 +77,7 @@ export const Header = () => {
         </AppLink>
       </div>
     );
-  }; // change to normal function, when we will have isLogged state
+  };
   return (
     <>
       <img src={HeaderImage} alt="" className={cls.headerImage} />
@@ -85,17 +87,29 @@ export const Header = () => {
           <nav className={`${cls.nav} ${nav ? cls.active : null}`}>
             <ul className={cls.nav__list}>
               <li>
-                <AppLink to={Routes.MAIN} className={cls.nav__link}>
+                <AppLink
+                  to={Routes.MAIN}
+                  className={cls.nav__link}
+                  onClick={ShowScroll}
+                >
                   Home
                 </AppLink>
               </li>
               <li>
-                <AppLink to={Routes.CATALOG} className={cls.nav__link}>
+                <AppLink
+                  to={Routes.CATALOG}
+                  className={cls.nav__link}
+                  onClick={ShowScroll}
+                >
                   Catalog
                 </AppLink>
               </li>
               <li>
-                <AppLink to={Routes.ABOUT} className={cls.nav__link}>
+                <AppLink
+                  to={Routes.ABOUT}
+                  className={cls.nav__link}
+                  onClick={ShowScroll}
+                >
                   About
                 </AppLink>
               </li>
@@ -112,7 +126,7 @@ export const Header = () => {
                 size={30}
                 onClick={() => {
                   setNav(!nav);
-                  document.body.style.overflow = 'hidden';
+                  HideScroll();
                 }}
               />
             ) : (
@@ -121,7 +135,7 @@ export const Header = () => {
                 size={30}
                 onClick={() => {
                   setNav(!nav);
-                  document.body.style.overflow = 'unset';
+                  ShowScroll();
                 }}
               />
             )}
