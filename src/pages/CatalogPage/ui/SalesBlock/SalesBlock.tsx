@@ -12,6 +12,7 @@ import { useAppDispatch } from '@/shared/hooks/redux';
 import { fetchDiscountProducts } from '../../model/services/fetchDiscountProducts';
 import { SliderComponent } from './Slider';
 import { ConverterPrice } from '@/shared/util/converterPrice';
+import { SectionSeparator } from '@/shared/ui/SectionSeparator/SectionSeparator';
 
 import cls from './SalesBlock.module.scss';
 
@@ -62,6 +63,7 @@ export const SalesBlock = ({ className }: SalesBlockProps) => {
           return null;
         })}
       </SliderComponent>
+      <SectionSeparator />
     </section>
   );
 };

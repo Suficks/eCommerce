@@ -5,6 +5,10 @@ import classNames from 'classnames';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
+import { CategoriesBlock } from '../CategoriesBlock/CategoriesBlock';
+import { fetchCategories } from '../../model/services/fetchCategories';
+import { useAppDispatch } from '@/shared/hooks/redux';
+import { CategoryCustom } from '@/shared/api';
 // import { useAppDispatch } from '@/shared/hooks/redux';
 // import { fetchAllProducts } from '../../model/services/fetchDiscountProducts';
 
@@ -15,8 +19,21 @@ interface CatalogPageProps {
 }
 
 export const CatalogPage = memo(({ className }: CatalogPageProps) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   // const [products, setProducts] = useState<ProductProjection[]>([]);
+  const [categories, setCategories] = useState<CategoryCustom[]>([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultAction = await dispatch(fetchCategories()).unwrap();
+      setCategories(resultAction);
+    };
+    fetchData();
+  }, [dispatch]);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -30,8 +47,9 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     <main className={classNames(cls.CatalogPage, {}, [className])}>
       <div className="wrapper">
         <Header />
-        <MainBlock />
+        <MainBlock categories={categories} />
         <SalesBlock />
+        <CategoriesBlock categories={categories} />
       </div>
     </main>
   );
