@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Bottle from '@/shared/assets/images/bottle.svg';
@@ -14,8 +13,8 @@ import Product_2 from '@/shared/assets/images/product_2.png';
 import Product_3 from '@/shared/assets/images/product_3.png';
 import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
-import { Header } from '@/widgets/Header/Header';
 import { Footer } from '@/widgets/Footer/Footer';
+import { Header } from '@/widgets/Header/Header';
 
 import cls from './MainPage.module.scss';
 

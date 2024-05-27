@@ -1,11 +1,12 @@
 import { LegacyRef, createRef } from 'react';
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
+import { CatalogPage } from '@/pages/CatalogPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage/MainPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
+import { ProductPage } from '@/pages/ProductPage/ProductPage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
-import { CatalogPage } from '@/pages/CatalogPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -14,6 +15,7 @@ export enum Routes {
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
   PRODUCT_ID = ':productId',
+  PRODUCT = '/product',
   PROFILE = '/profile',
   CART = '/cart',
   ABOUT = '/about',
@@ -79,6 +81,11 @@ export const routeConfig: RouteConfig[] = [
         ],
       },
     ],
+  },
+  {
+    path: Routes.PRODUCT,
+    element: <ProductPage />,
+    nodeRef: createRef<HTMLDivElement>(),
   },
   {
     path: Routes.PROFILE,
