@@ -1,30 +1,18 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
 
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
-import { useAppDispatch } from '@/shared/hooks/redux';
-import { fetchCategories } from '../../model/services/fetchCategories';
 import { CategoryCustom } from '@/shared/api/types/apiTypes';
 import { SliderComponent } from './Slider';
+import { SectionSeparator } from '@/shared/ui/SectionSeparator/SectionSeparator';
 
 import cls from './MainBlock.module.scss';
 
 interface MainBlockProps {
   className?: string;
+  categories: CategoryCustom[];
 }
 
-export const MainBlock = ({ className }: MainBlockProps) => {
-  const dispatch = useAppDispatch();
-  const [categories, setCategories] = useState<CategoryCustom[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const resultAction = await dispatch(fetchCategories()).unwrap();
-      setCategories(resultAction);
-    };
-    fetchData();
-  }, [dispatch]);
-
+export const MainBlock = ({ className, categories }: MainBlockProps) => {
   return (
     <section className={classNames(cls.MainBlock, className)}>
       <ul className={cls.list}>
@@ -40,6 +28,7 @@ export const MainBlock = ({ className }: MainBlockProps) => {
       </ul>
       <div className={cls.separator} />
       <SliderComponent />
+      <SectionSeparator />
     </section>
   );
 };

@@ -18,14 +18,14 @@ export async function getCategories(): Promise<CategoryCustom[]> {
       .map((subCategory) => {
         return {
           name: subCategory.name['en-GB'],
-          path: subCategory.slug['en-GB'],
+          path: subCategory.key,
           id: subCategory.id,
         } as ItemsCategory;
       });
     acc.push({
       parent: {
         name: mainCategory.name['en-GB'],
-        path: mainCategory.slug['en-GB'],
+        path: mainCategory.key,
         id: mainCategory.id,
       } as ParentCategory,
 

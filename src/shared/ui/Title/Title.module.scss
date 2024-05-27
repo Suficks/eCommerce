@@ -2,7 +2,7 @@
   position: relative;
   z-index: 2;
 
-  margin-bottom: 60px;
+  margin-bottom: clamp(40px, 10vw, 80px);
 
   &::before {
     position: absolute;
@@ -24,6 +24,6 @@
 }
 
 .title {
-  @include montserrat(80px, 700, 80px);
+  @include montserrat(clamp(63px, 10vw, 80px), 700, clamp(63px, 10vw, 80px));
   color: $green;
 }

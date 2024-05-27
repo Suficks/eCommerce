@@ -4,21 +4,6 @@
   display: flex;
   align-items: center;
   padding: 20px 30px 80px;
-
-  &::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-
-
-    width: 100vw;
-    height: 1px;
-
-    background-color: $separator-green;
-
-    content: '';
-  }
 }
 
 .list {
@@ -29,6 +14,7 @@
   gap: 30px;
   align-items: center;
   width: 40%;
+  margin-bottom: 20px;
 
   text-align: center;
 
@@ -86,7 +72,6 @@
   font-style: italic;
   letter-spacing: 1px;
   text-align: start;
-
 }
 
 .subtitle {
@@ -102,4 +87,31 @@
   margin: auto;
 
   text-align: center;
+}
+
+.mainBlock_slider {
+  width: 60%;
+  padding-bottom: 20px;
+}
+
+@media screen and (width <= 700px) {
+  .MainBlock {
+    @include flex(center, center, column)
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .mainBlock_slider {
+    width: 100%
+  }
+}
+
+@media screen and (width <= 450px) {
+  .card {
+    flex-direction: column;
+    align-items: center;
+    min-height: 398px;
+  }
 }

@@ -10,16 +10,6 @@ body, * {
   margin: auto;
 }
 
-.slick-slider {
-  width: 60%;
-  padding-bottom: 20px;
-}
-
-.slick-track {
-  display: flex;
-  gap: 30px;
-}
-
 .slick-dots li button::before {
   content: ''
 }
@@ -34,4 +24,24 @@ body, * {
 
 .slick-dots li.slick-active button{
   background-color: $green;
+}
+
+.slick-next::before,
+.slick-prev::before  {
+  display: none;
+}
+
+.slick-disabled {
+  cursor: auto;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.5;
+
+    pointer-events: none;
+  }
+}
+
+.slick-list {
+  text-align: center;
 }

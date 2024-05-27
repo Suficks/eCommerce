@@ -73,6 +73,7 @@ export const MainPage = (props: MainPageProps) => {
               <div className={cls.productsWrapper}>
                 <NavLink to={Routes.CATALOG}>
                   <Card
+                    clickable
                     image={Product_1}
                     alt="product_1"
                     width={210}
@@ -81,6 +82,7 @@ export const MainPage = (props: MainPageProps) => {
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
                   <Card
+                    clickable
                     image={Product_3}
                     alt="product_3"
                     width={230}
@@ -89,6 +91,7 @@ export const MainPage = (props: MainPageProps) => {
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
                   <Card
+                    clickable
                     image={Product_2}
                     alt="product_2"
                     width={210}
