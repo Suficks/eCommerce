@@ -91,7 +91,7 @@ export const Validation = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S+]{8,}$/,
   username: /^[a-zA-Z]+$/,
   surname: /^[a-zA-Z]+$/,
-  email: /^[a-zA-Z0-9]+[a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+  email: /^[a-zA-Z0-9]+[a-zA-Z0-9._-]*@[a-zA-Z0-9-]{1,}\.[a-zA-Z0-9]{2,4}$/,
   city: /^[a-zA-Z]+ *[a-zA-Z]*$/,
   street: /^\S/,
   birthDate: validateBirthDate,
