@@ -19,8 +19,7 @@
 
   transition: 0.3s ease;
 
-  @include montserrat(30px, 500, 33px);
-
+  @include montserrat(30px, 500, 33px); 
 }
 
 .image {
@@ -35,4 +34,11 @@
 
 .transparent {
   background: none;
+}
+
+.hovered {
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+    opacity: 1;
+  }
 }

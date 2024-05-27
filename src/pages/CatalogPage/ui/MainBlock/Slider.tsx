@@ -15,7 +15,7 @@ export const SliderComponent = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 2000,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -24,13 +24,13 @@ export const SliderComponent = () => {
     cssEase: 'linear',
   };
   return (
-    <Slider {...settings}>
+    <Slider {...settings} className={cls.mainBlock_slider}>
       <Card className={classNames(cls.card)}>
         <img src={Product_3} alt="" />
         <div className={cls.text_wrapper}>
           <h1 className={cls.title}>Karigar</h1>
           <h1 className={cls.subtitle}>Up to 10% off Bags</h1>
-          <AppLink underlined to="/main">
+          <AppLink underlined to="/catalog/accessories/bags">
             Shop Now
           </AppLink>
         </div>
@@ -40,7 +40,7 @@ export const SliderComponent = () => {
         <div className={cls.text_wrapper}>
           <h1 className={cls.title}>Soloma</h1>
           <h1 className={cls.subtitle}>Up to 15% off Cases</h1>
-          <AppLink underlined to="/main">
+          <AppLink underlined to="/catalog/accessories/cases">
             Shop Now
           </AppLink>
         </div>
@@ -50,7 +50,7 @@ export const SliderComponent = () => {
         <div className={cls.text_wrapper}>
           <h1 className={cls.title}>Self Care</h1>
           <h1 className={cls.subtitle}>Up to 20% off Candles</h1>
-          <AppLink underlined to="/main">
+          <AppLink underlined to="/catalog/self-care/shower-and-shave">
             Shop Now
           </AppLink>
         </div>

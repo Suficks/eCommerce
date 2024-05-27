@@ -29,3 +29,10 @@
 .green {
   color: $green;
 }
+
+.small {
+  width: 160px;
+  height: 45px;
+
+  @include montserrat(17px, 400, 20px); 
+}

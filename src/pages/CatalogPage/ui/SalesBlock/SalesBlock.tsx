@@ -2,33 +2,24 @@ import { useNavigate } from 'react-router';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
 
-import { useEffect, useState } from 'react';
 import { Title } from '@/shared/ui/Title/Title';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { ProductCard } from '@/shared/ui/ProductCard/ProductCard';
 import SalesLeaf from '@/shared/assets/images/sales-leaf.svg';
 import { MathRandom } from '@/shared/util/MathRandom';
-import { useAppDispatch } from '@/shared/hooks/redux';
-import { fetchDiscountProducts } from '../../model/services/fetchDiscountProducts';
+import { SliderComponent } from './Slider';
+import { ConverterPrice } from '@/shared/util/converterPrice';
+import { SectionSeparator } from '@/shared/ui/SectionSeparator/SectionSeparator';
 
 import cls from './SalesBlock.module.scss';
 
 interface SalesBlockProps {
   className?: string;
+  salesProducts: ProductProjection[];
 }
 
-export const SalesBlock = ({ className }: SalesBlockProps) => {
+export const SalesBlock = ({ className, salesProducts }: SalesBlockProps) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<ProductProjection[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const resultAction = await dispatch(fetchDiscountProducts()).unwrap();
-      setProducts(resultAction);
-    };
-    fetchData();
-  }, [dispatch]);
 
   const onHandleClick = (id: string) => () => {
     navigate(`/catalog/${id}`);
@@ -37,11 +28,10 @@ export const SalesBlock = ({ className }: SalesBlockProps) => {
   return (
     <section className={classNames(cls.SalesBlock, className)}>
       <Icon Svg={SalesLeaf} className={cls.leaf} />
-      <Title subtitle="Today's" title="Flash Sale" />
-      <div className={cls.container}>
-        {products.map(({ id, name, masterVariant }) => {
+      <Title subtitle="Today's" title="Flash Sale" className={cls.title} />
+      <SliderComponent>
+        {salesProducts.map(({ id, name, masterVariant }) => {
           const { images, prices = [] } = masterVariant;
-
           if (prices[0].discounted) {
             const { value: regularPrice } = prices[0];
             const { value: salePrice } = prices[0].discounted;
@@ -51,8 +41,8 @@ export const SalesBlock = ({ className }: SalesBlockProps) => {
                 key={id}
                 image={images?.[0].url || ''}
                 name={name['en-GB']}
-                price={regularPrice.centAmount / 100}
-                sale={salePrice.centAmount / 100}
+                price={ConverterPrice(regularPrice.centAmount)}
+                sale={ConverterPrice(salePrice.centAmount)}
                 stars={MathRandom(3, 5)}
                 reviews={MathRandom(1, 100)}
               />
@@ -60,7 +50,8 @@ export const SalesBlock = ({ className }: SalesBlockProps) => {
           }
           return null;
         })}
-      </div>
+      </SliderComponent>
+      <SectionSeparator />
     </section>
   );
 };
