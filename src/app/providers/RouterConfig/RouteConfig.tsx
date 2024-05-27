@@ -1,12 +1,14 @@
 import { LegacyRef, createRef } from 'react';
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
-import { CatalogPage } from '@/pages/CatalogPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage/MainPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
 import { ProductPage } from '@/pages/ProductPage/ProductPage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
+import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
+import { loadClient } from '@/features/Loader/LoadClient';
+import { CatalogPage } from '@/pages/CatalogPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -89,9 +91,10 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.PROFILE,
-    element: (
-      <NotFound additionalMessage="The PROFILE page will be created during the next sprint." />
-    ),
+    id: 'profile',
+    loader: loadClient,
+    element: <ProfilePage />,
+    errorElement: <NotFound additionalMessage="Some error occured!" />,
     nodeRef: createRef<HTMLDivElement>(),
   },
   {
