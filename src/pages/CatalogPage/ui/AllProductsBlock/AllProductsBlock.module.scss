@@ -3,8 +3,6 @@
 }
 
 .image {
-  max-width: 360px;
-  height: 450px;
   margin-bottom: 20px;
   border-radius: 20px;
 }
@@ -16,9 +14,9 @@
 .products {
   display: grid;
   grid-auto-rows: auto;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 100px;
-  justify-items: center;
+  grid-template-columns:  repeat(auto-fill, 360px);
+  gap: clamp(30px, 10vw, 100px); 
+  justify-content: center;
 
   @include montserrat(24px, 400, 28px); 
 }
@@ -35,10 +33,10 @@
 
 .price_wrapper {
   flex: 1 1 auto;
+
+  @include flex(space-between, center, row);
   width: 100%;
   margin-bottom: 30px;
-
-  @include flex(space-between, flex-start, row);
 }
 
 .reviews {

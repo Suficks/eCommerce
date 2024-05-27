@@ -28,7 +28,7 @@ export const SalesBlock = ({ className, salesProducts }: SalesBlockProps) => {
   return (
     <section className={classNames(cls.SalesBlock, className)}>
       <Icon Svg={SalesLeaf} className={cls.leaf} />
-      <Title subtitle="Today's" title="Flash Sale" />
+      <Title subtitle="Today's" title="Flash Sale" className={cls.title} />
       <SliderComponent>
         {salesProducts.map(({ id, name, masterVariant }) => {
           const { images, prices = [] } = masterVariant;

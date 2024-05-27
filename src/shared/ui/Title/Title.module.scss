@@ -2,7 +2,7 @@
   position: relative;
   z-index: 2;
 
-  margin-bottom: 80px;
+  margin-bottom: clamp(40px, 10vw, 80px);
 
   &::before {
     position: absolute;

@@ -11,9 +11,10 @@ import { fetchAllProducts } from '../../model/services/fetchAllProducts';
 import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch } from '@/shared/hooks/redux';
 import { CategoryCustom } from '@/shared/api';
+import { fetchDiscountProducts } from '../../model/services/fetchDiscountProducts';
+import { Footer } from '@/widgets/Footer/Footer';
 
 import cls from './CatalogPage.module.scss';
-import { fetchDiscountProducts } from '../../model/services/fetchDiscountProducts';
 
 interface CatalogPageProps {
   className?: string;
@@ -63,6 +64,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
         <SalesBlock salesProducts={salesProducts} />
         <CategoriesBlock categories={categories} />
         <AllProductsBlock products={products} />
+        <Footer />
       </div>
     </main>
   );
