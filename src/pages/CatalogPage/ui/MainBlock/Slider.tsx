@@ -15,7 +15,7 @@ export const SliderComponent = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 2000,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -24,7 +24,7 @@ export const SliderComponent = () => {
     cssEase: 'linear',
   };
   return (
-    <Slider {...settings}>
+    <Slider {...settings} className={cls.mainBlock_slider}>
       <Card className={classNames(cls.card)}>
         <img src={Product_3} alt="" />
         <div className={cls.text_wrapper}>

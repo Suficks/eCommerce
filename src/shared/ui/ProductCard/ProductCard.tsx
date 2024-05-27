@@ -11,8 +11,8 @@ interface ProductCardProps {
   onClick: () => void;
   image: string;
   name: string;
-  price?: number;
-  sale?: number;
+  price?: string;
+  sale?: string;
   stars: number;
   reviews: number;
 }
@@ -31,9 +31,9 @@ export const ProductCard = (props: ProductCardProps) => {
       <div className={cls.info}>
         <p>{name}</p>
         <div className={cls.wrap}>
-          {sale && <span className={cls.sale}>{`$${sale}`}</span>}
+          {sale && <span className={cls.sale}>{sale}</span>}
           <span className={classNames(cls.price, { [cls.salePrice]: sale })}>
-            {`$${price}`}
+            {price}
           </span>
         </div>
         <div className={cls.wrap}>

@@ -1,13 +1,19 @@
+import { ReactNode } from 'react';
 import Slider from 'react-slick';
 
-export const SliderComponent = () => {
+import { SliderArrowNext } from '@/shared/ui/SliderArrows/SliderArrowNext';
+import { SliderArrowPrev } from '@/shared/ui/SliderArrows/SliderArrowPrev';
+
+export const SliderComponent = ({ children }: { children: ReactNode }) => {
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 2000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     arrows: true,
+    nextArrow: <SliderArrowNext position />,
+    prevArrow: <SliderArrowPrev position />,
   };
-  return <Slider {...settings} />;
+  return <Slider {...settings}>{children}</Slider>;
 };
