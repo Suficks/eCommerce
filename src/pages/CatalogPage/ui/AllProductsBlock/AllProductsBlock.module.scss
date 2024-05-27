@@ -1,0 +1,47 @@
+.AllProductsBlock {
+  padding: 60px 30px 80px;
+}
+
+.image {
+  max-width: 360px;
+  height: 450px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.name {
+  margin-bottom: 20px;
+}
+
+.products {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 100px;
+  justify-items: center;
+
+  @include montserrat(24px, 400, 28px); 
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.price_wrapper {
+  flex: 1 1 auto;
+  width: 100%;
+  margin-bottom: 30px;
+
+  @include flex(space-between, flex-start, row);
+}
+
+.reviews {
+  @include montserrat(20px, 400, 24px);
+  text-decoration: underline;
+}

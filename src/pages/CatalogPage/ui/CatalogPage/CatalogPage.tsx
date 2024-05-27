@@ -7,12 +7,13 @@ import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
 import { CategoriesBlock } from '../CategoriesBlock/CategoriesBlock';
 import { fetchCategories } from '../../model/services/fetchCategories';
+import { fetchAllProducts } from '../../model/services/fetchAllProducts';
+import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch } from '@/shared/hooks/redux';
 import { CategoryCustom } from '@/shared/api';
-// import { useAppDispatch } from '@/shared/hooks/redux';
-// import { fetchAllProducts } from '../../model/services/fetchDiscountProducts';
 
 import cls from './CatalogPage.module.scss';
+import { fetchDiscountProducts } from '../../model/services/fetchDiscountProducts';
 
 interface CatalogPageProps {
   className?: string;
@@ -20,8 +21,9 @@ interface CatalogPageProps {
 
 export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const dispatch = useAppDispatch();
-  // const [products, setProducts] = useState<ProductProjection[]>([]);
+  const [products, setProducts] = useState<ProductProjection[]>([]);
   const [categories, setCategories] = useState<CategoryCustom[]>([]);
+  const [salesProducts, setSalesProducts] = useState<ProductProjection[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,21 +37,32 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     fetchData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const resultAction = await dispatch(fetchAllProducts()).unwrap();
-  //     setProducts(resultAction);
-  //   };
-  //   fetchData();
-  // }, [dispatch]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultAction = await dispatch(
+        fetchAllProducts({ currentOffset: 6, itemPerPage: 6 }),
+      ).unwrap();
+      setProducts(resultAction);
+    };
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultAction = await dispatch(fetchDiscountProducts()).unwrap();
+      setSalesProducts(resultAction);
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <main className={classNames(cls.CatalogPage, {}, [className])}>
       <div className="wrapper">
         <Header />
         <MainBlock categories={categories} />
-        <SalesBlock />
+        <SalesBlock salesProducts={salesProducts} />
         <CategoriesBlock categories={categories} />
+        <AllProductsBlock products={products} />
       </div>
     </main>
   );

@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
 
 import { Title } from '@/shared/ui/Title/Title';
 import { Card } from '@/shared/ui/Card/Card';
@@ -20,20 +19,17 @@ interface CategoriesBlockProps {
   categories: CategoryCustom[];
 }
 
+const ItemsWithImage = {
+  Home: HomeIcon,
+  Accessories: AccessoriesIcon,
+  Tableware: TablewareIcon,
+  'Personal care products': PersonalCareIcon,
+};
+
 export const CategoriesBlock = ({
   className,
   categories,
 }: CategoriesBlockProps) => {
-  const ItemsWithImage = useMemo(
-    () => ({
-      Home: HomeIcon,
-      Accessories: AccessoriesIcon,
-      Tableware: TablewareIcon,
-      'Personal care products': PersonalCareIcon,
-    }),
-    [],
-  );
-
   return (
     <section className={classNames(cls.CategoriesBlock, className)}>
       <Title title="Browse By Category" subtitle="Categories" />

@@ -4,20 +4,6 @@
   display: flex;
   align-items: center;
   padding: 20px 30px 80px;
-
-  // &::after {
-  //   position: absolute;position
-  //   bottom: 0;bottom
-  //   left: 0;left
-  //   z-index: 2;z-index
-
-  //   width: 100%;width
-  //   height: 1px;height
-
-  //   background-color: $separator-green;background-color
-
-  //   content: '';content
-  // }
 }
 
 .list {
@@ -85,7 +71,6 @@
   font-style: italic;
   letter-spacing: 1px;
   text-align: start;
-
 }
 
 .subtitle {
