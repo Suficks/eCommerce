@@ -9,12 +9,14 @@ interface AppLinkProps {
   children: ReactNode;
   underlined?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 export const AppLink = (props: AppLinkProps) => {
-  const { to, children, className = '', underlined = false } = props;
+  const { to, children, className = '', underlined = false, onClick } = props;
   return (
     <NavLink
+      onClick={onClick}
       to={to}
       className={({ isActive }) =>
         classNames(
