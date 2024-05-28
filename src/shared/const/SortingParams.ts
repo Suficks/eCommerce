@@ -2,16 +2,16 @@ import { CatalogSortObject } from '@/pages/CatalogPage';
 
 export const SortingParams = [
   'Default',
-  'By price (ascending)',
-  'By price (descending)',
+  'By price ↑',
+  'By price ↓',
   'By name (A-Z)',
   'By name (Z-A)',
 ];
 
 export enum SortingConsts {
   DEFAULT = 'Default',
-  BY_PRICE_ASC = 'By price (ascending)',
-  BY_PRICE_DESC = 'By price (descending)',
+  BY_PRICE_ASC = 'By price ↑',
+  BY_PRICE_DESC = 'By price ↓',
   BY_NAME_ASC = 'By name (A-Z)',
   BY_AME_DESC = 'By name (Z-A)',
 }

@@ -1,5 +1,4 @@
 .CatalogSortSelector {
-  flex-wrap: wrap;
   margin-bottom: 20px;
 
   @include flex(flex-start, center, row, 40px);
@@ -7,8 +6,6 @@
 
 .title {
   @include montserrat(24px, 400, 28px); 
-  margin-bottom: 20px;
-
 }
 
 .select {
@@ -27,6 +24,5 @@
 }
 
 .selectWrap {
-  @include flex(space-between, center, row, 15px);
   margin-bottom: 20px;
 }
