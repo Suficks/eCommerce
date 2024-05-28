@@ -1,3 +1,6 @@
+import { ProductProjection } from '@commercetools/platform-sdk';
+import { CategoryCustom } from '@/shared/api';
+
 export enum ParentCategoryName {
   PERSONAL_CARE_PRODUCTS = 'Personal care products',
   ACCESSORIES = 'Accessories',
@@ -14,4 +17,17 @@ export enum ItemsCategoryName {
   CLEANING = 'Cleaning',
   ORAL_HYGIENE = 'Oral hygiene',
   SHOWER_AND_SHAVE = 'Shower and shave',
+}
+
+export interface CatalogPageData {
+  products: ProductProjection[];
+  discountProducts: ProductProjection[];
+  categories: CategoryCustom[];
+}
+
+export interface CatalogSchema {
+  isLoading?: boolean;
+  products: ProductProjection[];
+  discountProducts: ProductProjection[];
+  categories: CategoryCustom[];
 }

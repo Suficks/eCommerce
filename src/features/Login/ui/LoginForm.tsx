@@ -6,10 +6,9 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { loginThunk } from '../model/services/loginThunk';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
-import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
 import cls from './LoginForm.module.scss';
@@ -37,7 +36,6 @@ const passwordOptions = {
 
 export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.loginForm);
   const [error, setError] = useState('');
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
 
@@ -59,10 +57,6 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       setError(e as string);
     }
   }, [dispatch, getValues, onSuccess]);
-
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
 
   return (
     <form className={classNames(cls.form, className)}>

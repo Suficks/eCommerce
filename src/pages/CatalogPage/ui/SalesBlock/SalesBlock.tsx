@@ -15,10 +15,13 @@ import cls from './SalesBlock.module.scss';
 
 interface SalesBlockProps {
   className?: string;
-  salesProducts: ProductProjection[];
+  discountProducts: ProductProjection[];
 }
 
-export const SalesBlock = ({ className, salesProducts }: SalesBlockProps) => {
+export const SalesBlock = ({
+  className,
+  discountProducts,
+}: SalesBlockProps) => {
   const navigate = useNavigate();
 
   const onHandleClick = (id: string) => () => {
@@ -30,7 +33,7 @@ export const SalesBlock = ({ className, salesProducts }: SalesBlockProps) => {
       <Icon Svg={SalesLeaf} className={cls.leaf} />
       <Title subtitle="Today's" title="Flash Sale" className={cls.title} />
       <SliderComponent>
-        {salesProducts.map(({ id, name, masterVariant }) => {
+        {discountProducts.map(({ id, name, masterVariant }) => {
           const { images, prices = [] } = masterVariant;
           if (prices[0].discounted) {
             const { value: regularPrice } = prices[0];
