@@ -5,6 +5,7 @@ import { catalogActions } from '../model/slice/catalogSlice';
 import { getCatalogPageSearch } from '../model/selectors/catalogPageSelectors';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { SortingConsts } from '@/shared/const/SortingParams';
 
 export const useCatalogFilters = () => {
   const dispatch = useAppDispatch();
@@ -24,15 +25,22 @@ export const useCatalogFilters = () => {
     [dispatch, debouncedFetchData],
   );
 
+  const onChangeOrder = useCallback(
+    (value: SortingConsts) => {
+      dispatch(catalogActions.setOrder(value));
+      fetchData();
+    },
+    [dispatch, fetchData],
+  );
+
   return {
     // view,
     // sort,
-    // order,
     search,
     // type,
     // onChangeView,
     // onChangeSort,
-    // onChangeOrder,
+    onChangeOrder,
     onChangeSearch,
     // onChangeType,
   };

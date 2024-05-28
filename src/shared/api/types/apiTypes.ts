@@ -1,5 +1,9 @@
 import { ApiRoot } from '@commercetools/platform-sdk';
-import { ParentCategoryName, ItemsCategoryName } from '@/pages/CatalogPage';
+import {
+  ParentCategoryName,
+  ItemsCategoryName,
+  CatalogSortObject,
+} from '@/pages/CatalogPage';
 
 export interface UserLogin {
   token: string;
@@ -32,10 +36,6 @@ export type FilterSortSearchParameters = {
   // selectedFiltersList: string[];
   // minSelectedPrice: number;
   // maxSelectedPrice: number;
-  // attributesToSort?: {
-  //   order: string;
-  //   value: string;
-  //   icon: string;
-  // };
+  attributesToSort?: CatalogSortObject;
   search?: string;
 };

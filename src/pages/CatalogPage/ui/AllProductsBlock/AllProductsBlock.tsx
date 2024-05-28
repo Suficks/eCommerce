@@ -5,15 +5,16 @@ import { CiSearch } from 'react-icons/ci';
 
 import { Title } from '@/shared/ui/Title/Title';
 import { ConverterPrice } from '@/shared/util/converterPrice';
-import { MathRandom } from '@/shared/util/MathRandom';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { getProductPath } from '../../model/services/getProductPath';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { Input } from '@/shared/ui/input/input';
 import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
-import cls from './AllProductsBlock.module.scss';
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
+import { CatalogSortSelector } from '@/features/CatalogSortSelector';
+
+import cls from './AllProductsBlock.module.scss';
 
 interface AllProductsBlockProps {
   className?: string;
@@ -27,7 +28,7 @@ export const AllProductsBlock = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
-  const { search, onChangeSearch } = useCatalogFilters();
+  const { search, onChangeOrder, onChangeSearch } = useCatalogFilters();
 
   if (isLoading) {
     return <LoadingAnimation />;
@@ -55,7 +56,11 @@ export const AllProductsBlock = ({
         placeholder="Поиск"
         icon={<CiSearch className={cls.icon} />}
       />
+      <CatalogSortSelector onChangeOrder={onChangeOrder} />
       <div className={cls.products}>
+        {products.length === 0 && (
+          <div className={cls.no_products}>Продукты не найдены</div>
+        )}
         {products.map((item) => {
           const { masterVariant } = item;
           const { images, prices = [] } = masterVariant;
@@ -69,7 +74,7 @@ export const AllProductsBlock = ({
                 <p className={cls.price}>
                   {ConverterPrice(regularPrice.centAmount)}
                 </p>
-                <p className={cls.reviews}>{`${MathRandom(1, 400)} Reviews`}</p>
+                <p className={cls.reviews}>186 Reviews</p>
               </div>
               <Button
                 onClick={handleOnClick(

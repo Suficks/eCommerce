@@ -7,18 +7,16 @@ export async function getFilterSortSearchProducts(
   itemPerPage: number,
 ): Promise<ProductProjection[]> {
   const {
-    // categoryType: { attributesToFilter, selectedCategoryId },
     // selectedFiltersList,
     // minSelectedPrice,
     // maxSelectedPrice,
-    // attributesToSort,
+    attributesToSort,
     search,
   } = parameters;
   const queryArgs: {
     // filter: string | string[] | undefined;
-    // offset: number;
     limit: number;
-    // sort?: string[];
+    sort?: string;
     ['text.en-GB']?: string;
     fuzzy?: boolean;
   } = {
@@ -48,9 +46,11 @@ export async function getFilterSortSearchProducts(
   //   }
   // }
 
-  // if (queryArgs && attributesToSort) {
-  //   queryArgs.sort = [attributesToSort.order];
-  // }
+  if (attributesToSort && attributesToSort.field !== 'default') {
+    const { field, order } = attributesToSort;
+    queryArgs.sort = `${field} ${order}`;
+  }
+
   if (queryArgs && search) {
     queryArgs['text.en-GB'] = search;
     queryArgs.fuzzy = true;

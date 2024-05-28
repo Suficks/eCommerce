@@ -25,10 +25,21 @@ export interface CatalogPageData {
   categories: CategoryCustom[];
 }
 
+export type SortFields = 'price' | 'name.en-GB' | 'default';
+export type SortOrder = 'asc' | 'desc' | '';
+
+export interface CatalogSortObject {
+  field: SortFields;
+  order: SortOrder;
+}
+
 export interface CatalogSchema {
   isLoading?: boolean;
+
   products: ProductProjection[];
   discountProducts: ProductProjection[];
   categories: CategoryCustom[];
+
   search: string;
+  sort: CatalogSortObject;
 }

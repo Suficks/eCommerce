@@ -1,0 +1,32 @@
+.CatalogSortSelector {
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+  @include flex(flex-start, center, row, 40px);
+}
+
+.title {
+  @include montserrat(24px, 400, 28px); 
+  margin-bottom: 20px;
+
+}
+
+.select {
+  min-width: fit-content;
+  padding: 6px;
+  border: 3px solid $gray;
+  border-radius: 13px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+  }
+}
+
+.selectWrap {
+  @include flex(space-between, center, row, 15px);
+  margin-bottom: 20px;
+}

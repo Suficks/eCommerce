@@ -2,7 +2,6 @@
   padding: 60px 30px 80px;
 }
 
-
 .image {
   height: 360px;
   margin-bottom: 20px;
@@ -49,14 +48,19 @@
 }
 
 .input {
-  width: 60%;
   margin-bottom: 20px;
   padding: 10px 10px 10px 40px;
   border: 3px solid $gray;
   border-radius: 12px;
 
+  transition: 0.3s ease;
+  
   &:focus {
     padding: 10px 10px 10px 40px;
+  }
+
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
   }
 }
 
@@ -66,4 +70,12 @@
   left: 10px;
 
   transform: translateY(-90%);
+}
+
+.no_products {
+  grid-column: 2;
+
+  text-align: center;
+
+  @include montserrat(28px, 400, 28px);
 }

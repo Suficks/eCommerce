@@ -1,9 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ProductProjection } from '@commercetools/platform-sdk';
+import {
+  getCatalogPageSort,
+  getCatalogPageSearch,
+} from '../selectors/catalogPageSelectors';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
 import { getFilterSortSearchProducts } from '@/shared/api';
-import { getCatalogPageSearch } from '../selectors/catalogPageSelectors';
 
 export const searchFilterSort = createAsyncThunk<
   ProductProjection[],
@@ -11,8 +14,13 @@ export const searchFilterSort = createAsyncThunk<
   ThunkConfig<string>
 >('catalog/searchFilterSort', async (_, { rejectWithValue, getState }) => {
   const search = getCatalogPageSearch(getState());
+  const sort = getCatalogPageSort(getState());
+
   try {
-    const result = await getFilterSortSearchProducts({ search }, 6);
+    const result = await getFilterSortSearchProducts(
+      { search, attributesToSort: sort },
+      6,
+    );
 
     return result;
   } catch (e) {

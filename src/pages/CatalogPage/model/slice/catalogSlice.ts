@@ -5,6 +5,7 @@ import { CatalogPageData, CatalogSchema } from '../types/Catalog';
 import { fetchProducts } from '../services/fetchProducts';
 import { getProductPath } from '../services/getProductPath';
 import { searchFilterSort } from '../services/searchFilerSort';
+import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
 
 const initialState: CatalogSchema = {
   isLoading: false,
@@ -12,6 +13,7 @@ const initialState: CatalogSchema = {
   discountProducts: [],
   categories: [],
   search: '',
+  sort: { field: 'default', order: '' },
 };
 
 export const catalogSlice = createSlice({
@@ -20,6 +22,10 @@ export const catalogSlice = createSlice({
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
+    },
+    setOrder: (state, { payload }: PayloadAction<SortingConsts>) => {
+      state.sort.field = SortMapper[payload].field;
+      state.sort.order = SortMapper[payload].order;
     },
   },
   extraReducers: (builder) => {
