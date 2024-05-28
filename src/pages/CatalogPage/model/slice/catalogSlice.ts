@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
 import { fetchProducts } from '../services/fetchProducts';
+import { getProductPath } from '../services/getProductPath';
 
 const initialState: CatalogSchema = {
   isLoading: false,
@@ -28,6 +29,15 @@ export const catalogSlice = createSlice({
         },
       )
       .addCase(fetchProducts.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getProductPath.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductPath.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getProductPath.rejected, (state) => {
         state.isLoading = false;
       });
   },

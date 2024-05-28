@@ -1,14 +1,16 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router';
 
-import { getCategoryById, getProductTypeById } from '@/shared/api';
+import { useNavigate } from 'react-router';
 import { Title } from '@/shared/ui/Title/Title';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { MathRandom } from '@/shared/util/MathRandom';
 import { Button } from '@/shared/ui/button/button';
 import { SliderArrowPrev } from '@/shared/ui/SliderArrows/SliderArrowPrev';
 import { SliderArrowNext } from '@/shared/ui/SliderArrows/SliderArrowNext';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { getProductPath } from '../../model/services/getProductPath';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 
 import cls from './AllProductsBlock.module.scss';
 
@@ -21,18 +23,19 @@ export const AllProductsBlock = ({
   className,
   products,
 }: AllProductsBlockProps) => {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.catalog.isLoading);
   const navigate = useNavigate();
 
-  const handleOnClick =
-    (
-      productKey: string = '',
-      categoryKey: string = '',
-      itemName: string = '',
-    ) =>
-    async () => {
-      const [{ key: category }] = await getProductTypeById(productKey);
-      const [{ key: subCategory }] = await getCategoryById(categoryKey);
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
 
+  const handleOnClick =
+    (productKey: string, categoryKey: string, itemName: string) => async () => {
+      const { category, subCategory } = await dispatch(
+        getProductPath({ productKey, categoryKey }),
+      ).unwrap();
       navigate(`catalog/${category}/${subCategory}/${itemName}`);
     };
 
@@ -64,7 +67,7 @@ export const AllProductsBlock = ({
                 onClick={handleOnClick(
                   item.productType.id,
                   item.categories?.[0].id,
-                  item.key,
+                  item.key || '',
                 )}
                 small
                 className={cls.button}
