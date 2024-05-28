@@ -8,9 +8,9 @@ import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
 import Background from '@/shared/assets/images/info_background.webp';
 import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import Product_1 from '@/shared/assets/images/product_1.png';
-import Product_2 from '@/shared/assets/images/product_2.png';
-import Product_3 from '@/shared/assets/images/product_3.png';
+import BagImage from '@/shared/assets/images/bag_image.jpg';
+import CaseImage from '@/shared/assets/images/case_image.jpg';
+import CandleImage from '@/shared/assets/images/candle_image.jpg';
 import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Footer } from '@/widgets/Footer/Footer';
@@ -74,7 +74,7 @@ export const MainPage = (props: MainPageProps) => {
                 <NavLink to={Routes.CATALOG}>
                   <Card
                     clickable
-                    image={Product_1}
+                    image={CaseImage}
                     alt="product_1"
                     width={210}
                     transparent
@@ -83,16 +83,16 @@ export const MainPage = (props: MainPageProps) => {
                 <NavLink to={Routes.CATALOG}>
                   <Card
                     clickable
-                    image={Product_3}
+                    image={BagImage}
                     alt="product_3"
-                    width={230}
+                    width={210}
                     transparent
                   />
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
                   <Card
                     clickable
-                    image={Product_2}
+                    image={CandleImage}
                     alt="product_2"
                     width={210}
                     transparent
