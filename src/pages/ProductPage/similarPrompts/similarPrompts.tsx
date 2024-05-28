@@ -18,34 +18,33 @@ export const SimilarPrompts = ({
   products,
 }: SimilarPromptsProps) => {
   const navigate = useNavigate();
-
-  const onHandleClick = (id: string) => () => {
-    navigate(`/catalog/${id}`);
+  console.log(products);
+  const onHandleClick = (key: string) => () => {
+    navigate(`/product/${key}`);
   };
 
   return (
     <section className={classNames(cls.SimilarPrompts, className)}>
       <div className={cls.similarTitle}>Similar Prompts</div>
       <SliderComponent>
-        {products.map(({ id, name, masterVariant }) => {
+        {products.map(({ key, name, masterVariant }) => {
           const { images, prices = [] } = masterVariant;
-          if (prices[0].discounted) {
-            const { value: regularPrice } = prices[0];
-            const { value: salePrice } = prices[0].discounted;
-            return (
-              <ProductCard
-                onClick={onHandleClick(id)}
-                key={id}
-                image={images?.[0].url || ''}
-                name={name['en-GB']}
-                price={ConverterPrice(regularPrice.centAmount)}
-                sale={ConverterPrice(salePrice.centAmount)}
-                stars={MathRandom(3, 5)}
-                reviews={MathRandom(1, 100)}
-              />
-            );
-          }
-          return null;
+
+          const { value: regularPrice } = prices[0];
+          const salePrice = prices[0].discounted?.value;
+
+          return (
+            <ProductCard
+              onClick={onHandleClick(key || '')}
+              key={key}
+              image={images?.[0].url || ''}
+              name={name['en-GB']}
+              price={ConverterPrice(regularPrice.centAmount)}
+              sale={salePrice && ConverterPrice(salePrice.centAmount)}
+              stars={MathRandom(3, 5)}
+              reviews={MathRandom(1, 100)}
+            />
+          );
         })}
       </SliderComponent>
     </section>

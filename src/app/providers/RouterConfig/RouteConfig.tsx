@@ -15,6 +15,7 @@ export enum Routes {
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
   PRODUCT_ID = ':productId',
+  PRODUCT_KEY = '/product/:productKey',
   PRODUCT = '/product',
   PROFILE = '/profile',
   CART = '/cart',

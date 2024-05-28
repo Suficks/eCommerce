@@ -1,17 +1,17 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { apiRoot } from '../BuildClient';
 
-export async function getProductsByTypeId(
-  productTypeId: string,
+export async function getProductsByCategory(
+  categoryId: string,
 ): Promise<ProductProjection[]> {
-  const result = await apiRoot
+  const data = await apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        filter: [`productType.id:${productTypeId}`],
+        filter: [`categories.id:"${categoryId}"`],
       },
     })
     .execute();
-  return result.body.results;
+  return data.body.results;
 }
