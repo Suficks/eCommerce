@@ -9,9 +9,14 @@ import { fetchProducts } from '../../model/services/fetchProducts';
 import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { Footer } from '@/widgets/Footer/Footer';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
+import {
+  getCatalogPageCategories,
+  getCatalogPageIsLoading,
+  getCatalogPageProducts,
+} from '../../model/selectors/catalogPageSelectors';
 
 import cls from './CatalogPage.module.scss';
-import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 
 interface CatalogPageProps {
   className?: string;
@@ -19,9 +24,9 @@ interface CatalogPageProps {
 
 export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.catalog.isLoading);
-  const products = useAppSelector((state) => state.catalog.products);
-  const categories = useAppSelector((state) => state.catalog.categories);
+  const isLoading = useAppSelector(getCatalogPageIsLoading);
+  const products = useAppSelector(getCatalogPageProducts);
+  const categories = useAppSelector(getCatalogPageCategories);
   const discountProducts = useAppSelector(
     (state) => state.catalog.discountProducts,
   );

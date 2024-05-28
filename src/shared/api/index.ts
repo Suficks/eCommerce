@@ -1,4 +1,8 @@
-export type { CategoryCustom } from './types/apiTypes';
+export { getFilterSortSearchProducts } from './requests/getFilterSortSearchProducts';
+export type {
+  CategoryCustom,
+  FilterSortSearchParameters,
+} from './types/apiTypes';
 export { signUpUser } from './requests/signUpUser';
 export { loginUser } from './requests/loginUser';
 export { getCategories } from './requests/getCategories';

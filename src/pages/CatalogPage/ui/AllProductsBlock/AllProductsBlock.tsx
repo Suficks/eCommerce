@@ -1,18 +1,19 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
-
 import { useNavigate } from 'react-router';
+import { CiSearch } from 'react-icons/ci';
+
 import { Title } from '@/shared/ui/Title/Title';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { MathRandom } from '@/shared/util/MathRandom';
 import { Button } from '@/shared/ui/button/button';
-import { SliderArrowPrev } from '@/shared/ui/SliderArrows/SliderArrowPrev';
-import { SliderArrowNext } from '@/shared/ui/SliderArrows/SliderArrowNext';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { getProductPath } from '../../model/services/getProductPath';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-
+import { Input } from '@/shared/ui/input/input';
+import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
 import cls from './AllProductsBlock.module.scss';
+import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 
 interface AllProductsBlockProps {
   className?: string;
@@ -24,8 +25,9 @@ export const AllProductsBlock = ({
   products,
 }: AllProductsBlockProps) => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.catalog.isLoading);
   const navigate = useNavigate();
+  const isLoading = useAppSelector(getCatalogPageIsLoading);
+  const { search, onChangeSearch } = useCatalogFilters();
 
   if (isLoading) {
     return <LoadingAnimation />;
@@ -46,8 +48,14 @@ export const AllProductsBlock = ({
         title="Explore Our Products"
         className={cls.title}
       />
+      <Input
+        value={search}
+        onChange={onChangeSearch}
+        className={cls.input}
+        placeholder="Поиск"
+        icon={<CiSearch className={cls.icon} />}
+      />
       <div className={cls.products}>
-        <SliderArrowPrev position className={cls.prev} />
         {products.map((item) => {
           const { masterVariant } = item;
           const { images, prices = [] } = masterVariant;
@@ -55,7 +63,7 @@ export const AllProductsBlock = ({
 
           return (
             <div key={item.id} className={cls.product}>
-              <img src={images?.[0].url} alt="" className={cls.image} />
+              <img src={images?.[0]?.url || ''} alt="" className={cls.image} />
               <p className={cls.name}>{item.name['en-GB']}</p>
               <div className={cls.price_wrapper}>
                 <p className={cls.price}>
@@ -78,7 +86,6 @@ export const AllProductsBlock = ({
             </div>
           );
         })}
-        <SliderArrowNext position className={cls.next} />
       </div>
     </section>
   );

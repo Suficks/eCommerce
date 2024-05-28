@@ -27,3 +27,15 @@ export type CategoryCustom = {
   parent: ParentCategory;
   items: ItemsCategory[];
 };
+
+export type FilterSortSearchParameters = {
+  // selectedFiltersList: string[];
+  // minSelectedPrice: number;
+  // maxSelectedPrice: number;
+  // attributesToSort?: {
+  //   order: string;
+  //   value: string;
+  //   icon: string;
+  // };
+  search?: string;
+};

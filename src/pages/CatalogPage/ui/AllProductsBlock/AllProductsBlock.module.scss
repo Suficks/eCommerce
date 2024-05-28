@@ -2,9 +2,6 @@
   padding: 60px 30px 80px;
 }
 
-.title {
-  margin-bottom: 80px;
-}
 
 .image {
   height: 360px;
@@ -49,4 +46,24 @@
 .reviews {
   @include montserrat(20px, 400, 24px);
   text-decoration: underline;
+}
+
+.input {
+  width: 60%;
+  margin-bottom: 20px;
+  padding: 10px 10px 10px 40px;
+  border: 3px solid $gray;
+  border-radius: 12px;
+
+  &:focus {
+    padding: 10px 10px 10px 40px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+
+  transform: translateY(-90%);
 }

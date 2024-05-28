@@ -30,4 +30,5 @@ export interface CatalogSchema {
   products: ProductProjection[];
   discountProducts: ProductProjection[];
   categories: CategoryCustom[];
+  search: string;
 }
