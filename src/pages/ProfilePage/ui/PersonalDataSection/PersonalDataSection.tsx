@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 import { useForm } from 'react-hook-form';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
@@ -11,9 +11,10 @@ import { SubmitData } from '@/features/Registration';
 
 import cls from './PersonalDataSection.module.scss';
 
-import { editCustomerEmail } from '@/shared/api/requests/updateCustomerInfo';
+import { updateCustomerInfo } from '@/shared/api/requests/updateCustomerInfo';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { ToastConfig } from '@/shared/const/ToastConfig';
+import { ChangePasswordModal } from '@/pages/ProfilePage/ui/ChangePasswordModal/ChangePasswordModal';
 
 export interface UserData {
   username: string;
@@ -45,6 +46,11 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
     },
   });
   const [isEdit, setIsEdit] = useState(false);
+  const [isEditPassword, setIsEditPassword] = useState(false);
+
+  const closeModal = () => {
+    setIsEditPassword(false);
+  };
 
   const onSubmit = useCallback(async () => {
     try {
@@ -60,7 +66,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
         dateOfBirth: getValues('birthdate'),
         version,
       };
-      const result = await editCustomerEmail(ProfileData);
+      const result = await updateCustomerInfo(ProfileData);
       if (result) {
         toast.success('Data Updated!', ToastConfig);
       }
@@ -82,93 +88,103 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
     }
   }, [getValues]);
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={classNames(cls.form, className)}
-    >
-      <fieldset className={`${cls.field__wrapper} ${!isEdit && cls.blocked}`}>
-        <legend className={cls.field__heading}>Personal data</legend>
-        <div className={cls.input__wrapper}>
-          <Input
-            placeholder="Valera"
-            label="Name"
-            className={`${errors.username && cls.invalid}`}
-            type="text"
-            register={register('username', {
-              required: ValidationErrors.username.required,
-              pattern: {
-                value: Validation.username,
-                message: ValidationErrors.username.error,
-              },
-            })}
-          />
-          {errors?.username &&
-            AppError({ text: errors.username?.message || 'Error!' })}
-        </div>
-        <div className={cls.input__wrapper}>
-          <Input
-            placeholder="Kostin"
-            label="Surname"
-            className={errors.surname && cls.invalid}
-            type="text"
-            register={register('surname', {
-              required: ValidationErrors.surname.required,
-              pattern: {
-                value: Validation.surname,
-                message: ValidationErrors.surname.error,
-              },
-            })}
-          />
-          {errors?.surname &&
-            AppError({ text: errors.surname?.message || 'Error!' })}
-        </div>
-        <div className={cls.input__wrapper}>
-          <Input
-            register={register('email', {
-              required: ValidationErrors.email.required,
-              pattern: {
-                value: Validation.email,
-                message: ValidationErrors.email.error,
-              },
-            })}
-            type="text"
-            placeholder="example@google.com"
-            label="Email"
-            className={errors.email && cls.invalid}
-          />
-          {errors?.email &&
-            AppError({ text: errors.email?.message || 'Error!' })}
-        </div>
-        <div className={cls.input__wrapper}>
-          <Input
-            label="Birthdate"
-            className={`${errors.birthdate && cls.invalid} ${cls.input__date}`}
-            type="date"
-            register={register('birthdate', {
-              required: ValidationErrors.birthDate.required,
-              validate: (value) => Validation.birthDate(value),
-            })}
-          />
-          {errors?.birthdate &&
-            AppError({ text: errors.birthdate?.message || 'Error!' })}
-        </div>
-      </fieldset>
-      <div className={cls.button__wrapper}>
-        {isEdit && (
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={classNames(cls.form, className)}
+      >
+        <fieldset className={`${cls.field__wrapper} ${!isEdit && cls.blocked}`}>
+          <legend className={cls.field__heading}>Personal data</legend>
+          <div className={cls.input__wrapper}>
+            <Input
+              placeholder="Valera"
+              label="Name"
+              className={`${errors.username && cls.invalid}`}
+              type="text"
+              register={register('username', {
+                required: ValidationErrors.username.required,
+                pattern: {
+                  value: Validation.username,
+                  message: ValidationErrors.username.error,
+                },
+              })}
+            />
+            {errors?.username &&
+              AppError({ text: errors.username?.message || 'Error!' })}
+          </div>
+          <div className={cls.input__wrapper}>
+            <Input
+              placeholder="Kostin"
+              label="Surname"
+              className={errors.surname && cls.invalid}
+              type="text"
+              register={register('surname', {
+                required: ValidationErrors.surname.required,
+                pattern: {
+                  value: Validation.surname,
+                  message: ValidationErrors.surname.error,
+                },
+              })}
+            />
+            {errors?.surname &&
+              AppError({ text: errors.surname?.message || 'Error!' })}
+          </div>
+          <div className={cls.input__wrapper}>
+            <Input
+              register={register('email', {
+                required: ValidationErrors.email.required,
+                pattern: {
+                  value: Validation.email,
+                  message: ValidationErrors.email.error,
+                },
+              })}
+              type="text"
+              placeholder="example@google.com"
+              label="Email"
+              className={errors.email && cls.invalid}
+            />
+            {errors?.email &&
+              AppError({ text: errors.email?.message || 'Error!' })}
+          </div>
+          <div className={cls.input__wrapper}>
+            <Input
+              label="Birthdate"
+              className={`${errors.birthdate && cls.invalid} ${cls.input__date}`}
+              type="date"
+              register={register('birthdate', {
+                required: ValidationErrors.birthDate.required,
+                validate: (value) => Validation.birthDate(value),
+              })}
+            />
+            {errors?.birthdate &&
+              AppError({ text: errors.birthdate?.message || 'Error!' })}
+          </div>
+        </fieldset>
+        <div className={cls.button__wrapper}>
+          {isEdit && (
+            <Button
+              text="Save"
+              className={cls.button}
+              onClick={handleSubmit(onSubmit)}
+            />
+          )}
           <Button
-            text="Save"
+            text="Edit"
             className={cls.button}
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => {
+              setIsEdit(!isEdit);
+            }}
           />
-        )}
-        <Button
-          text="Edit"
-          className={cls.button}
-          onClick={() => {
-            setIsEdit(!isEdit);
-          }}
-        />
-      </div>
-    </form>
+          <Button
+            text="Change Password"
+            className={cls.button}
+            onClick={() => {
+              setIsEditPassword(!isEditPassword);
+            }}
+          />
+        </div>
+      </form>
+      {isEditPassword && <ChangePasswordModal closeModal={closeModal} />}
+    </>
   );
 };

@@ -10,7 +10,7 @@ interface UpdateCustomerInfoProps {
   version: number;
 }
 
-export async function editCustomerEmail(
+export async function updateCustomerInfo(
   props: UpdateCustomerInfoProps,
 ): Promise<unknown> {
   try {
