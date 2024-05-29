@@ -110,7 +110,7 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
               })}
             />
             {errors?.oldPassword &&
-              AppError({ text: errors.oldPassword?.message || 'Error!' })}
+              AppError({ text: errors.oldPassword?.message ?? 'Error!' })}
           </div>
           <div className={cls.input__wrapper}>
             <Input
@@ -147,7 +147,7 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
               })}
             />
             {errors?.newPassword &&
-              AppError({ text: errors.newPassword?.message || 'Error!' })}
+              AppError({ text: errors.newPassword?.message ?? 'Error!' })}
           </div>
           <div className={cls.input__wrapper}>
             <Input
@@ -177,7 +177,7 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
               })}
             />
             {errors?.repeatPassword &&
-              AppError({ text: errors.repeatPassword?.message || 'Error!' })}
+              AppError({ text: errors.repeatPassword?.message ?? 'Error!' })}
           </div>
           <Button
             text="Confirm"

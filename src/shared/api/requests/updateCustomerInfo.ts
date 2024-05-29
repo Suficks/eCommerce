@@ -1,3 +1,4 @@
+import { Customer, ClientResponse } from '@commercetools/platform-sdk';
 import { apiRoot } from '../BuildClient';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
@@ -12,7 +13,7 @@ interface UpdateCustomerInfoProps {
 
 export async function updateCustomerInfo(
   props: UpdateCustomerInfoProps,
-): Promise<unknown> {
+): Promise<ClientResponse<Customer> | undefined> {
   try {
     const { ID, email, firstName, lastName, dateOfBirth, version } = props;
     const response = await apiRoot

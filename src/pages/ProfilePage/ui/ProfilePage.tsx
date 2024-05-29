@@ -9,21 +9,23 @@ import cls from './ProfilePage.module.scss';
 import { Footer } from '@/widgets/Footer/Footer';
 import { PersonalDataSection } from '@/pages/ProfilePage/ui/PersonalDataSection/PersonalDataSection';
 import { isLogged } from '@/shared/util/isLogged';
+import { PageIDs } from '@/app/providers/RouterConfig/RouteConfig';
 
 export const ProfilePage = () => {
-  const client: Customer = useRouteLoaderData('profile') as Customer;
+  const client = useRouteLoaderData(PageIDs.PROFILE) as Customer;
+  const isDataLoaded = !!client;
   if (!isLogged()) {
     return <Navigate to="/main" replace />;
   }
   const PersonalData = {
     username: client.firstName || '',
-    surname: client.lastName || '',
+    surname: client.lastName ?? '',
     email: client.email,
-    password: client.password || '',
-    birthdate: client.dateOfBirth || '',
+    password: client.password ?? '',
+    birthdate: client.dateOfBirth ?? '',
   };
   return (
-    { client } && (
+    { isDataLoaded } && (
       <div className={cls.wrapper}>
         <Header />
         <main className={cls.mainBlock}>

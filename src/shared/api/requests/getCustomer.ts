@@ -6,17 +6,26 @@ export async function getCustomer(ID: string): Promise<Customer | undefined> {
     const result = await apiRoot.customers().withId({ ID }).get().execute();
     return result.body;
   } catch (e) {
-    const error = e as Error;
-    if (error.message === 'Failed to fetch') {
-      throw new Error('Server error. Try again later!', {
-        cause: 'ServerError',
-      });
-    }
+    if (e instanceof Error) {
+      if (e.message === 'Failed to fetch') {
+        throw new Error('Server error. Try again later!', {
+          cause: 'ServerError',
+        });
+      }
 
-    if (error.message.includes('URI not found')) {
-      throw new Error('The user doesnt exist!', {
-        cause: 'ServerCustomerError',
-      });
+      if (e.message.includes('URI not found')) {
+        throw new Error('The user doesnt exist!', {
+          cause: 'ServerCustomerError',
+        });
+      }
+      if (e.message) {
+        throw new Error(
+          'Some error occurred while fetching customer details.',
+          {
+            cause: 'UnknownError',
+          },
+        );
+      }
     }
     return undefined;
   }

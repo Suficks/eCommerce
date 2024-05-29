@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 import { useForm } from 'react-hook-form';
 import React, { useCallback, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationErrors } from '@/shared/const/Validation';
@@ -11,10 +11,8 @@ import { SubmitData } from '@/features/Registration';
 
 import cls from './PersonalDataSection.module.scss';
 
-import { updateCustomerInfo } from '@/shared/api/requests/updateCustomerInfo';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
-import { ToastConfig } from '@/shared/const/ToastConfig';
 import { ChangePasswordModal } from '@/pages/ProfilePage/ui/ChangePasswordModal/ChangePasswordModal';
+import { UpdateCustomer } from '@/pages/ProfilePage/model/services/updateCustomer';
 
 export interface UserData {
   username: string;
@@ -51,42 +49,10 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
   const closeModal = () => {
     setIsEditPassword(false);
   };
-
-  const onSubmit = useCallback(async () => {
-    try {
-      const { id } = JSON.parse(
-        localStorage.getItem(LocalStorageKeys.USER) as string,
-      );
-      const version = Number(localStorage.getItem(LocalStorageKeys.VERSION));
-      const ProfileData = {
-        ID: id,
-        email: getValues('email'),
-        firstName: getValues('username'),
-        lastName: getValues('surname'),
-        dateOfBirth: getValues('birthdate'),
-        version,
-      };
-      const result = await updateCustomerInfo(ProfileData);
-      if (result) {
-        toast.success('Data Updated!', ToastConfig);
-      }
-    } catch (error) {
-      let errorMessage = '';
-      if (error instanceof Error) {
-        switch (error.cause) {
-          case 409: {
-            errorMessage = 'Server Error! Wrong client version.';
-            break;
-          }
-          default: {
-            errorMessage = error.message;
-            break;
-          }
-        }
-        toast.error(errorMessage, ToastConfig);
-      }
-    }
-  }, [getValues]);
+  const navigate = useNavigate();
+  const onSubmit = useCallback(() => {
+    UpdateCustomer(getValues(), setIsEdit, navigate);
+  }, [getValues, setIsEdit, navigate]);
   return (
     <>
       <form
@@ -110,7 +76,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               })}
             />
             {errors?.username &&
-              AppError({ text: errors.username?.message || 'Error!' })}
+              AppError({ text: errors.username?.message ?? 'Error!' })}
           </div>
           <div className={cls.input__wrapper}>
             <Input
@@ -127,7 +93,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               })}
             />
             {errors?.surname &&
-              AppError({ text: errors.surname?.message || 'Error!' })}
+              AppError({ text: errors.surname?.message ?? 'Error!' })}
           </div>
           <div className={cls.input__wrapper}>
             <Input
@@ -144,7 +110,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               className={errors.email && cls.invalid}
             />
             {errors?.email &&
-              AppError({ text: errors.email?.message || 'Error!' })}
+              AppError({ text: errors.email?.message ?? 'Error!' })}
           </div>
           <div className={cls.input__wrapper}>
             <Input
@@ -157,7 +123,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               })}
             />
             {errors?.birthdate &&
-              AppError({ text: errors.birthdate?.message || 'Error!' })}
+              AppError({ text: errors.birthdate?.message ?? 'Error!' })}
           </div>
         </fieldset>
         <div className={cls.button__wrapper}>

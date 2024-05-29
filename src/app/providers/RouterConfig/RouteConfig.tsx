@@ -24,6 +24,9 @@ export enum Routes {
   ROOT = '/',
   NOT_FOUND = '/*',
 }
+export enum PageIDs {
+  PROFILE = 'profile',
+}
 
 type IndexRouteObjectWithPath = Exclude<
   IndexRouteObject,

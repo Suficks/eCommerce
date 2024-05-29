@@ -34,10 +34,4 @@ export const AppPage = () => {
   );
 };
 
-export const AppRouter = createBrowserRouter([
-  {
-    path: '/',
-    element: <AppPage />,
-    children: routeConfig,
-  },
-]);
+export const AppRouter = createBrowserRouter(routeConfig); // with animations ON got errors from redirection
