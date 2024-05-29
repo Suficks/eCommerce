@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 
 import { SliderComponent } from '@/pages/CatalogPage/ui/SalesBlock/Slider';
+import noImage from '@/shared/assets/images/No-Image.webp';
 import { ProductCard } from '@/shared/ui/ProductCard/ProductCard';
 import { MathRandom } from '@/shared/util/MathRandom';
 import { ConverterPrice } from '@/shared/util/converterPrice';
@@ -18,7 +19,6 @@ export const SimilarPrompts = ({
   products,
 }: SimilarPromptsProps) => {
   const navigate = useNavigate();
-  console.log(products);
   const onHandleClick = (key: string) => () => {
     navigate(`/product/${key}`);
   };
@@ -37,7 +37,7 @@ export const SimilarPrompts = ({
             <ProductCard
               onClick={onHandleClick(key || '')}
               key={key}
-              image={images?.[0].url || ''}
+              image={images?.[0].url || noImage}
               name={name['en-GB']}
               price={ConverterPrice(regularPrice.centAmount)}
               sale={salePrice && ConverterPrice(salePrice.centAmount)}

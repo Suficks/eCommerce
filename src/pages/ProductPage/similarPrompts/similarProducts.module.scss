@@ -1,6 +1,7 @@
 .SimilarPrompts {
   position: relative;
 
+  @include flex(null, null, column, 30px);
   @include montserrat(35px, 600, 40px);
   padding: 60px 30px 80px;
 }
