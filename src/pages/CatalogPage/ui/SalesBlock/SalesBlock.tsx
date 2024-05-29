@@ -38,7 +38,7 @@ export const SalesBlock = ({
       const { category, subCategory } = await dispatch(
         getProductPath({ productKey, categoryKey }),
       ).unwrap();
-      navigate(`catalog/${category}/${subCategory}/${itemName}`);
+      navigate(`${category}/${subCategory}/${itemName}`);
     };
 
   return (
