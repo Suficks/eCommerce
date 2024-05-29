@@ -96,7 +96,7 @@ export const RegistrationFormUser = ({
           label="Email"
           className={errors.email && cls.invalid}
         />
-        {errors?.email && AppError({ text: errors.email?.message || 'Error!' })}
+        {errors?.email && AppError({ text: errors.email?.message ?? 'Error!' })}
       </div>
       <div className={cls.input__wrapper}>
         <Input
@@ -133,7 +133,7 @@ export const RegistrationFormUser = ({
           })}
         />
         {errors?.password &&
-          AppError({ text: errors.password?.message || 'Error!' })}
+          AppError({ text: errors.password?.message ?? 'Error!' })}
       </div>
       <div className={cls.input__wrapper}>
         <Input
@@ -163,7 +163,7 @@ export const RegistrationFormUser = ({
           })}
         />
         {errors?.passwordConfirm &&
-          AppError({ text: errors.passwordConfirm?.message || 'Error!' })}
+          AppError({ text: errors.passwordConfirm?.message ?? 'Error!' })}
       </div>
       <fieldset className={cls.field__wrapper}>
         <legend className={cls.field__heading}>Personal data</legend>
@@ -182,7 +182,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.username &&
-            AppError({ text: errors.username?.message || 'Error!' })}
+            AppError({ text: errors.username?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -199,7 +199,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.surname &&
-            AppError({ text: errors.surname?.message || 'Error!' })}
+            AppError({ text: errors.surname?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -212,7 +212,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.birthdate &&
-            AppError({ text: errors.birthdate?.message || 'Error!' })}
+            AppError({ text: errors.birthdate?.message ?? 'Error!' })}
         </div>
       </fieldset>
       <fieldset className={cls.field__wrapper}>
@@ -247,7 +247,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingCity &&
-            AppError({ text: errors.shippingCity?.message || 'Error!' })}
+            AppError({ text: errors.shippingCity?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -267,7 +267,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingStreet &&
-            AppError({ text: errors.shippingStreet?.message || 'Error!' })}
+            AppError({ text: errors.shippingStreet?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -285,7 +285,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingPostal &&
-            AppError({ text: errors.shippingPostal?.message || 'Error!' })}
+            AppError({ text: errors.shippingPostal?.message ?? 'Error!' })}
         </div>
         <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
           <Input
@@ -345,7 +345,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.billingCity &&
-            AppError({ text: errors.billingCity?.message || 'Error!' })}
+            AppError({ text: errors.billingCity?.message ?? 'Error!' })}
         </div>
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
@@ -364,7 +364,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.billingStreet &&
-            AppError({ text: errors.billingStreet?.message || 'Error!' })}
+            AppError({ text: errors.billingStreet?.message ?? 'Error!' })}
         </div>
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
@@ -381,7 +381,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.billingPostal &&
-            AppError({ text: errors.billingPostal?.message || 'Error!' })}
+            AppError({ text: errors.billingPostal?.message ?? 'Error!' })}
         </div>
         <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
           <Input

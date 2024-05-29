@@ -1,0 +1,26 @@
+.icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  display: none;
+}
+
+.addressCard {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.addressCard:hover{
+  .icon{
+    display: block;
+  }
+  cursor: pointer;
+}
+
+.defaultAddress{
+  background-color: $light-green;
+}
