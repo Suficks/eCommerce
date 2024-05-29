@@ -27,9 +27,9 @@ export const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductByKey('safety-razor-set');
+        // const fetchedProduct = await getProductByKey('safety-razor-set');
         // const fetchedProduct = await getProductByKey(productKey);
-        // const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
+        const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
         // const fetchedProduct = await getProductByKey('carbon-water-filter');
         setProduct(fetchedProduct);
         setLoading(false);

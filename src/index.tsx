@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import { ToastContainer } from 'react-toastify';
-import { setupStore } from './app/store/config/store';
 import { App } from './app/App';
+import { setupStore } from './app/store/config/store';
 
 const container = document.getElementById('root');
 

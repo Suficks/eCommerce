@@ -65,3 +65,30 @@
 
   color: white;
 }
+
+.modalImageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+}
+
+.modal {
+  align-self: center;
+  width: fit-content;
+}
+
+.modalImage {
+  width: 60vw;
+}
+
+.modalWrap {
+  @include flex(center, center)
+}
+
+.modalButton {
+  border-color: $green;
+  border-radius: 50%;
+
+  background-color: $green;
+}

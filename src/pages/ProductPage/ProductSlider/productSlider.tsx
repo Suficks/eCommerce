@@ -11,9 +11,10 @@ interface Image {
 
 interface ProductSliderProps {
   images: Image[];
+  onClick?: () => void;
 }
 
-export const ProductSlider = ({ images }: ProductSliderProps) => {
+export const ProductSlider = ({ images, onClick }: ProductSliderProps) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -28,7 +29,12 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
       <Slider {...settings} className={cls.productSlider}>
         {images.map((image) => (
           <div key={image.url}>
-            <Card width={330} image={image.url} className={cls.productImage} />
+            <Card
+              width={330}
+              image={image.url}
+              className={cls.productImage}
+              onClick={onClick}
+            />
           </div>
         ))}
       </Slider>
