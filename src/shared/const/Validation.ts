@@ -1,6 +1,6 @@
 import { countriesList } from './Countries';
 
-export const ValidationErrors = {
+export const ValidationMessages = {
   email: {
     required: 'Enter your email!',
     error:
@@ -54,20 +54,23 @@ export const ValidationErrors = {
   serverError: {
     error: 'The server is thinking, try again later',
   },
+  login: {
+    success: 'You have successfully logged in!',
+  },
 };
 
 const validateBirthDate = (date: string) => {
   const currentDate = new Date();
   const birthdate = new Date(date);
   if (birthdate > currentDate) {
-    return ValidationErrors.birthDate.futureAge;
+    return ValidationMessages.birthDate.futureAge;
   }
   const difference = new Date(currentDate.valueOf() - birthdate.valueOf());
   const age = Math.abs(difference.getUTCFullYear() - 1970);
   if (age > 120) {
-    return ValidationErrors.birthDate.tooOld;
+    return ValidationMessages.birthDate.tooOld;
   }
-  return age >= 13 ? true : ValidationErrors.birthDate.tooYoung;
+  return age >= 13 ? true : ValidationMessages.birthDate.tooYoung;
 };
 
 const validationConfirmPassword = (
@@ -75,7 +78,7 @@ const validationConfirmPassword = (
   realPassword: string,
 ) => {
   return (
-    realPassword === confirmPassword || ValidationErrors.passwordConfirm.error
+    realPassword === confirmPassword || ValidationMessages.passwordConfirm.error
   );
 };
 

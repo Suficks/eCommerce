@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
-import { Validation, ValidationErrors } from '@/shared/const/Validation';
+import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { SubmitData } from '@/features/Registration';
 
@@ -68,10 +68,10 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               className={`${errors.username && cls.invalid}`}
               type="text"
               register={register('username', {
-                required: ValidationErrors.username.required,
+                required: ValidationMessages.username.required,
                 pattern: {
                   value: Validation.username,
-                  message: ValidationErrors.username.error,
+                  message: ValidationMessages.username.error,
                 },
               })}
             />
@@ -85,10 +85,10 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               className={errors.surname && cls.invalid}
               type="text"
               register={register('surname', {
-                required: ValidationErrors.surname.required,
+                required: ValidationMessages.surname.required,
                 pattern: {
                   value: Validation.surname,
-                  message: ValidationErrors.surname.error,
+                  message: ValidationMessages.surname.error,
                 },
               })}
             />
@@ -98,10 +98,10 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
           <div className={cls.input__wrapper}>
             <Input
               register={register('email', {
-                required: ValidationErrors.email.required,
+                required: ValidationMessages.email.required,
                 pattern: {
                   value: Validation.email,
-                  message: ValidationErrors.email.error,
+                  message: ValidationMessages.email.error,
                 },
               })}
               type="text"
@@ -118,7 +118,7 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
               className={`${errors.birthdate && cls.invalid} ${cls.input__date}`}
               type="date"
               register={register('birthdate', {
-                required: ValidationErrors.birthDate.required,
+                required: ValidationMessages.birthDate.required,
                 validate: (value) => Validation.birthDate(value),
               })}
             />

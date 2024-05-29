@@ -10,7 +10,7 @@ import {
   constructClientRefresh,
 } from '../BuildClient';
 import { tokenInstance } from '../tokenHandlers';
-import { ValidationErrors } from '@/shared/const/Validation';
+import { ValidationMessages } from '@/shared/const/Validation';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
 const MERGE_ANONYMOUS_CART_WITH_USER_CART = 'MergeWithExistingCustomerCart';
@@ -109,9 +109,9 @@ export async function loginUser(
       .get({ queryArgs: { where: `email="${email}"` } })
       .execute();
     if (checkEmailExistResponse.body.count === 0) {
-      throw new Error(ValidationErrors.email.notExist);
+      throw new Error(ValidationMessages.email.notExist);
     } else if (checkEmailExistResponse.body.count === 1) {
-      throw new Error(ValidationErrors.password.wrongPassword);
+      throw new Error(ValidationMessages.password.wrongPassword);
     }
   }
   return undefined;

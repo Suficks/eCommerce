@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
-import { Validation, ValidationErrors } from '@/shared/const/Validation';
+import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
 import { SubmitData } from '@/features/Registration';
@@ -82,10 +82,10 @@ export const RegistrationFormUser = ({
       <div className={cls.input__wrapper}>
         <Input
           register={register('email', {
-            required: ValidationErrors.email.required,
+            required: ValidationMessages.email.required,
             pattern: {
               value: Validation.email,
-              message: ValidationErrors.email.error,
+              message: ValidationMessages.email.error,
             },
             onChange: () => {
               setServerError('');
@@ -120,10 +120,10 @@ export const RegistrationFormUser = ({
             )
           }
           register={register('password', {
-            required: ValidationErrors.password.required,
+            required: ValidationMessages.password.required,
             pattern: {
               value: Validation.password,
-              message: ValidationErrors.password.error,
+              message: ValidationMessages.password.error,
             },
             onChange: () => {
               setValue('passwordConfirm', `${getValues('passwordConfirm')}`, {
@@ -157,7 +157,7 @@ export const RegistrationFormUser = ({
             )
           }
           register={register('passwordConfirm', {
-            required: ValidationErrors.password.required,
+            required: ValidationMessages.password.required,
             validate: (value) =>
               Validation.confirmPassword(value, getValues('password')),
           })}
@@ -174,10 +174,10 @@ export const RegistrationFormUser = ({
             className={errors.username && cls.invalid}
             type="text"
             register={register('username', {
-              required: ValidationErrors.username.required,
+              required: ValidationMessages.username.required,
               pattern: {
                 value: Validation.username,
-                message: ValidationErrors.username.error,
+                message: ValidationMessages.username.error,
               },
             })}
           />
@@ -191,10 +191,10 @@ export const RegistrationFormUser = ({
             className={errors.surname && cls.invalid}
             type="text"
             register={register('surname', {
-              required: ValidationErrors.surname.required,
+              required: ValidationMessages.surname.required,
               pattern: {
                 value: Validation.surname,
-                message: ValidationErrors.surname.error,
+                message: ValidationMessages.surname.error,
               },
             })}
           />
@@ -207,7 +207,7 @@ export const RegistrationFormUser = ({
             className={`${errors.birthdate && cls.invalid} ${cls.input__date}`}
             type="date"
             register={register('birthdate', {
-              required: ValidationErrors.birthDate.required,
+              required: ValidationMessages.birthDate.required,
               validate: (value) => Validation.birthDate(value),
             })}
           />
@@ -236,10 +236,10 @@ export const RegistrationFormUser = ({
             className={errors.shippingCity && cls.invalid}
             type="text"
             register={register('shippingCity', {
-              required: ValidationErrors.shipping.city.required,
+              required: ValidationMessages.shipping.city.required,
               pattern: {
                 value: Validation.city,
-                message: ValidationErrors.shipping.city.error,
+                message: ValidationMessages.shipping.city.error,
               },
               onChange: async () => {
                 handleBilling();
@@ -256,10 +256,10 @@ export const RegistrationFormUser = ({
             className={errors.shippingStreet && cls.invalid}
             type="text"
             register={register('shippingStreet', {
-              required: ValidationErrors.shipping.street.required,
+              required: ValidationMessages.shipping.street.required,
               pattern: {
                 value: Validation.street,
-                message: ValidationErrors.shipping.street.error,
+                message: ValidationMessages.shipping.street.error,
               },
               onChange: async () => {
                 handleBilling();
@@ -276,7 +276,7 @@ export const RegistrationFormUser = ({
             className={errors.shippingPostal && cls.invalid}
             type="text"
             register={register('shippingPostal', {
-              required: ValidationErrors.shipping.postal.required,
+              required: ValidationMessages.shipping.postal.required,
               validate: (value) =>
                 Validation.postalCode(value, getValues('shippingCountry')),
               onChange: async () => {
@@ -337,10 +337,10 @@ export const RegistrationFormUser = ({
             className={errors.billingCity && cls.invalid}
             type="text"
             register={register('billingCity', {
-              required: ValidationErrors.shipping.city.required,
+              required: ValidationMessages.shipping.city.required,
               pattern: {
                 value: Validation.city,
-                message: ValidationErrors.shipping.city.error,
+                message: ValidationMessages.shipping.city.error,
               },
             })}
           />
@@ -356,10 +356,10 @@ export const RegistrationFormUser = ({
             className={errors.billingStreet && cls.invalid}
             type="text"
             register={register('billingStreet', {
-              required: ValidationErrors.shipping.street.required,
+              required: ValidationMessages.shipping.street.required,
               pattern: {
                 value: Validation.street,
-                message: ValidationErrors.shipping.street.error,
+                message: ValidationMessages.shipping.street.error,
               },
             })}
           />
@@ -375,7 +375,7 @@ export const RegistrationFormUser = ({
             className={errors.billingPostal && cls.invalid}
             type="text"
             register={register('billingPostal', {
-              required: ValidationErrors.shipping.postal.required,
+              required: ValidationMessages.shipping.postal.required,
               validate: (value) =>
                 Validation.postalCode(value, getValues('billingCountry')),
             })}
