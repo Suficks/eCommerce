@@ -79,3 +79,15 @@
 
   @include montserrat(28px, 400, 28px);
 }
+
+.prices {
+  @include flex(flex-start, center, row, 15px)
+}
+
+.discounted {
+  color: $gray;
+  text-decoration: line-through;
+
+  @include montserrat(20px, 400, 20px);
+
+}

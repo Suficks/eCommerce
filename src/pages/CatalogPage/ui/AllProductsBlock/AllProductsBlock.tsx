@@ -64,16 +64,27 @@ export const AllProductsBlock = ({
         {products.map((item) => {
           const { masterVariant } = item;
           const { images, prices = [] } = masterVariant;
-          const { value: regularPrice } = prices[0];
+          const { value: regularPrice, discounted } = prices[0];
 
           return (
             <div key={item.id} className={cls.product}>
               <img src={images?.[0]?.url || ''} alt="" className={cls.image} />
               <p className={cls.name}>{item.name['en-GB']}</p>
               <div className={cls.price_wrapper}>
-                <p className={cls.price}>
-                  {ConverterPrice(regularPrice.centAmount)}
-                </p>
+                {discounted ? (
+                  <div className={cls.prices}>
+                    <p className={cls.price}>
+                      {ConverterPrice(discounted?.value.centAmount)}
+                    </p>
+                    <p className={cls.discounted}>
+                      {ConverterPrice(regularPrice?.centAmount)}
+                    </p>
+                  </div>
+                ) : (
+                  <p className={cls.price}>
+                    {ConverterPrice(regularPrice?.centAmount)}
+                  </p>
+                )}
                 <p className={cls.reviews}>186 Reviews</p>
               </div>
               <Button
