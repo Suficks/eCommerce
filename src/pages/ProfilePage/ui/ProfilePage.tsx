@@ -18,14 +18,14 @@ export const ProfilePage = () => {
     return <Navigate to="/main" replace />;
   }
   const PersonalData = {
-    username: client.firstName || '',
+    username: client.firstName ?? '',
     surname: client.lastName ?? '',
-    email: client.email,
+    email: client.email ?? '',
     password: client.password ?? '',
     birthdate: client.dateOfBirth ?? '',
   };
   return (
-    { isDataLoaded } && (
+    isDataLoaded && (
       <div className={cls.wrapper}>
         <Header />
         <main className={cls.mainBlock}>
