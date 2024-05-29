@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { SubmitData } from '../types/Registration';
+import { SubmitData } from '@/features/Registration';
 import { signUpUser } from '@/shared/api';
 
 export const signUpUserThunk = createAsyncThunk(

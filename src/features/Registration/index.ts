@@ -1,2 +1,2 @@
 export { RegistrationFormUser } from './ui/RegistrationFormUser';
-export { SubmitData } from './model/types/Registration';
+export type { SubmitData } from './model/types/Registration';

@@ -86,7 +86,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       {errors?.email && (
         <AppError
           className={cls.error}
-          text={errors.email?.message || 'Error!'}
+          text={errors.email?.message ?? 'Error!'}
         />
       )}
       <Input
@@ -116,7 +116,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       />
       {errors?.password && (
         <AppError
-          text={errors.password?.message || 'Error!'}
+          text={errors.password?.message ?? 'Error!'}
           className={cls.error}
         />
       )}
