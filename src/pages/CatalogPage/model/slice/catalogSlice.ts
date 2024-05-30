@@ -15,9 +15,9 @@ const initialState: CatalogSchema = {
   search: '',
   sort: { field: 'default', order: '' },
   brands: new Set(),
-  filters: [],
-  maxPrice: '500',
-  minPrice: '0',
+  selectedBrands: [],
+  maxPrice: '',
+  minPrice: '',
 };
 
 export const catalogSlice = createSlice({
@@ -32,13 +32,17 @@ export const catalogSlice = createSlice({
       state.sort.order = SortMapper[payload].order;
     },
     setFilters: (state, { payload }: PayloadAction<string>) => {
-      state.filters.push(payload);
+      state.selectedBrands.push(payload);
     },
     removeSelectedFilter: (state, { payload }: PayloadAction<string>) => {
-      state.filters = state.filters.filter((item) => item !== payload);
+      state.selectedBrands = state.selectedBrands.filter(
+        (item) => item !== payload,
+      );
     },
     removeAllFilters: (state) => {
-      state.filters = [];
+      state.selectedBrands = [];
+      state.maxPrice = '';
+      state.minPrice = '';
     },
     changeMaxPrice: (state, { payload }: PayloadAction<string>) => {
       state.maxPrice = payload;

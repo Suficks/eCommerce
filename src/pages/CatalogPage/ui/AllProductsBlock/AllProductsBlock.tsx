@@ -33,15 +33,15 @@ export const AllProductsBlock = ({
   const {
     search,
     brandAttributes,
-    filters,
+    selectedBrands,
     maxPrice,
     minPrice,
     onChangeOrder,
     onChangeSearch,
     onChangeMaxPrice,
     onChangeMinPrice,
-    onAddFilters,
-    onRemoveSelectedFilter,
+    onAddBrands,
+    onRemoveSelectedBrands,
     onRemoveAllFilters,
   } = useCatalogFilters();
 
@@ -73,10 +73,10 @@ export const AllProductsBlock = ({
       />
       <div className={cls.filtersWrap}>
         <FilterItem
-          filters={filters}
+          selectedBrands={selectedBrands}
           brandAttributes={brandAttributes}
-          onAddFilters={onAddFilters}
-          onRemoveSelectedFilter={onRemoveSelectedFilter}
+          onAddBrands={onAddBrands}
+          onRemoveSelectedBrands={onRemoveSelectedBrands}
           title="Brand"
         />
         <FilterItem
@@ -86,13 +86,16 @@ export const AllProductsBlock = ({
           onChangeMinPrice={onChangeMinPrice}
           title="Price"
           range
-          onAddFilters={onAddFilters}
-          onRemoveSelectedFilter={onRemoveSelectedFilter}
         />
       </div>
       <SelectedItems
-        attributes={filters}
-        onRemoveSelectedFilter={onRemoveSelectedFilter}
+        attributes={selectedBrands}
+        onRemoveSelectedFilter={onRemoveSelectedBrands}
+        onRemoveAllFilters={onRemoveAllFilters}
+      />
+      <SelectedItems
+        minPrice={minPrice}
+        maxPrice={maxPrice}
         onRemoveAllFilters={onRemoveAllFilters}
       />
       <CatalogSortSelector onChangeOrder={onChangeOrder} />

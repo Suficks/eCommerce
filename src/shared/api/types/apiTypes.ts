@@ -38,8 +38,8 @@ export type FilterSortSearchParameters = {
     selectedCategoryId: string;
     attributesToFilter: { name: string };
   };
-  // minSelectedPrice: number;
-  // maxSelectedPrice: number;
+  minPrice: number;
+  maxPrice: number;
   attributesToSort?: CatalogSortObject;
   search?: string;
 };

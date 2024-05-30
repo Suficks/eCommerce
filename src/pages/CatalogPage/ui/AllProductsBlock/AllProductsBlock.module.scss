@@ -108,3 +108,9 @@
   @include montserrat(20px, 400, 20px);
 }
 
+
+@media screen and (width <= 530px) {
+  .filtersWrap {
+    @include flex(center, flex-start, column, 0)
+  } 
+} 

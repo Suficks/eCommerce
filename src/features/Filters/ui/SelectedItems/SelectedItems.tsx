@@ -1,33 +1,46 @@
 import { RxCrossCircled, RxReload } from 'react-icons/rx';
 import classNames from 'classnames';
-import cls from './SelectedItems.module.scss';
 import { Icon } from '@/shared/ui/Icon/Icon';
+import cls from './SelectedItems.module.scss';
 
 interface SelectedItemsProps {
   className?: string;
   attributes?: string[];
-  onRemoveSelectedFilter: (value: string) => void;
-  onRemoveAllFilters: () => void;
+  maxPrice?: string;
+  minPrice?: string;
+  onRemoveSelectedFilter?: (value: string) => void;
+  onRemoveAllFilters?: () => void;
 }
 
 export const SelectedItems = (props: SelectedItemsProps) => {
   const {
     className,
     attributes = [],
+    maxPrice,
+    minPrice,
     onRemoveSelectedFilter,
     onRemoveAllFilters,
   } = props;
 
   const deleteSelectedItems = (value: string) => () => {
-    onRemoveSelectedFilter(value);
+    onRemoveSelectedFilter?.(value);
   };
 
   const deleteAllSelectedItems = () => {
-    onRemoveAllFilters();
+    onRemoveAllFilters?.();
   };
 
   return (
     <div className={classNames(cls.selected_items, className)}>
+      {(maxPrice || minPrice) && (
+        <div className={cls.selected}>
+          {`Price: ${minPrice || 0} - ${maxPrice || 500}$`}
+          <RxCrossCircled
+            className={cls.icon}
+            onClick={deleteAllSelectedItems}
+          />
+        </div>
+      )}
       {Array.from(attributes).map((item) => (
         <div key={item} className={cls.selected}>
           {item}
@@ -38,16 +51,17 @@ export const SelectedItems = (props: SelectedItemsProps) => {
           />
         </div>
       ))}
-      {Array.from(attributes).length !== 0 && (
-        <div className={classNames(cls.selected, cls.reset)}>
-          Reset all
-          <Icon
-            Svg={RxReload}
-            className={cls.icon}
-            onClick={deleteAllSelectedItems}
-          />
-        </div>
-      )}
+      {Array.from(attributes).length !== 0 ||
+        (maxPrice && (
+          <div className={classNames(cls.selected, cls.reset)}>
+            Reset all
+            <Icon
+              Svg={RxReload}
+              className={cls.icon}
+              onClick={deleteAllSelectedItems}
+            />
+          </div>
+        ))}
     </div>
   );
 };

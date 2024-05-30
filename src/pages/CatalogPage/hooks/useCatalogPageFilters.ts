@@ -4,7 +4,7 @@ import { searchFilterSort } from '../model/services/searchFilerSort';
 import { catalogActions } from '../model/slice/catalogSlice';
 import {
   getCatalogPageBrands,
-  getCatalogPageFilters,
+  getCatalogPageSelectedBrands,
   getCatalogPageMaxPrice,
   getCatalogPageMinPrice,
   getCatalogPageSearch,
@@ -17,7 +17,7 @@ export const useCatalogFilters = () => {
   const dispatch = useAppDispatch();
   const search = useAppSelector(getCatalogPageSearch);
   const brandAttributes = useAppSelector(getCatalogPageBrands);
-  const filters = useAppSelector(getCatalogPageFilters);
+  const selectedBrands = useAppSelector(getCatalogPageSelectedBrands);
   const maxPrice = useAppSelector(getCatalogPageMaxPrice);
   const minPrice = useAppSelector(getCatalogPageMinPrice);
 
@@ -53,14 +53,13 @@ export const useCatalogFilters = () => {
 
   const onChangeMinPrice = useCallback(
     (newPrice: string) => {
-      console.log(newPrice);
       dispatch(catalogActions.changeMinPrice(newPrice));
       fetchData();
     },
     [dispatch, fetchData],
   );
 
-  const onAddFilters = useCallback(
+  const onAddBrands = useCallback(
     (value: string) => {
       dispatch(catalogActions.setFilters(value));
       fetchData();
@@ -68,7 +67,7 @@ export const useCatalogFilters = () => {
     [dispatch, fetchData],
   );
 
-  const onRemoveSelectedFilter = useCallback(
+  const onRemoveSelectedBrands = useCallback(
     (value: string) => {
       dispatch(catalogActions.removeSelectedFilter(value));
       fetchData();
@@ -84,13 +83,13 @@ export const useCatalogFilters = () => {
   return {
     brandAttributes,
     search,
-    filters,
+    selectedBrands,
     maxPrice,
     minPrice,
     onChangeOrder,
     onChangeSearch,
-    onAddFilters,
-    onRemoveSelectedFilter,
+    onAddBrands,
+    onRemoveSelectedBrands,
     onRemoveAllFilters,
     onChangeMaxPrice,
     onChangeMinPrice,

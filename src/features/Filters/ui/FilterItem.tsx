@@ -11,11 +11,11 @@ import cls from './FilterItem.module.scss';
 interface FilterItemProps {
   className?: string;
   title: string;
-  onAddFilters: (value: string) => void;
-  onRemoveSelectedFilter: (value: string) => void;
+  onAddBrands?: (value: string) => void;
+  onRemoveSelectedBrands?: (value: string) => void;
   onChangeMaxPrice?: (newPrice: string) => void;
   onChangeMinPrice?: (newPrice: string) => void;
-  filters?: string[];
+  selectedBrands?: string[];
   brandAttributes?: Set<string>;
   range?: boolean;
   maxPrice?: string;
@@ -27,12 +27,12 @@ export const FilterItem = (props: FilterItemProps) => {
     className,
     title,
     range,
-    filters,
+    selectedBrands,
     maxPrice,
     minPrice,
     brandAttributes,
-    onAddFilters,
-    onRemoveSelectedFilter,
+    onAddBrands,
+    onRemoveSelectedBrands,
     onChangeMaxPrice,
     onChangeMinPrice,
   } = props;
@@ -51,10 +51,23 @@ export const FilterItem = (props: FilterItemProps) => {
 
   const onInputChange = (value: string, checked?: boolean) => {
     if (checked) {
-      onAddFilters(value);
+      onAddBrands?.(value);
     } else {
-      onRemoveSelectedFilter(value);
+      onRemoveSelectedBrands?.(value);
     }
+  };
+
+  const onChangeRange = (values: number[]) => {
+    onChangeMinPrice?.(String(values[0]));
+    onChangeMaxPrice?.(String(values[1]));
+  };
+
+  const onChangeMinPriceHandler = (value: string) => {
+    onChangeMinPrice?.(value);
+  };
+
+  const onChangeMaxPriceHandler = (value: string) => {
+    onChangeMaxPrice?.(value);
   };
 
   useEffect(() => {
@@ -63,15 +76,6 @@ export const FilterItem = (props: FilterItemProps) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  const onChangeMinPriceHandler = (value: string) => {
-    console.log(value);
-    onChangeMinPrice?.(value);
-  };
-
-  const onChangeMaxPriceHandler = (value: string) => {
-    onChangeMaxPrice?.(value);
-  };
 
   const brandContent = () => {
     if (brandAttributes) {
@@ -85,7 +89,7 @@ export const FilterItem = (props: FilterItemProps) => {
                 classNameLabel={cls.label}
                 type="checkbox"
                 value={attribute}
-                checked={filters?.includes(attribute)}
+                checked={selectedBrands?.includes(attribute)}
               />
             </li>
           ))}
@@ -100,14 +104,18 @@ export const FilterItem = (props: FilterItemProps) => {
       <div className={cls.price_filters}>
         <Input
           max="500"
+          value={minPrice}
           onChange={onChangeMinPriceHandler}
           maxLength={3}
+          placeholder="0"
           type="number"
           icon={<BsCurrencyDollar className={cls.dollar} />}
         />
         <span>-</span>
         <Input
           max="500"
+          value={maxPrice}
+          placeholder="500"
           onChange={onChangeMaxPriceHandler}
           maxLength={3}
           type="number"
@@ -116,8 +124,7 @@ export const FilterItem = (props: FilterItemProps) => {
       </div>
       <RangeSlider
         value={[minPrice, maxPrice]}
-        onThumbDragStart={onChangeMinPriceHandler}
-        defaultValue={[0, 500]}
+        onInput={onChangeRange}
         min={0}
         max={500}
         className={cls.rangeInput}
