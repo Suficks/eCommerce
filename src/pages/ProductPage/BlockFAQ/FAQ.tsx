@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Plant from '@/shared/assets/images/Group 17.webp';
 import cls from './blockFAQ.module.scss';
 
 interface FAQItem {
@@ -86,6 +87,7 @@ export const FAQ: React.FC = () => {
           )}
         </div>
       ))}
+      <img src={Plant} alt="" className={cls.plantImage} />
     </section>
   );
 };
