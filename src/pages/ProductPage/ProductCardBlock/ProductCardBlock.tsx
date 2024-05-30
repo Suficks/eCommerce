@@ -69,12 +69,18 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
     <div className={cls.productCard}>
       <img src={plantFromProductPage} alt="" className={cls.plantImage} />
       {imagesArr.length === 1 ? (
-        <Card
-          width={300}
-          image={imagesArr[0].url}
-          className={cls.imageCard}
+        <button
+          type="button"
           onClick={() => handleShow(0)}
-        />
+          className={cls.imageWrapperButton}
+          aria-label="close"
+        >
+          <Card
+            width={300}
+            image={imagesArr[0].url}
+            className={cls.imageCard}
+          />
+        </button>
       ) : (
         <ProductSlider images={imagesArr} onClick={() => handleShow(0)} />
       )}

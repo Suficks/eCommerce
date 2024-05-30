@@ -4,10 +4,6 @@
 
   flex-wrap: wrap;
 
-  .imageCard {
-    margin-left: 35px;
-  }
-
   .productData {
     @include flex(null, null, column, 30px);
     z-index: 1;
@@ -103,5 +99,16 @@
 
       stroke: $green;
     }
+  }
+}
+
+.imageWrapperButton {
+  margin-left: 35px;
+  padding: 0;
+  border: none;
+  border-radius: 13px;
+
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
   }
 }
