@@ -1,11 +1,10 @@
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { RxCrossCircled, RxReload } from 'react-icons/rx';
+import { BsCurrencyDollar } from 'react-icons/bs';
+import RangeSlider from 'react-range-slider-input';
+import 'react-range-slider-input/dist/style.css';
 
 import { Input } from '@/shared/ui/input/input';
-import { useAppSelector } from '@/shared/hooks/redux';
-import { getCatalogPageBrands } from '@/pages/CatalogPage';
-import { Icon } from '@/shared/ui/Icon/Icon';
 
 import cls from './FilterItem.module.scss';
 
@@ -14,20 +13,31 @@ interface FilterItemProps {
   title: string;
   onAddFilters: (value: string) => void;
   onRemoveSelectedFilter: (value: string) => void;
-  onRemoveAllFilters: () => void;
+  onChangeMaxPrice?: (newPrice: string) => void;
+  onChangeMinPrice?: (newPrice: string) => void;
+  filters?: string[];
+  brandAttributes?: Set<string>;
+  range?: boolean;
+  maxPrice?: string;
+  minPrice?: string;
 }
 
-export const FilterItem = ({
-  className,
-  title,
-  onAddFilters,
-  onRemoveSelectedFilter,
-  onRemoveAllFilters,
-}: FilterItemProps) => {
+export const FilterItem = (props: FilterItemProps) => {
+  const {
+    className,
+    title,
+    range,
+    filters,
+    maxPrice,
+    minPrice,
+    brandAttributes,
+    onAddFilters,
+    onRemoveSelectedFilter,
+    onChangeMaxPrice,
+    onChangeMinPrice,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const ref = useRef<HTMLDivElement>(null);
-  const brandAttributes = useAppSelector(getCatalogPageBrands);
 
   const onFilterItemClick = () => {
     setIsOpen((prev) => !prev);
@@ -41,22 +51,10 @@ export const FilterItem = ({
 
   const onInputChange = (value: string, checked?: boolean) => {
     if (checked) {
-      setSelectedItems((prev) => [...prev, value]);
       onAddFilters(value);
     } else {
-      setSelectedItems((prev) => prev.filter((item) => item !== value));
       onRemoveSelectedFilter(value);
     }
-  };
-
-  const deleteSelectedItems = (value: string) => () => {
-    setSelectedItems((prev) => prev.filter((item) => item !== value));
-    onRemoveSelectedFilter(value);
-  };
-
-  const deleteAllSelectedItems = () => {
-    setSelectedItems([]);
-    onRemoveAllFilters();
   };
 
   useEffect(() => {
@@ -66,69 +64,94 @@ export const FilterItem = ({
     };
   }, []);
 
-  return (
-    <>
-      <div ref={ref} className={classNames(cls.FilterItem, className)}>
-        <button
-          type="button"
-          onClick={onFilterItemClick}
-          className={cls.header}
-        >
-          {title}
-          <span
-            className={classNames(
-              cls.arrow,
-              isOpen ? cls.arrow_up : cls.arrow_down,
-            )}
-          />
-        </button>
-        <div className={classNames(cls.content, { [cls.hidden]: !isOpen })}>
-          <div className={cls.list}>
-            {Array.from(brandAttributes).map((attribute) => (
-              <li key={attribute} className={cls.item}>
-                <Input
-                  onChange={onInputChange}
-                  label={attribute}
-                  classNameLabel={cls.label}
-                  type="checkbox"
-                  value={attribute}
-                />
-              </li>
-            ))}
-          </div>
-          <button
-            aria-label="close"
-            type="button"
-            className={cls.close}
-            onClick={onFilterItemClick}
-          >
-            <span />
-            <span />
-          </button>
+  const onChangeMinPriceHandler = (value: string) => {
+    console.log(value);
+    onChangeMinPrice?.(value);
+  };
+
+  const onChangeMaxPriceHandler = (value: string) => {
+    onChangeMaxPrice?.(value);
+  };
+
+  const brandContent = () => {
+    if (brandAttributes) {
+      return (
+        <div className={cls.list}>
+          {Array.from(brandAttributes).map((attribute) => (
+            <li key={attribute} className={cls.item}>
+              <Input
+                onChange={onInputChange}
+                label={attribute}
+                classNameLabel={cls.label}
+                type="checkbox"
+                value={attribute}
+                checked={filters?.includes(attribute)}
+              />
+            </li>
+          ))}
         </div>
+      );
+    }
+    return null;
+  };
+
+  const priceContent = () => (
+    <>
+      <div className={cls.price_filters}>
+        <Input
+          max="500"
+          onChange={onChangeMinPriceHandler}
+          maxLength={3}
+          type="number"
+          icon={<BsCurrencyDollar className={cls.dollar} />}
+        />
+        <span>-</span>
+        <Input
+          max="500"
+          onChange={onChangeMaxPriceHandler}
+          maxLength={3}
+          type="number"
+          icon={<BsCurrencyDollar className={cls.dollar} />}
+        />
       </div>
-      <div className={cls.selected_items}>
-        {selectedItems.map((item) => (
-          <div key={item} className={cls.selected}>
-            {item}
-            <Icon
-              Svg={RxCrossCircled}
-              className={cls.icon}
-              onClick={deleteSelectedItems(item)}
-            />
-          </div>
-        ))}
-        {selectedItems.length !== 0 && (
-          <div className={classNames(cls.selected, cls.reset)}>
-            Reset all
-            <Icon
-              Svg={RxReload}
-              className={cls.icon}
-              onClick={deleteAllSelectedItems}
-            />
-          </div>
-        )}
+      <RangeSlider
+        value={[minPrice, maxPrice]}
+        onThumbDragStart={onChangeMinPriceHandler}
+        defaultValue={[0, 500]}
+        min={0}
+        max={500}
+        className={cls.rangeInput}
+      />
+      <div className={cls.selectedRange}>
+        <p className={cls.min}>{minPrice}</p>
+        <p className={cls.max}>{maxPrice}</p>
       </div>
     </>
+  );
+
+  return (
+    <div ref={ref} className={classNames(cls.FilterItem, className)}>
+      <button type="button" onClick={onFilterItemClick} className={cls.header}>
+        {title}
+        <span
+          className={classNames(
+            cls.arrow,
+            isOpen ? cls.arrow_up : cls.arrow_down,
+          )}
+        />
+      </button>
+      <div className={classNames(cls.content, { [cls.hidden]: !isOpen })}>
+        {range ? priceContent() : brandContent()}
+        <button
+          aria-label="close"
+          type="button"
+          className={cls.close}
+          onClick={onFilterItemClick}
+        >
+          <span />
+          <span />
+        </button>
+      </div>
+    </div>
   );
 };

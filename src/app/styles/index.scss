@@ -56,3 +56,13 @@ input[type="checkbox"] {
   background: #fff;
   cursor: pointer;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+}
+
+.range-slider .range-slider__thumb,
+.range-slider .range-slider__range {
+  background: $green;
+}

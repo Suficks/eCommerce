@@ -16,6 +16,8 @@ const initialState: CatalogSchema = {
   sort: { field: 'default', order: '' },
   brands: new Set(),
   filters: [],
+  maxPrice: '500',
+  minPrice: '0',
 };
 
 export const catalogSlice = createSlice({
@@ -37,6 +39,12 @@ export const catalogSlice = createSlice({
     },
     removeAllFilters: (state) => {
       state.filters = [];
+    },
+    changeMaxPrice: (state, { payload }: PayloadAction<string>) => {
+      state.maxPrice = payload;
+    },
+    changeMinPrice: (state, { payload }: PayloadAction<string>) => {
+      state.minPrice = payload;
     },
   },
   extraReducers: (builder) => {

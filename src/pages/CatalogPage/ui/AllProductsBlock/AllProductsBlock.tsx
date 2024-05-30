@@ -14,6 +14,7 @@ import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelect
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { CatalogSortSelector } from '@/features/CatalogSortSelector';
 import { FilterItem } from '@/features/Filters/ui/FilterItem';
+import { SelectedItems } from '@/features/Filters';
 
 import cls from './AllProductsBlock.module.scss';
 
@@ -31,8 +32,14 @@ export const AllProductsBlock = ({
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const {
     search,
+    brandAttributes,
+    filters,
+    maxPrice,
+    minPrice,
     onChangeOrder,
     onChangeSearch,
+    onChangeMaxPrice,
+    onChangeMinPrice,
     onAddFilters,
     onRemoveSelectedFilter,
     onRemoveAllFilters,
@@ -64,13 +71,30 @@ export const AllProductsBlock = ({
         placeholder="Поиск"
         icon={<CiSearch className={cls.icon} />}
       />
-      <FilterItem
-        onAddFilters={onAddFilters}
+      <div className={cls.filtersWrap}>
+        <FilterItem
+          filters={filters}
+          brandAttributes={brandAttributes}
+          onAddFilters={onAddFilters}
+          onRemoveSelectedFilter={onRemoveSelectedFilter}
+          title="Brand"
+        />
+        <FilterItem
+          maxPrice={maxPrice}
+          minPrice={minPrice}
+          onChangeMaxPrice={onChangeMaxPrice}
+          onChangeMinPrice={onChangeMinPrice}
+          title="Price"
+          range
+          onAddFilters={onAddFilters}
+          onRemoveSelectedFilter={onRemoveSelectedFilter}
+        />
+      </div>
+      <SelectedItems
+        attributes={filters}
         onRemoveSelectedFilter={onRemoveSelectedFilter}
         onRemoveAllFilters={onRemoveAllFilters}
-        title="Brand"
       />
-      {/* <FilterItem title="Price" /> */}
       <CatalogSortSelector onChangeOrder={onChangeOrder} />
       <div className={cls.products}>
         {products.length === 0 && (

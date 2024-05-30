@@ -14,3 +14,7 @@ export const getCatalogPageSort = (state: StateSchema) =>
   state.catalog?.sort ?? '';
 export const getCatalogPageFilters = (state: StateSchema) =>
   state.catalog?.filters ?? '';
+export const getCatalogPageMaxPrice = (state: StateSchema) =>
+  state.catalog?.maxPrice ?? '';
+export const getCatalogPageMinPrice = (state: StateSchema) =>
+  state.catalog?.minPrice ?? '';

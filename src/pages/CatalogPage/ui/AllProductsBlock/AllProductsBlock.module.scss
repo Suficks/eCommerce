@@ -2,6 +2,33 @@
   padding: 60px 30px 80px;
 }
 
+.input {
+  margin-bottom: 30px;
+  padding: 10px 10px 10px 40px;
+  border: 3px solid $gray;
+  border-radius: 12px;
+
+  transition: 0.3s ease;
+  
+  &:focus {
+    padding: 10px 10px 10px 40px;
+  }
+
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 15%;
+  left: 10px;
+}
+
+.filtersWrap {
+  @include flex(flex-start, center, row, 40px)
+} 
+
 .image {
   height: 360px;
   margin-bottom: 20px;
@@ -63,28 +90,6 @@
   text-decoration: underline;
 }
 
-.input {
-  margin-bottom: 30px;
-  padding: 10px 10px 10px 40px;
-  border: 3px solid $gray;
-  border-radius: 12px;
-
-  transition: 0.3s ease;
-  
-  &:focus {
-    padding: 10px 10px 10px 40px;
-  }
-
-  &:hover {
-    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
-  }
-}
-
-.icon {
-  position: absolute;
-  top: 15%;
-  left: 10px;
-}
 
 .no_products {
   text-align: center;
@@ -102,3 +107,4 @@
 
   @include montserrat(20px, 400, 20px);
 }
+
