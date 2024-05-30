@@ -1,14 +1,14 @@
 import { LegacyRef, createRef } from 'react';
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
+import { loadClient } from '@/features/Loader/LoadClient';
+import { CatalogPage } from '@/pages/CatalogPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage/MainPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
 import { ProductPage } from '@/pages/ProductPage/ProductPage';
-import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
-import { loadClient } from '@/features/Loader/LoadClient';
-import { CatalogPage } from '@/pages/CatalogPage';
+import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -17,7 +17,6 @@ export enum Routes {
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
   PRODUCT_ID = ':productId',
-  PRODUCT_KEY = '/product/:productKey',
   PRODUCT = '/product',
   PROFILE = '/profile',
   CART = '/cart',

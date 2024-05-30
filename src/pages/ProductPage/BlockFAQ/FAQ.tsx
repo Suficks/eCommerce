@@ -73,14 +73,6 @@ export const FAQ: React.FC = () => {
     <section className={cls.faqWrapper}>
       <div className={cls.faqTitle}>FAQ</div>
       {faqItems.map((item) => (
-        // <Card
-        //   transparent
-        //   key={item.id}
-        //   className={cls.faqItem}
-        //   text={item.question}
-        //   clickable
-        //   onClick={() => toggleAnswer(item.id)}
-        // >
         <div key={item.id} className={cls.faqItem}>
           <button
             type="button"
