@@ -21,9 +21,17 @@ interface ProductCardBlockProps {
 export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
   const [show, setShow] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const {
+    masterData: {
+      current: {
+        masterVariant: { images = [], prices = [] },
+        name,
+        description,
+      },
+    },
+  } = product;
   const imagesArr =
-    product?.masterData?.current?.masterVariant?.images?.length === 0 ||
-    product?.masterData?.current?.masterVariant?.images === undefined
+    images.length === 0
       ? [
           {
             url: noImage,
@@ -33,20 +41,14 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
             },
           },
         ]
-      : product?.masterData?.current?.masterVariant?.images;
+      : images;
 
-  const price: string = product?.masterData.current.masterVariant.prices
-    ? ConverterPrice(
-        product?.masterData.current.masterVariant.prices[0].value.centAmount,
-      )
+  const price = prices.length ? ConverterPrice(prices[0].value.centAmount) : '';
+  const discountedPrice = prices[0]?.discounted?.value.centAmount
+    ? ConverterPrice(prices[0].discounted.value.centAmount)
     : '';
-  const discountedPrice = product?.masterData.current.masterVariant.prices?.[0]
-    .discounted?.value.centAmount
-    ? ConverterPrice(
-        product.masterData.current.masterVariant.prices[0].discounted.value
-          .centAmount,
-      )
-    : '';
+  const productName = name['en-GB'];
+  const productDescription = description?.['en-GB'];
   const handleShow = (index: number) => {
     setCurrentImageIndex(index);
     setShow(true);
@@ -77,12 +79,8 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
         <ProductSlider images={imagesArr} onClick={() => handleShow(0)} />
       )}
       <div className={cls.productData}>
-        <h1 className={cls.productName}>
-          {product.masterData.current.name['en-GB']}
-        </h1>
-        <p className={cls.productDescription}>
-          {product.masterData.current.description?.['en-GB']}
-        </p>
+        <h1 className={cls.productName}>{productName}</h1>
+        <p className={cls.productDescription}>{productDescription}</p>
         <div className={cls.priceWrapper}>
           <span
             className={classNames(cls.price, {
