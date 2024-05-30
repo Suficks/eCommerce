@@ -119,7 +119,7 @@ export const FilterItem = ({
           </div>
         ))}
         {selectedItems.length !== 0 && (
-          <div className={cls.selected}>
+          <div className={classNames(cls.selected, cls.reset)}>
             Reset all
             <Icon
               Svg={RxReload}
