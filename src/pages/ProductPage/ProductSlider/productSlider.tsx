@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { Card } from '../Card/Card';
+import { Card } from '../../../shared/ui/Card/Card';
 import cls from './productSlider.module.scss';
 
 interface Image {
@@ -11,9 +11,10 @@ interface Image {
 
 interface ProductSliderProps {
   images: Image[];
+  onClick?: () => void;
 }
 
-export const ProductSlider = ({ images }: ProductSliderProps) => {
+export const ProductSlider = ({ images, onClick }: ProductSliderProps) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -21,8 +22,6 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     focusOnSelect: true,
-    centerMode: true,
-    centerPadding: '6px 0px 0px',
   };
 
   return (
@@ -30,7 +29,12 @@ export const ProductSlider = ({ images }: ProductSliderProps) => {
       <Slider {...settings} className={cls.productSlider}>
         {images.map((image) => (
           <div key={image.url}>
-            <Card width={330} image={image.url} className={cls.productImage} />
+            <Card
+              width={330}
+              image={image.url}
+              className={cls.productImage}
+              onClick={onClick}
+            />
           </div>
         ))}
       </Slider>

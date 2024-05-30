@@ -1,64 +1,58 @@
 /* eslint-disable no-restricted-globals */
-import { Product } from '@commercetools/platform-sdk';
-import classNames from 'classnames';
+import { Product, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 
 import { getProductByKey } from '@/shared/api/requests/getProduct';
-import noImage from '@/shared/assets/images/No-Image.webp';
-import plantFromProductPage from '@/shared/assets/images/plantFromProductPage.png';
-import { Card } from '@/shared/ui/Card/Card';
-import { ProductSlider } from '@/shared/ui/ProductSlider/productSlider';
-import { Button } from '@/shared/ui/button/button';
+import { getProductsByCategory } from '@/shared/api/requests/getProductsByCategory';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
 import { FAQ } from './BlockFAQ/FAQ';
+import { ProductCardBlock } from './ProductCardBlock/ProductCardBlock';
 import cls from './ProductPage.module.scss';
+import { SimilarPrompts } from './similarPrompts/similarPrompts';
 
 export const ProductPage = () => {
-  const [product, setProduct] = useState<Product | null>(null);
-  // const productTypeId = product?.productType.id;
-  const imagesArr =
-    product?.masterData?.current?.masterVariant?.images?.length === 0 ||
-    product?.masterData?.current?.masterVariant?.images === undefined
-      ? [
-          {
-            url: noImage,
-            dimensions: {
-              w: 1665,
-              h: 2048,
-            },
-          },
-        ]
-      : product?.masterData?.current?.masterVariant?.images;
+  // const { productKey } = useParams();
+  // console.log(productKey);
+  // if (!productKey) {
+  //   throw new Error("can't find the product key");
+  // }
+  const [product, setProduct] = useState<Product>({} as Product);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>(
+    [],
+  );
 
-  const price: string = product?.masterData.current.masterVariant.prices
-    ? ConverterPrice(
-        product?.masterData.current.masterVariant.prices[0].value.centAmount,
-      )
-    : '';
-  const discountedPrice = product?.masterData.current.masterVariant.prices?.[0]
-    .discounted?.value.centAmount
-    ? ConverterPrice(
-        product.masterData.current.masterVariant.prices[0].discounted.value
-          .centAmount,
-      )
-    : '';
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductByKey('safety-razor-set');
-        // const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
+        // const fetchedProduct = await getProductByKey('safety-razor-set');
+        // const fetchedProduct = await getProductByKey(productKey);
+        const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
         // const fetchedProduct = await getProductByKey('carbon-water-filter');
         setProduct(fetchedProduct);
+        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       }
     };
-
     fetchProduct();
   }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (product.productType) {
+        const fetchedProducts = await getProductsByCategory(
+          product.masterData.current.categories[0].id,
+        );
+        setSimilarProducts(fetchedProducts);
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [product]);
+
   return (
     <div className={cls.wrapper}>
       <Header />
@@ -70,61 +64,15 @@ export const ProductPage = () => {
         &larr;
       </button>
       <main className={cls.main}>
-        <div className={cls.productCard}>
-          <img src={plantFromProductPage} alt="" className={cls.plantImage} />
-          {imagesArr.length === 1 ? (
-            <Card
-              width={300}
-              image={imagesArr[0].url}
-              className={cls.imageCard}
-            />
-          ) : (
-            <ProductSlider images={imagesArr} />
-          )}
-          {product ? (
-            <div className={cls.productData}>
-              <h1 className={cls.productName}>
-                {product.masterData.current.name['en-GB']}
-              </h1>
-              <p className={cls.productDescription}>
-                {product.masterData.current.description?.['en-GB']}
-              </p>
-              <div className={cls.priceWrapper}>
-                <span
-                  className={classNames(cls.price, {
-                    [cls.crossed]: discountedPrice,
-                  })}
-                >
-                  {price}
-                </span>
-                <span
-                  className={classNames(
-                    {
-                      [cls.price]: discountedPrice,
-                    },
-                    cls.discountedPrice,
-                  )}
-                >
-                  {discountedPrice}
-                </span>
-              </div>
-              <div className={cls.buttonsWrapper}>
-                <Button text="Buy now" className={cls.buyButtons} />
-                <Button
-                  text="Add to card"
-                  transparent
-                  className={cls.buyButtons}
-                />
-              </div>
-            </div>
-          ) : (
-            <LoadingAnimation />
-          )}
-        </div>
-        <section className={cls.SimilarPrompts}>
-          <div className={cls.similarTitle}>Similar Prompts</div>
-        </section>
-        <FAQ />
+        {loading ? (
+          <LoadingAnimation />
+        ) : (
+          <>
+            <ProductCardBlock product={product} />
+            <SimilarPrompts products={similarProducts} />
+            <FAQ />
+          </>
+        )}
       </main>
       <Footer />
     </div>
