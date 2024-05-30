@@ -16,7 +16,6 @@ interface CardProps {
   clickable?: boolean;
   text?: string;
   alt?: string;
-  onClick?: () => void;
 }
 
 export const Card = ({
@@ -30,12 +29,9 @@ export const Card = ({
   alt,
   children,
   transparent = false,
-  onClick,
 }: CardProps) => {
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <div
       className={classNames(
         cls.Card,
         { [cls.transparent]: transparent, [cls.hovered]: clickable },
@@ -55,6 +51,6 @@ export const Card = ({
         </p>
       )}
       {children}
-    </button>
+    </div>
   );
 };

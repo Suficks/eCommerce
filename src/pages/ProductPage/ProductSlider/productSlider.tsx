@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { Card } from '../../../shared/ui/Card/Card';
+import { Card } from '@/shared/ui/Card/Card';
 import cls from './productSlider.module.scss';
 
 interface Image {
@@ -29,12 +29,18 @@ export const ProductSlider = ({ images, onClick }: ProductSliderProps) => {
       <Slider {...settings} className={cls.productSlider}>
         {images.map((image) => (
           <div key={image.url}>
-            <Card
-              width={330}
-              image={image.url}
-              className={cls.productImage}
+            <button
+              type="button"
               onClick={onClick}
-            />
+              className={cls.imageWrapperButton}
+              aria-label="close"
+            >
+              <Card
+                width={330}
+                image={image.url}
+                className={cls.productImage}
+              />
+            </button>
           </div>
         ))}
       </Slider>
