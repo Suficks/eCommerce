@@ -69,11 +69,11 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
     <div className={cls.productCard}>
       <img src={plantFromProductPage} alt="" className={cls.plantImage} />
       {imagesArr.length === 1 ? (
-        // eslint-disable-next-line jsx-a11y/control-has-associated-label
         <button
           type="button"
           onClick={() => handleShow(0)}
           className={cls.imageWrapperButton}
+          aria-label="close"
         >
           <Card
             width={300}

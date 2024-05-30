@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -34,6 +33,7 @@ export const ProductSlider = ({ images, onClick }: ProductSliderProps) => {
               type="button"
               onClick={onClick}
               className={cls.imageWrapperButton}
+              aria-label="close"
             >
               <Card
                 width={330}
