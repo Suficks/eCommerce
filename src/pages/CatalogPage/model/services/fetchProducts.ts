@@ -18,6 +18,7 @@ export const fetchProducts = createAsyncThunk<
     products: [],
     discountProducts: [],
     categories: [],
+    brands: new Set<string>(),
   };
   try {
     const products = await getAllProducts(listSettings);
@@ -31,6 +32,14 @@ export const fetchProducts = createAsyncThunk<
     data.categories = categories;
     data.products = products;
     data.discountProducts = discountProducts;
+
+    products.forEach((item) => {
+      data.brands.add(
+        item.masterVariant.attributes?.find(
+          (attribute) => attribute.name === 'brand',
+        )?.value,
+      );
+    });
 
     return data;
   } catch (e) {

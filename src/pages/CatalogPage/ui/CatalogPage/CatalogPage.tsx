@@ -37,7 +37,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchProducts({ currentOffset: 6, itemPerPage: 6 }));
+      await dispatch(fetchProducts({ currentOffset: 0, itemPerPage: 80 }));
     };
     fetchData();
   }, [dispatch]);

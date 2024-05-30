@@ -1,3 +1,11 @@
+export {
+  getCatalogPageIsLoading,
+  getCatalogPageProducts,
+  getCatalogPageCategories,
+  getCatalogPageBrands,
+  getCatalogPageSearch,
+  getCatalogPageSort,
+} from './model/selectors/catalogPageSelectors';
 export type {
   ParentCategoryName,
   ItemsCategoryName,

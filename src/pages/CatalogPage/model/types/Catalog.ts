@@ -23,6 +23,7 @@ export interface CatalogPageData {
   products: ProductProjection[];
   discountProducts: ProductProjection[];
   categories: CategoryCustom[];
+  brands: Set<string>;
 }
 
 export type SortFields = 'price' | 'name.en-GB' | 'default';
@@ -42,4 +43,6 @@ export interface CatalogSchema {
 
   search: string;
   sort: CatalogSortObject;
+  filters: string[];
+  brands: Set<string>;
 }

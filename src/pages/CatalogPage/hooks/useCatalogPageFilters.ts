@@ -33,6 +33,27 @@ export const useCatalogFilters = () => {
     [dispatch, fetchData],
   );
 
+  const onAddFilters = useCallback(
+    (value: string) => {
+      dispatch(catalogActions.setFilters(value));
+      fetchData();
+    },
+    [dispatch, fetchData],
+  );
+
+  const onRemoveSelectedFilter = useCallback(
+    (value: string) => {
+      dispatch(catalogActions.removeSelectedFilter(value));
+      fetchData();
+    },
+    [dispatch, fetchData],
+  );
+
+  const onRemoveAllFilters = useCallback(() => {
+    dispatch(catalogActions.removeAllFilters());
+    fetchData();
+  }, [dispatch, fetchData]);
+
   return {
     // view,
     // sort,
@@ -42,6 +63,9 @@ export const useCatalogFilters = () => {
     // onChangeSort,
     onChangeOrder,
     onChangeSearch,
+    onAddFilters,
+    onRemoveSelectedFilter,
+    onRemoveAllFilters,
     // onChangeType,
   };
 };

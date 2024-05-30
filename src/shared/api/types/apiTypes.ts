@@ -33,7 +33,11 @@ export type CategoryCustom = {
 };
 
 export type FilterSortSearchParameters = {
-  // selectedFiltersList: string[];
+  selectedFiltersList: string[];
+  categoryType: {
+    selectedCategoryId: string;
+    attributesToFilter: { name: string };
+  };
   // minSelectedPrice: number;
   // maxSelectedPrice: number;
   attributesToSort?: CatalogSortObject;

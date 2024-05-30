@@ -13,6 +13,7 @@ import { Input } from '@/shared/ui/input/input';
 import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { CatalogSortSelector } from '@/features/CatalogSortSelector';
+import { FilterItem } from '@/features/Filters/ui/FilterItem';
 
 import cls from './AllProductsBlock.module.scss';
 
@@ -28,7 +29,14 @@ export const AllProductsBlock = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
-  const { search, onChangeOrder, onChangeSearch } = useCatalogFilters();
+  const {
+    search,
+    onChangeOrder,
+    onChangeSearch,
+    onAddFilters,
+    onRemoveSelectedFilter,
+    onRemoveAllFilters,
+  } = useCatalogFilters();
 
   if (isLoading) {
     return <LoadingAnimation />;
@@ -56,10 +64,17 @@ export const AllProductsBlock = ({
         placeholder="Поиск"
         icon={<CiSearch className={cls.icon} />}
       />
+      <FilterItem
+        onAddFilters={onAddFilters}
+        onRemoveSelectedFilter={onRemoveSelectedFilter}
+        onRemoveAllFilters={onRemoveAllFilters}
+        title="Brand"
+      />
+      {/* <FilterItem title="Price" /> */}
       <CatalogSortSelector onChangeOrder={onChangeOrder} />
       <div className={cls.products}>
         {products.length === 0 && (
-          <div className={cls.no_products}>Продукты не найдены</div>
+          <div className={cls.no_products}>Products not found</div>
         )}
         {products.map((item) => {
           const { masterVariant } = item;
@@ -87,6 +102,7 @@ export const AllProductsBlock = ({
                 )}
                 <p className={cls.reviews}>186 Reviews</p>
               </div>
+              <p className={cls.description}>{item.description?.['en-GB']}</p>
               <Button
                 onClick={handleOnClick(
                   item.productType.id,

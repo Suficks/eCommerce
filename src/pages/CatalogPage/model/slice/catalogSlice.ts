@@ -14,6 +14,8 @@ const initialState: CatalogSchema = {
   categories: [],
   search: '',
   sort: { field: 'default', order: '' },
+  brands: new Set(),
+  filters: [],
 };
 
 export const catalogSlice = createSlice({
@@ -26,6 +28,15 @@ export const catalogSlice = createSlice({
     setOrder: (state, { payload }: PayloadAction<SortingConsts>) => {
       state.sort.field = SortMapper[payload].field;
       state.sort.order = SortMapper[payload].order;
+    },
+    setFilters: (state, { payload }: PayloadAction<string>) => {
+      state.filters.push(payload);
+    },
+    removeSelectedFilter: (state, { payload }: PayloadAction<string>) => {
+      state.filters = state.filters.filter((item) => item !== payload);
+    },
+    removeAllFilters: (state) => {
+      state.filters = [];
     },
   },
   extraReducers: (builder) => {
@@ -40,6 +51,7 @@ export const catalogSlice = createSlice({
           state.products = payload.products;
           state.discountProducts = payload.discountProducts;
           state.categories = payload.categories;
+          state.brands = payload.brands;
         },
       )
       .addCase(fetchProducts.rejected, (state) => {

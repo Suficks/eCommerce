@@ -3,6 +3,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import {
   getCatalogPageSort,
   getCatalogPageSearch,
+  getCatalogPageFilters,
 } from '../selectors/catalogPageSelectors';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
@@ -15,12 +16,19 @@ export const searchFilterSort = createAsyncThunk<
 >('catalog/searchFilterSort', async (_, { rejectWithValue, getState }) => {
   const search = getCatalogPageSearch(getState());
   const sort = getCatalogPageSort(getState());
+  const filters = getCatalogPageFilters(getState());
 
   try {
-    const result = await getFilterSortSearchProducts(
-      { search, attributesToSort: sort },
-      6,
-    );
+    const result = await getFilterSortSearchProducts({
+      search,
+      attributesToSort: sort,
+      selectedFiltersList: filters,
+      categoryType: {
+        attributesToFilter: {
+          name: 'brand',
+        },
+      },
+    });
 
     return result;
   } catch (e) {

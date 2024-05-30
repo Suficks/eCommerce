@@ -13,7 +13,7 @@ interface InputProps {
   register?: UseFormRegisterReturn<string>;
   classNameLabel?: string;
   icon?: ReactElement;
-  onChange?: (value: string) => void;
+  onChange?: (value: string, checked?: boolean) => void;
 }
 
 export const Input = ({
@@ -28,7 +28,7 @@ export const Input = ({
   classNameLabel,
 }: InputProps) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e.target.value);
+    onChange?.(e.target.value, e.target.checked);
   };
 
   return (

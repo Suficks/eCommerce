@@ -1,5 +1,5 @@
 .CatalogSortSelector {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 
   @include flex(flex-start, center, row, 40px);
 }
@@ -21,8 +21,4 @@
   &:hover {
     box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
   }
-}
-
-.selectWrap {
-  margin-bottom: 20px;
 }
