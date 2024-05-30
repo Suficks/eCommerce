@@ -70,37 +70,62 @@
 }
 
 .modal {
+  position: relative;
+
   align-self: center;
   width: fit-content;
 }
 
 .modalImage {
   width: 60vw;
+
+  @media (width <=700px) {
+    width: 85vw;
+  }
 }
 
 .modalWrap {
   @include flex(center, center)
 }
 
-.modalButton {
+.modalButtonNext {
+  top: 10px;
+  left: 60px;
+}
+
+.modalButtonPrev {
+  top: 10px;
+  left: 10px;
+}
+
+.modalButtonPrev,
+.modalButtonNext {
+  position: absolute;
+
   padding: 10px;
   border-color: $green;
   border-radius: 50%;
 
-  background-color: $green;
+  background-color: white;
+
+  svg * {
+
+    stroke: $green;
+  }
 
   &:hover,
   &:active {
     border-color: $green !important;
 
-    background-color: white !important;
+    background-color: $green !important;
 
     svg * {
 
-      stroke: $green;
+      stroke: white;
     }
   }
 }
+
 
 .imageWrapperButton {
   margin-left: 35px;

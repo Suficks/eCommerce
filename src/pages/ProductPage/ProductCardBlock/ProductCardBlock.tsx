@@ -125,26 +125,26 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>Product Image</Modal.Title>
+          <BootstrapButton
+            onClick={handlePrevImage}
+            className={cls.modalButtonPrev}
+          >
+            <PrevButton />
+          </BootstrapButton>
+          <BootstrapButton
+            onClick={handleNextImage}
+            className={cls.modalButtonNext}
+          >
+            <NextButton />
+          </BootstrapButton>
         </Modal.Header>
         <Modal.Body>
           <div className={cls.modalImageContainer}>
-            <BootstrapButton
-              onClick={handlePrevImage}
-              className={cls.modalButton}
-            >
-              <PrevButton />
-            </BootstrapButton>
             <img
               src={imagesArr[currentImageIndex].url}
               alt="Product"
               className={cls.modalImage}
             />
-            <BootstrapButton
-              onClick={handleNextImage}
-              className={cls.modalButton}
-            >
-              <NextButton />
-            </BootstrapButton>
           </div>
         </Modal.Body>
       </Modal>
