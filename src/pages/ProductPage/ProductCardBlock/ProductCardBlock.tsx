@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { Button as BootstrapButton, Modal } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import { ProductSlider } from '@/pages/ProductPage/ProductSlider/productSlider';
 import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
@@ -107,7 +109,9 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
           </span>
         </div>
         <div className={cls.buttonsWrapper}>
-          <Button text="Buy now" className={cls.buyButtons} />
+          <NavLink to={Routes.CART} className={cls.linkAsButton}>
+            Buy now
+          </NavLink>
           <Button text="Add to card" transparent className={cls.buyButtons} />
         </div>
       </div>

@@ -83,7 +83,7 @@ export const FAQ: React.FC = () => {
             {item.question}
           </button>
           {openId === item.id && (
-            <p className={cls.faqItemAnswer}>{item.answer}</p>
+            <div className={cls.faqItemAnswer}>{item.answer}</div>
           )}
         </div>
       ))}
