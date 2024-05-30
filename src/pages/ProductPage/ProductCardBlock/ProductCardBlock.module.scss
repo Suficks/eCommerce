@@ -87,8 +87,21 @@
 }
 
 .modalButton {
+  padding: 10px;
   border-color: $green;
   border-radius: 50%;
 
   background-color: $green;
+
+  &:hover,
+  &:active {
+    border-color: $green !important;
+
+    background-color: white !important;
+
+    svg * {
+
+      stroke: $green;
+    }
+  }
 }
