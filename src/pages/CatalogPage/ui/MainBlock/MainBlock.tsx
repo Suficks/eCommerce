@@ -17,11 +17,7 @@ export const MainBlock = ({ className, categories }: MainBlockProps) => {
     <section className={classNames(cls.MainBlock, className)}>
       <ul className={cls.list}>
         {categories.map(({ parent }) => (
-          <AppLink
-            to={`/catalog/${parent.path}`}
-            key={parent.id}
-            className={cls.item}
-          >
+          <AppLink to={`${parent.path}`} key={parent.id} className={cls.item}>
             {parent.name}
           </AppLink>
         ))}

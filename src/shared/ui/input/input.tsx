@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
+
 import cls from './input.module.scss';
 
 interface InputProps {
@@ -12,6 +13,7 @@ interface InputProps {
   register?: UseFormRegisterReturn<string>;
   classNameLabel?: string;
   icon?: ReactElement;
+  onChange?: (value: string, checked?: boolean) => void;
 }
 
 export const Input = ({
@@ -22,12 +24,18 @@ export const Input = ({
   type,
   register,
   icon,
+  onChange,
   classNameLabel,
 }: InputProps) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e.target.value, e.target.checked);
+  };
+
   return (
     <label className={classNames(cls.label, classNameLabel)}>
       {label}
       <input
+        onChange={onChangeHandler}
         className={classNames(cls.input, className)}
         placeholder={placeholder}
         value={value}

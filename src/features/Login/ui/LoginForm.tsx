@@ -2,17 +2,18 @@ import { memo, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { loginThunk } from '../model/services/loginThunk';
-import { Validation, ValidationErrors } from '@/shared/const/Validation';
-import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
+import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
 import cls from './LoginForm.module.scss';
+import { ToastConfig } from '@/shared/const/ToastConfig';
 
 export interface LoginFormProps {
   className?: string;
@@ -20,25 +21,23 @@ export interface LoginFormProps {
 }
 
 const emailOptions = {
-  required: ValidationErrors.email.required,
+  required: ValidationMessages.email.required,
   pattern: {
     value: Validation.email,
-    message: ValidationErrors.email.error,
+    message: ValidationMessages.email.error,
   },
 };
 
 const passwordOptions = {
-  required: ValidationErrors.password.required,
+  required: ValidationMessages.password.required,
   pattern: {
     value: Validation.password,
-    message: ValidationErrors.password.error,
+    message: ValidationMessages.password.error,
   },
 };
 
 export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.loginForm);
-  const [error, setError] = useState('');
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
 
   const {
@@ -53,16 +52,13 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       const values = getValues();
       const result = await dispatch(loginThunk(values)).unwrap();
       if (result && onSuccess) {
+        toast.success(ValidationMessages.login.success, ToastConfig);
         onSuccess();
       }
     } catch (e) {
-      setError(e as string);
+      toast.error(e as string, ToastConfig);
     }
   }, [dispatch, getValues, onSuccess]);
-
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
 
   return (
     <form className={classNames(cls.form, className)}>
@@ -74,10 +70,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         </AppLink>
       </div>
       <Input
-        register={register('email', {
-          ...emailOptions,
-          onChange: () => setError(''),
-        })}
+        register={register('email', emailOptions)}
         placeholder="example@google.com"
         type="text"
         label="Email"
@@ -90,10 +83,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
         />
       )}
       <Input
-        register={register('password', {
-          ...passwordOptions,
-          onChange: () => setError(''),
-        })}
+        register={register('password', passwordOptions)}
         placeholder="Strongpassword21"
         label="Password"
         type={inputType}
@@ -120,7 +110,6 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
           className={cls.error}
         />
       )}
-      {error && <AppError text={error} className={cls.error} />}
       <Button
         text="Login"
         className={cls.button}

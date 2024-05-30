@@ -10,9 +10,11 @@ import cls from './LoginPage.module.scss';
 
 export const LoginPage = memo(() => {
   const navigate = useNavigate();
+
   if (isLogged()) {
     return <Navigate to="/main" replace />;
   }
+
   return (
     <main className={cls.loginPage}>
       <div className={cls.background} />

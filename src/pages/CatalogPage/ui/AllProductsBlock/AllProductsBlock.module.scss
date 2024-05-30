@@ -2,10 +2,6 @@
   padding: 60px 30px 80px;
 }
 
-.title {
-  margin-bottom: 80px;
-}
-
 .image {
   height: 360px;
   margin-bottom: 20px;
@@ -32,6 +28,12 @@
   display: flex;
   flex-direction: column;
   max-width: 360px;
+
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .price {
@@ -43,10 +45,60 @@
 
   @include flex(space-between, center, row);
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.description {
+  display: -webkit-box;
+  margin-bottom: 30px;  
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  @include montserrat(20px, 400, 24px);
 }
 
 .reviews {
   @include montserrat(20px, 400, 24px);
   text-decoration: underline;
+}
+
+.input {
+  margin-bottom: 30px;
+  padding: 10px 10px 10px 40px;
+  border: 3px solid $gray;
+  border-radius: 12px;
+
+  transition: 0.3s ease;
+  
+  &:focus {
+    padding: 10px 10px 10px 40px;
+  }
+
+  &:hover {
+    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 15%;
+  left: 10px;
+}
+
+.no_products {
+  text-align: center;
+
+  @include montserrat(28px, 400, 28px);
+}
+
+.prices {
+  @include flex(flex-start, center, row, 15px)
+}
+
+.discounted {
+  color: $gray;
+  text-decoration: line-through;
+
+  @include montserrat(20px, 400, 20px);
 }

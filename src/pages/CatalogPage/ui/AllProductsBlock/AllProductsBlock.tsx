@@ -1,14 +1,19 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router';
+import { CiSearch } from 'react-icons/ci';
 
-import { getCategoryById, getProductTypeById } from '@/shared/api';
 import { Title } from '@/shared/ui/Title/Title';
 import { ConverterPrice } from '@/shared/util/converterPrice';
-import { MathRandom } from '@/shared/util/MathRandom';
 import { Button } from '@/shared/ui/button/button';
-import { SliderArrowPrev } from '@/shared/ui/SliderArrows/SliderArrowPrev';
-import { SliderArrowNext } from '@/shared/ui/SliderArrows/SliderArrowNext';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { getProductPath } from '../../model/services/getProductPath';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
+import { Input } from '@/shared/ui/input/input';
+import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
+import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
+import { CatalogSortSelector } from '@/features/CatalogSortSelector';
+import { FilterItem } from '@/features/Filters/ui/FilterItem';
 
 import cls from './AllProductsBlock.module.scss';
 
@@ -21,19 +26,28 @@ export const AllProductsBlock = ({
   className,
   products,
 }: AllProductsBlockProps) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isLoading = useAppSelector(getCatalogPageIsLoading);
+  const {
+    search,
+    onChangeOrder,
+    onChangeSearch,
+    onAddFilters,
+    onRemoveSelectedFilter,
+    onRemoveAllFilters,
+  } = useCatalogFilters();
+
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
 
   const handleOnClick =
-    (
-      productKey: string = '',
-      categoryKey: string = '',
-      itemName: string = '',
-    ) =>
-    async () => {
-      const [{ key: category }] = await getProductTypeById(productKey);
-      const [{ key: subCategory }] = await getCategoryById(categoryKey);
-
-      navigate(`catalog/${category}/${subCategory}/${itemName}`);
+    (productKey: string, categoryKey: string, itemName: string) => async () => {
+      const { category, subCategory } = await dispatch(
+        getProductPath({ productKey, categoryKey }),
+      ).unwrap();
+      navigate(`${category}/${subCategory}/${itemName}`);
     };
 
   return (
@@ -43,28 +57,57 @@ export const AllProductsBlock = ({
         title="Explore Our Products"
         className={cls.title}
       />
+      <Input
+        value={search}
+        onChange={onChangeSearch}
+        className={cls.input}
+        placeholder="Поиск"
+        icon={<CiSearch className={cls.icon} />}
+      />
+      <FilterItem
+        onAddFilters={onAddFilters}
+        onRemoveSelectedFilter={onRemoveSelectedFilter}
+        onRemoveAllFilters={onRemoveAllFilters}
+        title="Brand"
+      />
+      {/* <FilterItem title="Price" /> */}
+      <CatalogSortSelector onChangeOrder={onChangeOrder} />
       <div className={cls.products}>
-        <SliderArrowPrev position className={cls.prev} />
+        {products.length === 0 && (
+          <div className={cls.no_products}>Products not found</div>
+        )}
         {products.map((item) => {
           const { masterVariant } = item;
           const { images, prices = [] } = masterVariant;
-          const { value: regularPrice } = prices[0];
+          const { value: regularPrice, discounted } = prices[0];
 
           return (
             <div key={item.id} className={cls.product}>
-              <img src={images?.[0].url} alt="" className={cls.image} />
+              <img src={images?.[0]?.url || ''} alt="" className={cls.image} />
               <p className={cls.name}>{item.name['en-GB']}</p>
               <div className={cls.price_wrapper}>
-                <p className={cls.price}>
-                  {ConverterPrice(regularPrice.centAmount)}
-                </p>
-                <p className={cls.reviews}>{`${MathRandom(1, 400)} Reviews`}</p>
+                {discounted ? (
+                  <div className={cls.prices}>
+                    <p className={cls.price}>
+                      {ConverterPrice(discounted?.value.centAmount)}
+                    </p>
+                    <p className={cls.discounted}>
+                      {ConverterPrice(regularPrice?.centAmount)}
+                    </p>
+                  </div>
+                ) : (
+                  <p className={cls.price}>
+                    {ConverterPrice(regularPrice?.centAmount)}
+                  </p>
+                )}
+                <p className={cls.reviews}>186 Reviews</p>
               </div>
+              <p className={cls.description}>{item.description?.['en-GB']}</p>
               <Button
                 onClick={handleOnClick(
                   item.productType.id,
                   item.categories?.[0].id,
-                  item.key,
+                  item.key || '',
                 )}
                 small
                 className={cls.button}
@@ -75,7 +118,6 @@ export const AllProductsBlock = ({
             </div>
           );
         })}
-        <SliderArrowNext position className={cls.next} />
       </div>
     </section>
   );

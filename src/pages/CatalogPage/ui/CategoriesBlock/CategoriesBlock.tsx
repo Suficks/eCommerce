@@ -37,11 +37,7 @@ export const CategoriesBlock = ({
       <div className={cls.wrapper}>
         {categories.map(({ parent }) => {
           return (
-            <AppLink
-              to={`catalog/${parent.path}`}
-              key={parent.id}
-              className={cls.link}
-            >
+            <AppLink to={`${parent.path}`} key={parent.id} className={cls.link}>
               <Card
                 clickable
                 transparent

@@ -5,7 +5,7 @@ import { AiFillEye, AiFillEyeInvisible, AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import cls from '@/pages/ProfilePage/ui/ChangePasswordModal/ChangePasswordModal.module.scss';
 import { Input } from '@/shared/ui/input/input';
-import { Validation, ValidationErrors } from '@/shared/const/Validation';
+import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Button } from '@/shared/ui/button/button';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
@@ -102,10 +102,10 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
                 )
               }
               register={register('oldPassword', {
-                required: ValidationErrors.password.required,
+                required: ValidationMessages.password.required,
                 pattern: {
                   value: Validation.password,
-                  message: ValidationErrors.password.error,
+                  message: ValidationMessages.password.error,
                 },
               })}
             />
@@ -134,10 +134,10 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
                 )
               }
               register={register('newPassword', {
-                required: ValidationErrors.password.required,
+                required: ValidationMessages.password.required,
                 pattern: {
                   value: Validation.password,
-                  message: ValidationErrors.password.error,
+                  message: ValidationMessages.password.error,
                 },
                 onChange: () => {
                   setValue('repeatPassword', `${getValues('repeatPassword')}`, {
@@ -171,7 +171,7 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
                 )
               }
               register={register('repeatPassword', {
-                required: ValidationErrors.password.required,
+                required: ValidationMessages.password.required,
                 validate: (value) =>
                   Validation.confirmPassword(value, getValues('newPassword')),
               })}
