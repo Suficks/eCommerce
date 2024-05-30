@@ -8,6 +8,7 @@ import {
   getCatalogPageMaxPrice,
   getCatalogPageMinPrice,
   getCatalogPageSearch,
+  getCatalogPageSelectedCategory,
 } from '../model/selectors/catalogPageSelectors';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { useDebounce } from '@/shared/hooks/useDebounce';
@@ -18,6 +19,7 @@ export const useCatalogFilters = () => {
   const search = useAppSelector(getCatalogPageSearch);
   const brandAttributes = useAppSelector(getCatalogPageBrands);
   const selectedBrands = useAppSelector(getCatalogPageSelectedBrands);
+  const selectedCategory = useAppSelector(getCatalogPageSelectedCategory);
   const maxPrice = useAppSelector(getCatalogPageMaxPrice);
   const minPrice = useAppSelector(getCatalogPageMinPrice);
 
@@ -46,17 +48,17 @@ export const useCatalogFilters = () => {
   const onChangeMaxPrice = useCallback(
     (newPrice: string) => {
       dispatch(catalogActions.changeMaxPrice(newPrice));
-      fetchData();
+      debouncedFetchData();
     },
-    [dispatch, fetchData],
+    [dispatch, debouncedFetchData],
   );
 
   const onChangeMinPrice = useCallback(
     (newPrice: string) => {
       dispatch(catalogActions.changeMinPrice(newPrice));
-      fetchData();
+      debouncedFetchData();
     },
-    [dispatch, fetchData],
+    [dispatch, debouncedFetchData],
   );
 
   const onAddBrands = useCallback(
@@ -80,12 +82,21 @@ export const useCatalogFilters = () => {
     fetchData();
   }, [dispatch, fetchData]);
 
+  const onChangeSelectedCategory = useCallback(
+    (id: string) => {
+      dispatch(catalogActions.setSelectedCategoryId(id));
+      fetchData();
+    },
+    [dispatch, fetchData],
+  );
+
   return {
     brandAttributes,
     search,
     selectedBrands,
     maxPrice,
     minPrice,
+    selectedCategory,
     onChangeOrder,
     onChangeSearch,
     onAddBrands,
@@ -93,5 +104,6 @@ export const useCatalogFilters = () => {
     onRemoveAllFilters,
     onChangeMaxPrice,
     onChangeMinPrice,
+    onChangeSelectedCategory,
   };
 };

@@ -4,8 +4,8 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
 import { fetchProducts } from '../services/fetchProducts';
 import { getProductPath } from '../services/getProductPath';
-import { searchFilterSort } from '../services/searchFilerSort';
 import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
+import { searchFilterSort } from '../services/searchFilerSort';
 
 const initialState: CatalogSchema = {
   isLoading: false,
@@ -18,6 +18,7 @@ const initialState: CatalogSchema = {
   selectedBrands: [],
   maxPrice: '',
   minPrice: '',
+  selectedCategoryId: '',
 };
 
 export const catalogSlice = createSlice({
@@ -33,6 +34,9 @@ export const catalogSlice = createSlice({
     },
     setFilters: (state, { payload }: PayloadAction<string>) => {
       state.selectedBrands.push(payload);
+    },
+    setSelectedCategoryId: (state, { payload }: PayloadAction<string>) => {
+      state.selectedCategoryId = payload;
     },
     removeSelectedFilter: (state, { payload }: PayloadAction<string>) => {
       state.selectedBrands = state.selectedBrands.filter(

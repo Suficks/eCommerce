@@ -6,6 +6,7 @@ import {
   getCatalogPageMaxPrice,
   getCatalogPageMinPrice,
   getCatalogPageSelectedBrands,
+  getCatalogPageSelectedCategory,
 } from '../selectors/catalogPageSelectors';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
@@ -21,6 +22,7 @@ export const searchFilterSort = createAsyncThunk<
   const selectedBrands = getCatalogPageSelectedBrands(getState());
   const maxPrice = Number(getCatalogPageMaxPrice(getState()));
   const minPrice = Number(getCatalogPageMinPrice(getState()));
+  const selectedCategoryId = getCatalogPageSelectedCategory(getState());
 
   try {
     const result = await getFilterSortSearchProducts({
@@ -28,8 +30,9 @@ export const searchFilterSort = createAsyncThunk<
       attributesToSort: sort,
       selectedFiltersList: Array.from(selectedBrands),
       categoryType: {
+        selectedCategoryId,
         attributesToFilter: {
-          name: 'brand',
+          name: selectedBrands.length !== 0 ? 'brand' : undefined,
         },
       },
       maxPrice,

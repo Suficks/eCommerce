@@ -1,6 +1,4 @@
 .CatalogSortSelector {
-  margin-bottom: 50px;
-
   @include flex(flex-start, center, row, 40px);
 }
 
@@ -19,6 +17,6 @@
   transition: 0.3s ease;
 
   &:hover {
-    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+    box-shadow: $box-shadow;
   }
 }

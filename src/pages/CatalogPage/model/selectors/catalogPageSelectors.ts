@@ -6,6 +6,8 @@ export const getCatalogPageProducts = (state: StateSchema) =>
   state.catalog?.products ?? '';
 export const getCatalogPageCategories = (state: StateSchema) =>
   state.catalog?.categories ?? '';
+export const getCatalogPageDiscountProducts = (state: StateSchema) =>
+  state.catalog?.discountProducts ?? '';
 export const getCatalogPageBrands = (state: StateSchema) =>
   state.catalog?.brands ?? '';
 export const getCatalogPageSearch = (state: StateSchema) =>
@@ -18,3 +20,5 @@ export const getCatalogPageMaxPrice = (state: StateSchema) =>
   state.catalog?.maxPrice ?? '';
 export const getCatalogPageMinPrice = (state: StateSchema) =>
   state.catalog?.minPrice ?? '';
+export const getCatalogPageSelectedCategory = (state: StateSchema) =>
+  state.catalog?.selectedCategoryId ?? '';
