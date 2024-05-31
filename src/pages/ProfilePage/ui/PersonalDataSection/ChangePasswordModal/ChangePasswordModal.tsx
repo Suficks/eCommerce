@@ -2,15 +2,14 @@ import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import { AiFillEye, AiFillEyeInvisible, AiOutlineClose } from 'react-icons/ai';
-import { toast } from 'react-toastify';
-import cls from '@/pages/ProfilePage/ui/ChangePasswordModal/ChangePasswordModal.module.scss';
+import { useNavigate } from 'react-router-dom';
+import cls from '@/pages/ProfilePage/ui/PersonalDataSection/ChangePasswordModal/ChangePasswordModal.module.scss';
 import { Input } from '@/shared/ui/input/input';
 import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Button } from '@/shared/ui/button/button';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
-import { ToastConfig } from '@/shared/const/ToastConfig';
-import { updateCustomerPassword } from '@/shared/api/requests/updatePassword';
+import { UpdatePassword } from '@/pages/ProfilePage/model/services/updatePassword';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 
 interface ChangeModalProps {
   closeModal: () => void;
@@ -32,6 +31,8 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
     mode: 'onChange',
     defaultValues: {},
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [inputOldPassType, setInputOldPassType] = useState<'password' | 'text'>(
     'password',
   );
@@ -41,32 +42,16 @@ export const ChangePasswordModal = ({ closeModal }: ChangeModalProps) => {
   const [inputRepeatPassType, setInputRepeatPassType] = useState<
     'password' | 'text'
   >('password');
-  const onSubmit = useCallback(async () => {
-    try {
-      const { id } = JSON.parse(
-        localStorage.getItem(LocalStorageKeys.USER) as string,
-      );
-      const version = Number(localStorage.getItem(LocalStorageKeys.VERSION));
-      const ProfileData = {
-        ID: id,
-        oldPassword: getValues('oldPassword'),
-        newPassword: getValues('newPassword'),
-        version,
-      };
-      const result = await updateCustomerPassword(ProfileData);
-      if (result) {
-        toast.success('Password Updated!', ToastConfig);
-        closeModal();
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message, ToastConfig);
-      }
-    }
-  }, [closeModal, getValues]);
+  const onSubmit = useCallback(() => {
+    setIsLoading(true);
+    UpdatePassword(getValues(), closeModal, navigate).then(() => {
+      setIsLoading(false);
+    });
+  }, [closeModal, getValues, navigate]);
 
   return (
     <div className={cls.modal__wrapper}>
+      {isLoading && <LoadingAnimation fullScreen />}
       <fieldset className={cls.field__wrapper}>
         <AiOutlineClose
           size={25}
