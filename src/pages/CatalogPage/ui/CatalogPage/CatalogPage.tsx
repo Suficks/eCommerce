@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { createRef, memo, useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { Header } from '@/widgets/Header/Header';
@@ -25,10 +25,15 @@ interface CatalogPageProps {
 
 export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const dispatch = useAppDispatch();
+  const ref = createRef<HTMLDivElement>();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const products = useAppSelector(getCatalogPageProducts);
   const categories = useAppSelector(getCatalogPageCategories);
   const discountProducts = useAppSelector(getCatalogPageDiscountProducts);
+
+  const scrollIntoSection = useCallback(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [ref]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,10 +54,13 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     <main className={classNames(cls.CatalogPage, {}, [className])}>
       <div className="wrapper">
         <Header />
-        <MainBlock categories={categories} />
+        <MainBlock
+          categories={categories}
+          scrollIntoSection={scrollIntoSection}
+        />
         <SalesBlock discountProducts={discountProducts} />
         <FiltersBlock categories={categories} />
-        <AllProductsBlock products={products} />
+        <AllProductsBlock products={products} ref={ref} />
         <Footer />
       </div>
     </main>
