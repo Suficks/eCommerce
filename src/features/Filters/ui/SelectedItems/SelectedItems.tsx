@@ -10,6 +10,7 @@ interface SelectedItemsProps {
   minPrice?: string;
   onRemoveSelectedFilter?: (value: string) => void;
   onRemoveAllFilters?: () => void;
+  onRemoveSelectedPrice?: () => void;
 }
 
 export const SelectedItems = (props: SelectedItemsProps) => {
@@ -20,10 +21,15 @@ export const SelectedItems = (props: SelectedItemsProps) => {
     minPrice,
     onRemoveSelectedFilter,
     onRemoveAllFilters,
+    onRemoveSelectedPrice,
   } = props;
 
   const deleteSelectedItems = (value: string) => () => {
     onRemoveSelectedFilter?.(value);
+  };
+
+  const deletePriceFilter = () => {
+    onRemoveSelectedPrice();
   };
 
   const deleteAllSelectedItems = () => {
@@ -35,10 +41,7 @@ export const SelectedItems = (props: SelectedItemsProps) => {
       {(maxPrice || minPrice) && (
         <div className={cls.selected}>
           {`Price: ${minPrice || 0} - ${maxPrice || 500}$`}
-          <RxCrossCircled
-            className={cls.icon}
-            onClick={deleteAllSelectedItems}
-          />
+          <RxCrossCircled className={cls.icon} onClick={deletePriceFilter} />
         </div>
       )}
       {Array.from(attributes).map((item) => (

@@ -13,6 +13,7 @@ interface CardProps {
   width?: number;
   green?: boolean;
   transparent?: boolean;
+  direction?: 'column' | 'row';
   clickable?: boolean;
   text?: string;
   alt?: string;
@@ -25,6 +26,7 @@ export const Card = ({
   svg,
   green,
   width,
+  direction = 'column',
   clickable = false,
   alt,
   children,
@@ -34,7 +36,11 @@ export const Card = ({
     <div
       className={classNames(
         cls.Card,
-        { [cls.transparent]: transparent, [cls.hovered]: clickable },
+        {
+          [cls.transparent]: transparent,
+          [cls.hovered]: clickable,
+          [cls.column]: direction === 'column',
+        },
         className,
       )}
       style={{ maxWidth: width }}

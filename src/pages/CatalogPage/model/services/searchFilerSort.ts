@@ -25,19 +25,22 @@ export const searchFilterSort = createAsyncThunk<
   const selectedCategoryId = getCatalogPageSelectedCategory(getState());
 
   try {
-    const result = await getFilterSortSearchProducts({
-      search,
-      attributesToSort: sort,
-      selectedFiltersList: Array.from(selectedBrands),
-      categoryType: {
-        selectedCategoryId,
-        attributesToFilter: {
-          name: selectedBrands.length !== 0 ? 'brand' : undefined,
+    const result = await getFilterSortSearchProducts(
+      {
+        search,
+        attributesToSort: sort,
+        selectedFiltersList: Array.from(selectedBrands),
+        categoryType: {
+          selectedCategoryId,
+          attributesToFilter: {
+            name: selectedBrands.length !== 0 ? 'brand' : undefined,
+          },
         },
+        maxPrice,
+        minPrice,
       },
-      maxPrice,
-      minPrice,
-    });
+      80,
+    );
 
     return result;
   } catch (e) {
