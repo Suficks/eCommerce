@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, useRouteLoaderData } from 'react-router-dom';
 import { Customer } from '@commercetools/platform-sdk';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -9,14 +8,21 @@ import cls from './ProfilePage.module.scss';
 import { Footer } from '@/widgets/Footer/Footer';
 import { PersonalDataSection } from '@/pages/ProfilePage/ui/PersonalDataSection/PersonalDataSection';
 import { isLogged } from '@/shared/util/isLogged';
+import { AddressesSection } from '@/pages/ProfilePage/ui/AddressesSection/AddressesSection';
+import { getShippingAddresses } from '@/pages/ProfilePage/model/services/getShippingAddresses';
+import { getBillingAddresses } from '@/pages/ProfilePage/model/services/getBillingAddresses';
 import { PageIDs } from '@/app/providers/RouterConfig/RouteConfig';
 
 export const ProfilePage = () => {
   const client = useRouteLoaderData(PageIDs.PROFILE) as Customer;
-  const isDataLoaded = !!client;
   if (!isLogged()) {
     return <Navigate to="/main" replace />;
   }
+  const isDataLoaded = !!client;
+  const shippingAddresses = getShippingAddresses(client) || [];
+  const { defaultShippingAddressId } = client;
+  const billingAddresses = getBillingAddresses(client) || [];
+  const { defaultBillingAddressId } = client;
   const PersonalData = {
     username: client.firstName ?? '',
     surname: client.lastName ?? '',
@@ -58,13 +64,18 @@ export const ProfilePage = () => {
               <PersonalDataSection user={PersonalData} />
             </TabPanel>
             <TabPanel>
-              <h2>Any content 2</h2>
+              <AddressesSection
+                addressesArr={shippingAddresses}
+                defaultAddress={defaultShippingAddressId || ''}
+                addressType="Shipping"
+              />
             </TabPanel>
-            <TabPanel
-              className={cls.tabPanel}
-              selectedClassName={cls.tabPanel__selected}
-            >
-              <h2>Any content 3</h2>
+            <TabPanel>
+              <AddressesSection
+                addressesArr={billingAddresses}
+                defaultAddress={defaultBillingAddressId || ''}
+                addressType="Billing"
+              />
             </TabPanel>
           </Tabs>
         </main>
