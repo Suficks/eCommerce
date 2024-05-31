@@ -38,10 +38,14 @@ export const catalogSlice = createSlice({
     setSelectedCategoryId: (state, { payload }: PayloadAction<string>) => {
       state.selectedCategoryId = payload;
     },
-    removeSelectedFilter: (state, { payload }: PayloadAction<string>) => {
+    removeSelectedBrands: (state, { payload }: PayloadAction<string>) => {
       state.selectedBrands = state.selectedBrands.filter(
         (item) => item !== payload,
       );
+    },
+    removeSelectedPrice: (state) => {
+      state.maxPrice = '';
+      state.minPrice = '';
     },
     removeAllFilters: (state) => {
       state.selectedBrands = [];

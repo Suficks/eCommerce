@@ -36,12 +36,7 @@
 }
 
 .allProducts {
-  display: block;
-  width: fit-content;
-  margin: auto;
-  margin-bottom: 20px;
-
-  text-align: center;
+  align-self: flex-start
 }
 
 .category {

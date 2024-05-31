@@ -1,11 +1,14 @@
 .AppLink{
   position: relative;
 
-  @include montserrat(20px, 500, 24px);
   color: $green;
   text-decoration: none;
 
+  cursor: pointer;
+
   transition: 0.2s ease;
+
+  @include montserrat(20px, 500, 24px);
 
   &:hover {
     color: white;

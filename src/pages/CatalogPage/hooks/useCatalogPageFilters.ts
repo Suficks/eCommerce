@@ -71,7 +71,7 @@ export const useCatalogFilters = () => {
 
   const onRemoveSelectedBrands = useCallback(
     (value: string) => {
-      dispatch(catalogActions.removeSelectedFilter(value));
+      dispatch(catalogActions.removeSelectedBrands(value));
       fetchData();
     },
     [dispatch, fetchData],
@@ -79,6 +79,11 @@ export const useCatalogFilters = () => {
 
   const onRemoveAllFilters = useCallback(() => {
     dispatch(catalogActions.removeAllFilters());
+    fetchData();
+  }, [dispatch, fetchData]);
+
+  const onRemoveSelectedPrice = useCallback(() => {
+    dispatch(catalogActions.removeSelectedPrice());
     fetchData();
   }, [dispatch, fetchData]);
 
@@ -105,5 +110,6 @@ export const useCatalogFilters = () => {
     onChangeMaxPrice,
     onChangeMinPrice,
     onChangeSelectedCategory,
+    onRemoveSelectedPrice,
   };
 };

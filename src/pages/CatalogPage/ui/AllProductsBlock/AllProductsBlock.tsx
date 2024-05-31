@@ -1,6 +1,7 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router';
+import { forwardRef } from 'react';
 
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Button } from '@/shared/ui/button/button';
@@ -16,10 +17,10 @@ interface AllProductsBlockProps {
   products: ProductProjection[];
 }
 
-export const AllProductsBlock = ({
-  className,
-  products,
-}: AllProductsBlockProps) => {
+export const AllProductsBlock = forwardRef<
+  HTMLDivElement,
+  AllProductsBlockProps
+>(({ className, products }, ref) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
@@ -36,7 +37,7 @@ export const AllProductsBlock = ({
     };
 
   return (
-    <section className={classNames(cls.AllProductsBlock, className)}>
+    <section ref={ref} className={classNames(cls.AllProductsBlock, className)}>
       <div className={cls.products}>
         {products.length === 0 && (
           <div className={cls.no_products}>Products not found</div>
@@ -86,4 +87,4 @@ export const AllProductsBlock = ({
       </div>
     </section>
   );
-};
+});

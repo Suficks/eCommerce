@@ -52,6 +52,7 @@ export const FiltersBlock = ({
     onRemoveSelectedBrands,
     onChangeSelectedCategory,
     onRemoveAllFilters,
+    onRemoveSelectedPrice,
   } = useCatalogFilters();
 
   const onHandleChangeCategory = (id: string) => () => {
@@ -66,20 +67,20 @@ export const FiltersBlock = ({
         className={cls.title}
       />
       <Icon Svg={LeafIcon} className={cls.leftLeaf} />
-      <AppLink
-        onClick={onHandleChangeCategory('')}
-        to="/catalog"
-        className={classNames(cls.link, cls.allProducts)}
-      >
-        <Card
-          clickable
-          transparent
-          className={cls.card}
-          text="All Categories"
-          image={CategoriesWithImage.All}
-        />
-      </AppLink>
       <div className={cls.wrapper}>
+        <AppLink
+          onClick={onHandleChangeCategory('')}
+          to="/catalog"
+          className={classNames(cls.link, cls.allProducts)}
+        >
+          <Card
+            clickable
+            transparent
+            className={cls.card}
+            text="All Categories"
+            image={CategoriesWithImage.All}
+          />
+        </AppLink>
         {categories.map(({ parent, items }) => {
           return (
             <div key={parent.id} className={cls.category}>
@@ -157,6 +158,7 @@ export const FiltersBlock = ({
         minPrice={minPrice}
         maxPrice={maxPrice}
         onRemoveAllFilters={onRemoveAllFilters}
+        onRemoveSelectedPrice={onRemoveSelectedPrice}
       />
       <CatalogSortSelector onChangeOrder={onChangeOrder} />
     </section>

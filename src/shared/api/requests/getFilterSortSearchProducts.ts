@@ -4,6 +4,7 @@ import { FilterSortSearchParameters } from '../types/apiTypes';
 
 export async function getFilterSortSearchProducts(
   parameters: FilterSortSearchParameters,
+  itemPerPage: number,
 ): Promise<ProductProjection[]> {
   const {
     categoryType: { attributesToFilter, selectedCategoryId },
@@ -16,10 +17,12 @@ export async function getFilterSortSearchProducts(
   const queryArgs: {
     filter: string | string[] | undefined;
     sort?: string;
+    limit: number;
     ['text.en-GB']?: string;
     fuzzy?: boolean;
   } = {
     filter: [],
+    limit: itemPerPage,
   };
   if (Array.isArray(queryArgs.filter)) {
     if (selectedCategoryId) {
