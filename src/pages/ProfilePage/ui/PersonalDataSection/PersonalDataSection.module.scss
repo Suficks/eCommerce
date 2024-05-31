@@ -54,8 +54,28 @@ input.invalid {
   flex-wrap: wrap;
   gap: 20px;
   align-items: center;
-  justify-content: center;
-  width: clamp(300px, 100%, 700px);
+  justify-content: space-between;  
+  width: 100%;
+
+  @media screen and (width <= 850px) {
+    & {
+      justify-content: center;
+    }
+  }
+}
+
+.editButtons__wrapper {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+  
+  @media screen and (width <= 850px) {
+    & {
+      justify-content: center;
+    }
+  }
 }
 
 .field__heading {

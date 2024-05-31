@@ -84,7 +84,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.PROFILE,
-    id: 'profile',
+    id: PageIDs.PROFILE,
     loader: loadClient,
     element: <ProfilePage />,
     errorElement: <NotFound additionalMessage="Some error occured!" />,
