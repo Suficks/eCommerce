@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import { Product, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import { getProductByKey } from '@/shared/api/requests/getProduct';
 import { getProductsByCategory } from '@/shared/api/requests/getProductsByCategory';
@@ -13,11 +14,10 @@ import cls from './ProductPage.module.scss';
 import { SimilarPrompts } from './similarPrompts/similarPrompts';
 
 export const ProductPage = () => {
-  // const { productKey } = useParams();
-  // console.log(productKey);
-  // if (!productKey) {
-  //   throw new Error("can't find the product key");
-  // }
+  const { productKey } = useParams();
+  if (!productKey) {
+    throw new Error("can't find the product key");
+  }
   const [product, setProduct] = useState<Product>({} as Product);
   const [loading, setLoading] = useState<boolean>(true);
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>(
@@ -27,10 +27,7 @@ export const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductByKey('safety-razor-set');
-        // const fetchedProduct = await getProductByKey(productKey);
-        // const fetchedProduct = await getProductByKey('charcoal-filter-carafe');
-        // const fetchedProduct = await getProductByKey('carbon-water-filter');
+        const fetchedProduct = await getProductByKey(productKey);
         setProduct(fetchedProduct);
         setLoading(false);
       } catch (error) {
@@ -38,7 +35,7 @@ export const ProductPage = () => {
       }
     };
     fetchProduct();
-  }, []);
+  }, [productKey]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,7 +48,8 @@ export const ProductPage = () => {
       }
     };
     fetchProducts();
-  }, [product]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={cls.wrapper}>

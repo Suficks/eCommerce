@@ -39,6 +39,10 @@
   user-select: none;
 
   @include montserrat(28px, 400, 30px);
+
+  &:hover {
+    box-shadow: $box-shadow;
+  }
 }
 
 .faqItemAnswer {
