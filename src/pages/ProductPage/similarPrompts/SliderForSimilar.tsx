@@ -7,7 +7,9 @@ import { SliderArrowPrev } from '@/shared/ui/SliderArrows/SliderArrowPrev';
 export const SliderForSimilar = ({ children }: { children: ReactNode }) => {
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 5000,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,

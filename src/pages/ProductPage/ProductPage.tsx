@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import { Product, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
+import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 import { getProductByKey } from '@/shared/api/requests/getProduct';
 import { getProductsByCategory } from '@/shared/api/requests/getProductsByCategory';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
@@ -12,9 +13,9 @@ import { FAQ } from './BlockFAQ/FAQ';
 import { ProductCardBlock } from './ProductCardBlock/ProductCardBlock';
 import cls from './ProductPage.module.scss';
 import { SimilarPrompts } from './similarPrompts/similarPrompts';
-import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 
 export const ProductPage = () => {
+  const navigate = useNavigate();
   const { productKey } = useParams();
   if (!productKey) {
     throw new Error("can't find the product key");
@@ -32,11 +33,12 @@ export const ProductPage = () => {
         setProduct(fetchedProduct);
         setLoading(false);
       } catch (error) {
+        navigate('*');
         console.error('Failed to fetch product:', error);
       }
     };
     fetchProduct();
-  }, [productKey]);
+  }, [navigate, productKey]);
 
   useEffect(() => {
     const fetchProducts = async () => {
