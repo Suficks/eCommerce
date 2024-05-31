@@ -18,6 +18,7 @@ import {
 } from '../../model/selectors/catalogPageSelectors';
 
 import cls from './CatalogPage.module.scss';
+import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 
 interface CatalogPageProps {
   className?: string;
@@ -60,6 +61,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
         />
         <SalesBlock discountProducts={discountProducts} />
         <FiltersBlock categories={categories} />
+        <Breadcrumbs />
         <AllProductsBlock products={products} ref={ref} />
         <Footer />
       </div>

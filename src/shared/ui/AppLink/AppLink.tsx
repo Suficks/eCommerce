@@ -18,6 +18,7 @@ export const AppLink = (props: AppLinkProps) => {
     <NavLink
       onClick={onClick}
       to={to}
+      end
       className={({ isActive }) =>
         classNames(
           cls.AppLink,
