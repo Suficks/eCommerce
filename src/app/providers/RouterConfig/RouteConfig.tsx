@@ -9,6 +9,7 @@ import { NotFound } from '@/pages/NotFound/NotFound';
 import { ProductPage } from '@/pages/ProductPage/ProductPage';
 import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
+import { AllProductsBlock } from '@/pages/CatalogPage/ui/AllProductsBlock/AllProductsBlock';
 
 export enum Routes {
   LOGIN = '/login',
@@ -16,8 +17,9 @@ export enum Routes {
   MAIN = '/main',
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
+  SUBCATEGORY_ID = ':categoryId/:subcategoryId',
   PRODUCT_ID = ':productId',
-  PRODUCT = '/product',
+  PRODUCT = '/catalog/:categoryId/:subcategoryId/:productId',
   PROFILE = '/profile',
   CART = '/cart',
   ABOUT = '/about',
@@ -71,19 +73,13 @@ export const routeConfig: RouteConfig[] = [
     children: [
       {
         path: Routes.CATEGORY_ID,
-        element: (
-          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
-        ),
+        element: <AllProductsBlock />,
         nodeRef: createRef<HTMLDivElement>(),
-        children: [
-          {
-            path: Routes.PRODUCT_ID,
-            element: (
-              <NotFound additionalMessage="The PRODUCT_ID page will be created during the next sprint." />
-            ),
-            nodeRef: createRef<HTMLDivElement>(),
-          },
-        ],
+      },
+      {
+        path: Routes.SUBCATEGORY_ID,
+        element: <AllProductsBlock />,
+        nodeRef: createRef<HTMLDivElement>(),
       },
     ],
   },

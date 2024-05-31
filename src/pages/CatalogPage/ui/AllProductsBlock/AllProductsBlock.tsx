@@ -7,22 +7,22 @@ import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { getProductPath } from '../../model/services/getProductPath';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
+import {
+  getCatalogPageIsLoading,
+  getCatalogPageProducts,
+} from '../../model/selectors/catalogPageSelectors';
 
 import cls from './AllProductsBlock.module.scss';
 
 interface AllProductsBlockProps {
   className?: string;
-  products: ProductProjection[];
 }
 
-export const AllProductsBlock = ({
-  className,
-  products,
-}: AllProductsBlockProps) => {
+export const AllProductsBlock = ({ className }: AllProductsBlockProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
+  const products = useAppSelector(getCatalogPageProducts); // Тут мы должны получать продукты в соответствии с линком (категория/подкатегория)
   if (isLoading) {
     return <LoadingAnimation />;
   }

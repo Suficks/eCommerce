@@ -1,6 +1,7 @@
 import { memo, useEffect } from 'react';
 import classNames from 'classnames';
 
+import { Outlet } from 'react-router-dom';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
@@ -26,7 +27,6 @@ interface CatalogPageProps {
 export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
-  const products = useAppSelector(getCatalogPageProducts);
   const categories = useAppSelector(getCatalogPageCategories);
   const discountProducts = useAppSelector(getCatalogPageDiscountProducts);
 
@@ -52,7 +52,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
         <MainBlock categories={categories} />
         <SalesBlock discountProducts={discountProducts} />
         <FiltersBlock categories={categories} />
-        <AllProductsBlock products={products} />
+        <Outlet />
         <Footer />
       </div>
     </main>
