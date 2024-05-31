@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationMessages } from '@/shared/const/Validation';
@@ -11,8 +12,9 @@ import { SubmitData } from '@/features/Registration';
 
 import cls from './PersonalDataSection.module.scss';
 
-import { ChangePasswordModal } from '@/pages/ProfilePage/ui/ChangePasswordModal/ChangePasswordModal';
+import { ChangePasswordModal } from '@/pages/ProfilePage/ui/PersonalDataSection/ChangePasswordModal/ChangePasswordModal';
 import { UpdateCustomer } from '@/pages/ProfilePage/model/services/updateCustomer';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 
 export interface UserData {
   username: string;
@@ -28,6 +30,7 @@ export interface PersonalDataProps {
 
 export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
   const { username, surname, email, password, birthdate } = user;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
     formState: { errors },
@@ -51,10 +54,14 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
   };
   const navigate = useNavigate();
   const onSubmit = useCallback(() => {
-    UpdateCustomer(getValues(), setIsEdit, navigate);
+    setIsLoading(true);
+    UpdateCustomer(getValues(), setIsEdit, navigate).then(() => {
+      setIsLoading(false);
+    });
   }, [getValues, setIsEdit, navigate]);
   return (
     <>
+      {isLoading && <LoadingAnimation fullScreen />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={classNames(cls.form, className)}
@@ -127,20 +134,22 @@ export const PersonalDataSection = ({ className, user }: PersonalDataProps) => {
           </div>
         </fieldset>
         <div className={cls.button__wrapper}>
-          {isEdit && (
+          <div className={cls.editButtons__wrapper}>
             <Button
-              text="Save"
+              text="Edit"
               className={cls.button}
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => {
+                setIsEdit(!isEdit);
+              }}
             />
-          )}
-          <Button
-            text="Edit"
-            className={cls.button}
-            onClick={() => {
-              setIsEdit(!isEdit);
-            }}
-          />
+            {isEdit && (
+              <Button
+                text="Save"
+                className={cls.button}
+                onClick={handleSubmit(onSubmit)}
+              />
+            )}
+          </div>
           <Button
             text="Change Password"
             className={cls.button}

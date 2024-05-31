@@ -1,11 +1,20 @@
+import classNames from 'classnames';
 import { Icon } from '../Icon/Icon';
 import Leaf from '@/shared/assets/images/leaf.svg';
 
 import cls from './loadingAnimation.module.scss';
 
-export const LoadingAnimation = () => {
+interface LoadingAnimationProps {
+  fullScreen?: boolean;
+}
+
+export const LoadingAnimation = ({ fullScreen }: LoadingAnimationProps) => {
   return (
-    <div className={cls.wrapperAnimation}>
+    <div
+      className={classNames(cls.wrapperAnimation, {
+        [cls.fullScreen]: fullScreen,
+      })}
+    >
       <Icon Svg={Leaf} className={cls.leaf} />
       <Icon Svg={Leaf} className={cls.leaf} />
       <Icon Svg={Leaf} className={cls.leaf} />

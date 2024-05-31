@@ -16,6 +16,7 @@ export enum Routes {
   MAIN = '/main',
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
+  SUBCATEGORY_ID = ':categoryId/:subcategoryId',
   PRODUCT = '/catalog/:categoryId/:subcategoryId/:productKey',
   PROFILE = '/profile',
   CART = '/cart',
@@ -75,6 +76,13 @@ export const routeConfig: RouteConfig[] = [
         ),
         nodeRef: createRef<HTMLDivElement>(),
       },
+      {
+        path: Routes.SUBCATEGORY_ID,
+        element: (
+          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
+        ),
+        nodeRef: createRef<HTMLDivElement>(),
+      },
     ],
   },
   {
@@ -84,7 +92,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.PROFILE,
-    id: 'profile',
+    id: PageIDs.PROFILE,
     loader: loadClient,
     element: <ProfilePage />,
     errorElement: <NotFound additionalMessage="Some error occured!" />,

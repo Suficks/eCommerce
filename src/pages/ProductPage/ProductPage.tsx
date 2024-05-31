@@ -12,6 +12,7 @@ import { FAQ } from './BlockFAQ/FAQ';
 import { ProductCardBlock } from './ProductCardBlock/ProductCardBlock';
 import cls from './ProductPage.module.scss';
 import { SimilarPrompts } from './similarPrompts/similarPrompts';
+import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 
 export const ProductPage = () => {
   const { productKey } = useParams();
@@ -60,6 +61,7 @@ export const ProductPage = () => {
       >
         &larr;
       </button>
+      <Breadcrumbs />
       <main className={cls.main}>
         {loading ? (
           <LoadingAnimation />
