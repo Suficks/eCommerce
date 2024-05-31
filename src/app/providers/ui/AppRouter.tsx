@@ -34,4 +34,4 @@ export const AppPage = () => {
   );
 };
 
-export const AppRouter = createBrowserRouter(routeConfig); // with animations ON got errors from redirection
+export const AppRouter = createBrowserRouter(routeConfig);
