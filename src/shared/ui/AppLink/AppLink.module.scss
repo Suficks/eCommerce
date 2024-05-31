@@ -16,6 +16,8 @@
   }
 
   &.underlined {
+    color: $green;
+
     &::before {
       position: absolute;
       top: 50%;

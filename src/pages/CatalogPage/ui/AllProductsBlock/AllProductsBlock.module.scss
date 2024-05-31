@@ -17,7 +17,7 @@
 
   display: grid;
   grid-auto-rows: auto;
-  grid-template-columns:  repeat(auto-fill, 360px);
+  grid-template-columns:  repeat(auto-fill, 340px);
   gap: clamp(30px, 10vw, 100px); 
   justify-content: center;
 
@@ -27,12 +27,12 @@
 .product {
   display: flex;
   flex-direction: column;
-  max-width: 360px;
+  max-width: 340px;
 
   transition: 0.3s ease;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -61,29 +61,6 @@
 .reviews {
   @include montserrat(20px, 400, 24px);
   text-decoration: underline;
-}
-
-.input {
-  margin-bottom: 30px;
-  padding: 10px 10px 10px 40px;
-  border: 3px solid $gray;
-  border-radius: 12px;
-
-  transition: 0.3s ease;
-  
-  &:focus {
-    padding: 10px 10px 10px 40px;
-  }
-
-  &:hover {
-    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
-  }
-}
-
-.icon {
-  position: absolute;
-  top: 15%;
-  left: 10px;
 }
 
 .no_products {
