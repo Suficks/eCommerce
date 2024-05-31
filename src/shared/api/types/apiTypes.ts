@@ -36,10 +36,10 @@ export type FilterSortSearchParameters = {
   selectedFiltersList: string[];
   categoryType: {
     selectedCategoryId: string;
-    attributesToFilter: { name: string };
+    attributesToFilter: { name: string | undefined };
   };
-  // minSelectedPrice: number;
-  // maxSelectedPrice: number;
+  minPrice: number;
+  maxPrice: number;
   attributesToSort?: CatalogSortObject;
   search?: string;
 };

@@ -8,8 +8,8 @@ export async function getFilterSortSearchProducts(
   const {
     categoryType: { attributesToFilter, selectedCategoryId },
     selectedFiltersList,
-    // minSelectedPrice,
-    // maxSelectedPrice,
+    minPrice,
+    maxPrice,
     attributesToSort,
     search,
   } = parameters;
@@ -21,11 +21,10 @@ export async function getFilterSortSearchProducts(
   } = {
     filter: [],
   };
-
   if (Array.isArray(queryArgs.filter)) {
-    // if (selectedCategoryId) {
-    //   queryArgs.filter.push(`categories.id:"${selectedCategoryId}"`);
-    // }
+    if (selectedCategoryId) {
+      queryArgs.filter.push(`categories.id:"${selectedCategoryId}"`);
+    }
     if (attributesToFilter.name && selectedFiltersList.length) {
       queryArgs.filter.push(
         `variants.attributes.${attributesToFilter.name}:"${selectedFiltersList}"`,
@@ -36,12 +35,13 @@ export async function getFilterSortSearchProducts(
         `variants.attributes.${attributesToFilter.name}:exists`,
       );
     }
-    // if (minSelectedPrice || maxSelectedPrice) {
-    //   queryArgs.filter.push(
-    //     `variants.price.centAmount:range (${minSelectedPrice ? minSelectedPrice * 100 : '*'
-    //     } to ${maxSelectedPrice ? maxSelectedPrice * 100 : '*'})`,
-    //   );
-    // }
+    if (minPrice || maxPrice) {
+      queryArgs.filter.push(
+        `variants.price.centAmount:range (${
+          minPrice ? minPrice * 100 : '*'
+        } to ${maxPrice ? maxPrice * 100 : '*'})`,
+      );
+    }
   }
 
   if (attributesToSort && attributesToSort.field !== 'default') {

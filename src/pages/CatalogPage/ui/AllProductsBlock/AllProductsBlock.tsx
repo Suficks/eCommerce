@@ -1,19 +1,13 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router';
-import { CiSearch } from 'react-icons/ci';
 
-import { Title } from '@/shared/ui/Title/Title';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { getProductPath } from '../../model/services/getProductPath';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-import { Input } from '@/shared/ui/input/input';
 import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelectors';
-import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
-import { CatalogSortSelector } from '@/features/CatalogSortSelector';
-import { FilterItem } from '@/features/Filters/ui/FilterItem';
 
 import cls from './AllProductsBlock.module.scss';
 
@@ -29,15 +23,6 @@ export const AllProductsBlock = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
-  const {
-    search,
-    onChangeOrder,
-    onChangeSearch,
-    onAddFilters,
-    onRemoveSelectedFilter,
-    onRemoveAllFilters,
-  } = useCatalogFilters();
-
   if (isLoading) {
     return <LoadingAnimation />;
   }
@@ -52,26 +37,6 @@ export const AllProductsBlock = ({
 
   return (
     <section className={classNames(cls.AllProductsBlock, className)}>
-      <Title
-        subtitle="All products"
-        title="Explore Our Products"
-        className={cls.title}
-      />
-      <Input
-        value={search}
-        onChange={onChangeSearch}
-        className={cls.input}
-        placeholder="Поиск"
-        icon={<CiSearch className={cls.icon} />}
-      />
-      <FilterItem
-        onAddFilters={onAddFilters}
-        onRemoveSelectedFilter={onRemoveSelectedFilter}
-        onRemoveAllFilters={onRemoveAllFilters}
-        title="Brand"
-      />
-      {/* <FilterItem title="Price" /> */}
-      <CatalogSortSelector onChangeOrder={onChangeOrder} />
       <div className={cls.products}>
         {products.length === 0 && (
           <div className={cls.no_products}>Products not found</div>

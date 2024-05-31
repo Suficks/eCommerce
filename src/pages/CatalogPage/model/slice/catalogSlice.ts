@@ -4,8 +4,8 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
 import { fetchProducts } from '../services/fetchProducts';
 import { getProductPath } from '../services/getProductPath';
-import { searchFilterSort } from '../services/searchFilerSort';
 import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
+import { searchFilterSort } from '../services/searchFilerSort';
 
 const initialState: CatalogSchema = {
   isLoading: false,
@@ -15,7 +15,10 @@ const initialState: CatalogSchema = {
   search: '',
   sort: { field: 'default', order: '' },
   brands: new Set(),
-  filters: [],
+  selectedBrands: [],
+  maxPrice: '',
+  minPrice: '',
+  selectedCategoryId: '',
 };
 
 export const catalogSlice = createSlice({
@@ -30,13 +33,26 @@ export const catalogSlice = createSlice({
       state.sort.order = SortMapper[payload].order;
     },
     setFilters: (state, { payload }: PayloadAction<string>) => {
-      state.filters.push(payload);
+      state.selectedBrands.push(payload);
+    },
+    setSelectedCategoryId: (state, { payload }: PayloadAction<string>) => {
+      state.selectedCategoryId = payload;
     },
     removeSelectedFilter: (state, { payload }: PayloadAction<string>) => {
-      state.filters = state.filters.filter((item) => item !== payload);
+      state.selectedBrands = state.selectedBrands.filter(
+        (item) => item !== payload,
+      );
     },
     removeAllFilters: (state) => {
-      state.filters = [];
+      state.selectedBrands = [];
+      state.maxPrice = '';
+      state.minPrice = '';
+    },
+    changeMaxPrice: (state, { payload }: PayloadAction<string>) => {
+      state.maxPrice = payload;
+    },
+    changeMinPrice: (state, { payload }: PayloadAction<string>) => {
+      state.minPrice = payload;
     },
   },
   extraReducers: (builder) => {

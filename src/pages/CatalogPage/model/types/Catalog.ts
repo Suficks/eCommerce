@@ -43,6 +43,9 @@ export interface CatalogSchema {
 
   search: string;
   sort: CatalogSortObject;
-  filters: string[];
+  selectedBrands: string[];
   brands: Set<string>;
+  maxPrice: string;
+  minPrice: string;
+  selectedCategoryId: string;
 }

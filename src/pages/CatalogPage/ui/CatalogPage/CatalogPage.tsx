@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
-import { CategoriesBlock } from '../CategoriesBlock/CategoriesBlock';
+import { FiltersBlock } from '../FiltersBlock/FiltersBlock';
 import { fetchProducts } from '../../model/services/fetchProducts';
 import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
@@ -12,6 +12,7 @@ import { Footer } from '@/widgets/Footer/Footer';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import {
   getCatalogPageCategories,
+  getCatalogPageDiscountProducts,
   getCatalogPageIsLoading,
   getCatalogPageProducts,
 } from '../../model/selectors/catalogPageSelectors';
@@ -27,9 +28,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const products = useAppSelector(getCatalogPageProducts);
   const categories = useAppSelector(getCatalogPageCategories);
-  const discountProducts = useAppSelector(
-    (state) => state.catalog.discountProducts,
-  );
+  const discountProducts = useAppSelector(getCatalogPageDiscountProducts);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,7 +51,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
         <Header />
         <MainBlock categories={categories} />
         <SalesBlock discountProducts={discountProducts} />
-        <CategoriesBlock categories={categories} />
+        <FiltersBlock categories={categories} />
         <AllProductsBlock products={products} />
         <Footer />
       </div>

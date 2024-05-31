@@ -18,7 +18,7 @@
   transition: 0.3s ease;
 
   &:hover {
-    box-shadow: rgb(255 255 255 / 35%) 0 5px 15px;
+    box-shadow: $box-shadow;
   }
 
   &:focus {
@@ -28,7 +28,7 @@
 
 .arrow {
   position: absolute;
-  right: 7px;
+  right: 9px;
 
   border-style: solid;
   border-width: 7px;
@@ -61,6 +61,8 @@
   border: 3px solid $gray;
   border-radius: 8px;
   overflow-y: auto;
+
+  @include montserrat(20px, 400, 20px);
 
   background: rgb(23 23 22 / 80%);
   box-shadow: 0 0 0 1px #0000000d, 0 10px 15px #0000004d;
@@ -122,25 +124,20 @@
   transform: translate(-50%) rotate(-45deg);
 }
 
-.selected_items {
-  @include flex(flex-start, center, row, 20px);
-  flex-wrap: wrap;
+.price_filters {
+  @include flex(space-between, center, row, 15px);
+  margin-bottom: 40px;
+}
+
+.dollar {
+  position: absolute;
+  right: 0;
+}
+
+.rangeInput {
   margin-bottom: 20px;
 }
 
-.selected {
-  @include montserrat(20px, 400, 20px);
-  padding: 10px;
-  border: 2px solid $gray;
-  border-radius: 13px;
-
-  @include flex(space-between, center, row, 15px);
-}
-
-.icon {
-  cursor: pointer;
-}
-
-.reset {
-  border-color: $red;
+.selectedRange {
+  @include flex(space-between, center);
 }
