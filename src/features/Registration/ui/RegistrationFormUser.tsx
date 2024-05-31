@@ -19,11 +19,13 @@ import { loginThunk } from '@/features/Login/model/services/loginThunk';
 export interface RegistrationFormProps {
   className?: string;
   onSuccess?: () => void;
+  setLoading: (value: boolean) => void;
 }
 
 export const RegistrationFormUser = ({
   className,
   onSuccess,
+  setLoading,
 }: RegistrationFormProps) => {
   const dispatch = useAppDispatch();
   const {
@@ -51,6 +53,7 @@ export const RegistrationFormUser = ({
   const onSubmit = useCallback(async () => {
     const values = getValues();
     try {
+      setLoading(true);
       const result = await dispatch(signUpUserThunk(values)).unwrap();
       if (result && onSuccess) {
         await dispatch(
@@ -62,8 +65,10 @@ export const RegistrationFormUser = ({
       if (typeof error === 'string') {
         setServerError(error);
       }
+    } finally {
+      setLoading(false);
     }
-  }, [dispatch, getValues, onSuccess]);
+  }, [dispatch, getValues, onSuccess, setLoading]);
 
   const handleBilling = () => {
     if (getValues('shippingAsBilling')) {

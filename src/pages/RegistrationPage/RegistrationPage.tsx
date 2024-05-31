@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Navigate } from 'react-router-dom';
@@ -9,14 +9,20 @@ import cls from './RegistrationPage.module.scss';
 
 import { Logo } from '@/shared/ui/Logo/Logo';
 import { isLogged } from '@/shared/util/isLogged';
+import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 
 export const RegistrationPage = memo(() => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const loading = (value: boolean) => {
+    setIsLoading(value);
+  };
   if (isLogged()) {
     return <Navigate to="/main" replace />;
   }
   return (
     <main className={cls.registrationPage}>
+      {isLoading && <LoadingAnimation fullScreen />}
       <Logo left />
       <div className={cls.card}>
         <div>
@@ -28,7 +34,10 @@ export const RegistrationPage = memo(() => {
             </AppLink>
           </div>
         </div>
-        <RegistrationFormUser onSuccess={() => navigate('/')} />
+        <RegistrationFormUser
+          onSuccess={() => navigate('/')}
+          setLoading={loading}
+        />
       </div>
     </main>
   );
