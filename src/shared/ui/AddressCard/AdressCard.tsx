@@ -1,43 +1,67 @@
 import classNames from 'classnames';
 
-import { AiFillEdit } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineClose } from 'react-icons/ai';
 
+import React from 'react';
 import cls from './AddressCard.module.scss';
+import { AddressProps } from '@/pages/ProfilePage/ui/EditAddressModal/EditAddressModal';
 
 interface AddressCardProps {
-  className?: string;
-  onClick?: () => void;
+  addressId: string;
   country: string;
   city: string;
   street: string;
-  postal: string;
+  postalCode: string;
   defaultAddress: boolean;
+  openModal: (address: AddressProps) => void;
+  deleteAddress: (id: string) => void;
 }
 
 export const AddressCard = (props: AddressCardProps) => {
-  const { className, country, city, street, postal, defaultAddress, onClick } =
-    props;
-
+  const {
+    country,
+    city,
+    street,
+    postalCode,
+    defaultAddress,
+    addressId,
+    openModal,
+    deleteAddress,
+  } = props;
   return (
     <div
       className={classNames(
         cls.addressCard,
-        className,
         defaultAddress && cls.defaultAddress,
       )}
     >
       <p>Country: {country}</p>
       <p>City: {city}</p>
       <p>Street: {street}</p>
-      <p>Postal Code: {postal}</p>
-      <button
-        className={cls.icon}
-        aria-label="Edit"
-        type="button"
-        onClick={onClick}
-      >
-        <AiFillEdit size={20} />
-      </button>
+      <p>Postal Code: {postalCode}</p>
+      <div className={cls.iconWrapper}>
+        <AiOutlineClose
+          size={30}
+          className={cls.closeIcon}
+          onClick={() => {
+            deleteAddress(addressId);
+          }}
+        />
+        <AiFillEdit
+          size={30}
+          className={cls.iconEdit}
+          onClick={() => {
+            openModal({
+              country,
+              city,
+              street,
+              postalCode,
+              addressId,
+              isDefault: defaultAddress,
+            });
+          }}
+        />
+      </div>
     </div>
   );
 };
