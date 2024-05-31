@@ -11,7 +11,6 @@ import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
 import plantFromProductPage from '@/shared/assets/images/plantFromProductPage.png';
 import PrevButton from '@/shared/assets/images/prev-slide.svg';
-import { Card } from '@/shared/ui/Card/Card';
 import { Button } from '@/shared/ui/button/button';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import cls from './ProductCardBlock.module.scss';
@@ -77,10 +76,10 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
           className={cls.imageWrapperButton}
           aria-label="close"
         >
-          <Card
-            width={300}
-            image={imagesArr[0].url}
+          <img
+            src={images?.[0]?.url || ''}
             className={cls.imageCard}
+            alt="product"
           />
         </button>
       ) : (
