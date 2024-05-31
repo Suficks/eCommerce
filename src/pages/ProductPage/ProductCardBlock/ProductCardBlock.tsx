@@ -58,14 +58,17 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
   const handleClose = () => setShow(false);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagesArr.length);
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
+    );
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + imagesArr.length) % imagesArr.length,
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
+
   return (
     <div className={cls.productCard}>
       <img src={plantFromProductPage} alt="" className={cls.plantImage} />
@@ -124,18 +127,22 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>Product Image</Modal.Title>
-          <BootstrapButton
-            onClick={handlePrevImage}
-            className={cls.modalButtonPrev}
-          >
-            <PrevButton />
-          </BootstrapButton>
-          <BootstrapButton
-            onClick={handleNextImage}
-            className={cls.modalButtonNext}
-          >
-            <NextButton />
-          </BootstrapButton>
+          {images.length > 1 && (
+            <BootstrapButton
+              onClick={handlePrevImage}
+              className={cls.modalButtonPrev}
+            >
+              <PrevButton />
+            </BootstrapButton>
+          )}
+          {images.length > 1 && (
+            <BootstrapButton
+              onClick={handleNextImage}
+              className={cls.modalButtonNext}
+            >
+              <NextButton />
+            </BootstrapButton>
+          )}
         </Modal.Header>
         <Modal.Body>
           <div className={cls.modalImageContainer}>

@@ -48,8 +48,7 @@ export const ProductPage = () => {
       }
     };
     fetchProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [product]);
 
   return (
     <div className={cls.wrapper}>
