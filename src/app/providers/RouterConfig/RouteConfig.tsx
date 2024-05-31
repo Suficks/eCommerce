@@ -16,6 +16,7 @@ export enum Routes {
   MAIN = '/main',
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
+  SUBCATEGORY_ID = ':categoryId/:subcategoryId',
   PRODUCT = '/catalog/:categoryId/:subcategoryId/:productKey',
   PROFILE = '/profile',
   CART = '/cart',
@@ -70,6 +71,13 @@ export const routeConfig: RouteConfig[] = [
     children: [
       {
         path: Routes.CATEGORY_ID,
+        element: (
+          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
+        ),
+        nodeRef: createRef<HTMLDivElement>(),
+      },
+      {
+        path: Routes.SUBCATEGORY_ID,
         element: (
           <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
         ),
