@@ -11,7 +11,6 @@ import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
 import plantFromProductPage from '@/shared/assets/images/plantFromProductPage.png';
 import PrevButton from '@/shared/assets/images/prev-slide.svg';
-import { Card } from '@/shared/ui/Card/Card';
 import { Button } from '@/shared/ui/button/button';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import cls from './ProductCardBlock.module.scss';
@@ -59,14 +58,17 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
   const handleClose = () => setShow(false);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagesArr.length);
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
+    );
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + imagesArr.length) % imagesArr.length,
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
+
   return (
     <div className={cls.productCard}>
       <img src={plantFromProductPage} alt="" className={cls.plantImage} />
@@ -77,10 +79,10 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
           className={cls.imageWrapperButton}
           aria-label="close"
         >
-          <Card
-            width={300}
-            image={imagesArr[0].url}
+          <img
+            src={images?.[0]?.url || ''}
             className={cls.imageCard}
+            alt="product"
           />
         </button>
       ) : (
@@ -125,18 +127,22 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>Product Image</Modal.Title>
-          <BootstrapButton
-            onClick={handlePrevImage}
-            className={cls.modalButtonPrev}
-          >
-            <PrevButton />
-          </BootstrapButton>
-          <BootstrapButton
-            onClick={handleNextImage}
-            className={cls.modalButtonNext}
-          >
-            <NextButton />
-          </BootstrapButton>
+          {images.length > 1 && (
+            <BootstrapButton
+              onClick={handlePrevImage}
+              className={cls.modalButtonPrev}
+            >
+              <PrevButton />
+            </BootstrapButton>
+          )}
+          {images.length > 1 && (
+            <BootstrapButton
+              onClick={handleNextImage}
+              className={cls.modalButtonNext}
+            >
+              <NextButton />
+            </BootstrapButton>
+          )}
         </Modal.Header>
         <Modal.Body>
           <div className={cls.modalImageContainer}>
