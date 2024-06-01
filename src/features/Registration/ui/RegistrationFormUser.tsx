@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Input } from '@/shared/ui/input/input';
@@ -35,6 +35,7 @@ export const RegistrationFormUser = ({
     getValues,
     setValue,
     trigger,
+    control,
   } = useForm<SubmitData>({
     mode: 'onChange',
     defaultValues: {
@@ -72,10 +73,18 @@ export const RegistrationFormUser = ({
 
   const handleBilling = () => {
     if (getValues('shippingAsBilling')) {
-      setValue('billingCountry', getValues('shippingCountry'));
-      setValue('billingCity', getValues('shippingCity'));
-      setValue('billingStreet', getValues('shippingStreet'));
-      setValue('billingPostal', getValues('shippingPostal'));
+      setValue('billingCountry', getValues('shippingCountry'), {
+        shouldValidate: true,
+      });
+      setValue('billingCity', getValues('shippingCity'), {
+        shouldValidate: true,
+      });
+      setValue('billingStreet', getValues('shippingStreet'), {
+        shouldValidate: true,
+      });
+      setValue('billingPostal', getValues('shippingPostal'), {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -223,15 +232,22 @@ export const RegistrationFormUser = ({
       <fieldset className={cls.field__wrapper}>
         <legend className={cls.field__heading}>Shipping address</legend>
         <div className={cls.input__wrapper}>
-          <Select
-            label="Country"
-            optionValues={['Poland', 'Russia', 'Belarus']}
-            register={register('shippingCountry', {
-              onChange: () => {
-                setValue('shippingPostal', '', { shouldValidate: true });
-                handleBilling();
-              },
-            })}
+          <Controller
+            control={control}
+            render={({ field: { name, onChange = () => {} } }) => (
+              <Select
+                label="Country"
+                optionValues={['Poland', 'Russia', 'Belarus']}
+                onChange={onChange}
+                register={register(name, {
+                  onChange: () => {
+                    setValue('shippingPostal', '', { shouldValidate: true });
+                    handleBilling();
+                  },
+                })}
+              />
+            )}
+            name="shippingCountry"
           />
         </div>
         <div className={cls.input__wrapper}>
@@ -312,7 +328,6 @@ export const RegistrationFormUser = ({
             register={register('shippingAsBilling', {
               onChange: async () => {
                 handleBilling();
-                await trigger('shippingAsBilling'); // need this to force rerender component on state change
               },
             })}
           />
@@ -323,14 +338,22 @@ export const RegistrationFormUser = ({
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
         >
-          <Select
-            label="Country"
-            optionValues={['Poland', 'Russia', 'Belarus']}
-            register={register('billingCountry', {
-              onChange: () => {
-                setValue('billingPostal', '', { shouldValidate: true });
-              },
-            })}
+          <Controller
+            control={control}
+            render={({ field: { name, onChange } }) => (
+              <Select
+                label="Country"
+                optionValues={['Poland', 'Russia', 'Belarus']}
+                onChange={onChange}
+                register={register(name, {
+                  onChange: async () => {
+                    // await trigger('billingPostal');
+                    setValue('billingPostal', '', { shouldValidate: true });
+                  },
+                })}
+              />
+            )}
+            name="billingCountry"
           />
         </div>
         <div

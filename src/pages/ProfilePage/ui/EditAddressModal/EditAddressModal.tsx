@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Address, Customer } from '@commercetools/platform-sdk';
@@ -65,6 +65,7 @@ export const EditAddressModal = ({
     getValues,
     setValue,
     trigger,
+    control,
   } = useForm<AddressData>({
     mode: 'onChange',
     defaultValues: {
@@ -109,8 +110,8 @@ export const EditAddressModal = ({
         if (result) {
           userMessage(ToastTypes.SUCCESS, 'Address updated successfully.');
           const { body: customerData } = result;
-          let addresses = [];
-          let defaultAddressId = '';
+          let addresses;
+          let defaultAddressId;
           if (addressType === 'Shipping') {
             addresses = getShippingAddresses(customerData) || [];
             defaultAddressId = customerData.defaultShippingAddressId ?? '';
@@ -155,14 +156,21 @@ export const EditAddressModal = ({
           className={classNames(cls.form)}
         >
           <div className={cls.input__wrapper}>
-            <Select
-              label="Country"
-              optionValues={['Poland', 'Russia', 'Belarus']}
-              register={register('country', {
-                onChange: () => {
-                  setValue('postalCode', '', { shouldValidate: true });
-                },
-              })}
+            <Controller
+              control={control}
+              render={({ field: { name, onChange = () => {} } }) => (
+                <Select
+                  label="Country"
+                  optionValues={['Poland', 'Russia', 'Belarus']}
+                  onChange={onChange}
+                  register={register(name, {
+                    onChange: () => {
+                      setValue('postalCode', '', { shouldValidate: true });
+                    },
+                  })}
+                />
+              )}
+              name="country"
             />
           </div>
           <div className={cls.input__wrapper}>
@@ -201,7 +209,7 @@ export const EditAddressModal = ({
           </div>
           <div className={cls.input__wrapper}>
             <Input
-              placeholder={`${(getValues('postalCode') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
+              placeholder={`${(getValues('country') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
               label="Postal code"
               className={errors.postalCode && cls.invalid}
               type="text"
