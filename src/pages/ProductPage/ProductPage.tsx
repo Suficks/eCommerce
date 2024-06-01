@@ -2,10 +2,12 @@
 import { Product, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 
 import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 import { getProductByKey } from '@/shared/api/requests/getProduct';
 import { getProductsByCategory } from '@/shared/api/requests/getProductsByCategory';
+import { ToastConfig } from '@/shared/const/ToastConfig';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
@@ -34,7 +36,7 @@ export const ProductPage = () => {
         setLoading(false);
       } catch (error) {
         navigate('*');
-        console.error('Failed to fetch product:', error);
+        toast.error('Failed to fetch product', ToastConfig);
       }
     };
     fetchProduct();
