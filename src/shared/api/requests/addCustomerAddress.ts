@@ -54,9 +54,30 @@ export async function addCustomerAddress(
       LocalStorageKeys.VERSION,
       JSON.stringify(response.body.version),
     );
+
     const { body } = response;
     const { version: newVersion, addresses } = body;
     const newAddressId = addresses[addresses.length - 1].id;
+
+    response = await apiRoot
+      .customers()
+      .withId({ ID })
+      .post({
+        body: {
+          version: newVersion,
+          actions: [
+            {
+              action: `add${addressType}AddressId`,
+              addressId: newAddressId,
+            },
+          ],
+        },
+      })
+      .execute();
+    localStorage.setItem(
+      LocalStorageKeys.VERSION,
+      JSON.stringify(response.body.version),
+    );
 
     if (isDefault) {
       response = await apiRoot
@@ -64,11 +85,11 @@ export async function addCustomerAddress(
         .withId({ ID })
         .post({
           body: {
-            version: newVersion,
+            version: response.body.version,
             actions: [
               {
                 action: `setDefault${addressType}Address`,
-                addressId: `${newAddressId}`,
+                addressId: newAddressId,
               },
             ],
           },
