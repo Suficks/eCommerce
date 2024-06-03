@@ -19,6 +19,7 @@ import LeafIcon from '@/shared/assets/images/categories_leaf.svg';
 import AllProductsIcon from '@/shared/assets/images/all_products_icon.png';
 
 import cls from './FiltersBlock.module.scss';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 interface CategoriesBlockProps {
   className?: string;
@@ -70,7 +71,7 @@ export const FiltersBlock = ({
       <div className={cls.wrapper}>
         <AppLink
           onClick={onHandleChangeCategory('')}
-          to="/catalog"
+          to={Routes.CATALOG}
           className={classNames(cls.link, cls.allProducts)}
         >
           <Card

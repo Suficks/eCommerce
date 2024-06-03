@@ -62,22 +62,12 @@ export const catalogSlice = createSlice({
     changeMinPrice: (state, { payload }: PayloadAction<string>) => {
       state.minPrice = payload;
     },
-    setBrands: (state) => {
-      const newBrands = new Set<string>(
-        state.products
-          .map(
-            (item) =>
-              item.masterVariant.attributes?.find(
-                (attribute) => attribute.name === 'brand',
-              )?.value as string,
-          )
-          .filter(Boolean),
-      );
-      state.brands = new Set([...state.brands, ...newBrands]);
-    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(
         fetchAllProducts.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {

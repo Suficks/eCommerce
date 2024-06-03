@@ -14,6 +14,7 @@ import { AppError } from '@/shared/ui/AppError/AppError';
 import { LoginSubmitData } from '../model/types/LoginSchema';
 import cls from './LoginForm.module.scss';
 import { ToastConfig } from '@/shared/const/ToastConfig';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 export interface LoginFormProps {
   className?: string;
@@ -65,7 +66,7 @@ export const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
       <h1 className={cls.title}>Login</h1>
       <div className={cls.wrapper}>
         <h2 className={cls.subtitle}> Do not have an Account yet?</h2>
-        <AppLink to="/registration" className={cls.link}>
+        <AppLink to={Routes.REGISTRATION} className={cls.link}>
           Sign Up
         </AppLink>
       </div>
