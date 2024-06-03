@@ -34,6 +34,7 @@ export const AddressCard = (props: AddressCardProps) => {
         cls.addressCard,
         defaultAddress && cls.defaultAddress,
       )}
+      data-testid="addressCard"
     >
       <p>Country: {country}</p>
       <p>City: {city}</p>
@@ -41,6 +42,7 @@ export const AddressCard = (props: AddressCardProps) => {
       <p>Postal Code: {postalCode}</p>
       <div className={cls.iconWrapper}>
         <AiOutlineClose
+          data-testid="closeIcon"
           size={30}
           className={cls.closeIcon}
           onClick={() => {
@@ -48,6 +50,7 @@ export const AddressCard = (props: AddressCardProps) => {
           }}
         />
         <AiFillEdit
+          data-testid="editIcon"
           size={30}
           className={cls.iconEdit}
           onClick={() => {

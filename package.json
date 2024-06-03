@@ -10,7 +10,7 @@
     "prettier:check": "npx prettier --check \"**/*.{ts,tsx,json}\"",
     "lint:scss": "npx stylelint \"**/*.scss\" --fix",
     "lint": "eslint ./src --ext ts,tsx --report-unused-disable-directives",
-    "test": "jest --env=jsdom --coverage",
+    "test": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'",
     "format": "npm run prettier && npm run lint:scss && npm run lint",
     "prepare": "husky"
   },
