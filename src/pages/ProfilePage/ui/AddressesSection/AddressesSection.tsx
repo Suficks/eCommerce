@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Address } from '@commercetools/platform-sdk';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { AddressCard } from '@/shared/ui/AddressCard/AdressCard';
@@ -10,15 +9,13 @@ import {
   AddressProps,
   EditAddressModal,
 } from '@/pages/ProfilePage/ui/EditAddressModal/EditAddressModal';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import {
-  ToastConfig,
   ToastMessage,
   ToastTypes,
   userMessage,
 } from '@/shared/const/ToastConfig';
-import { deleteCustomerAddress } from '@/shared/api/requests/deleteCustomerAddress';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
+import { deleteAddress } from '@/pages/ProfilePage/model/services/deleteAddress';
 
 interface ShippingProps {
   addressesArr: Address[];
@@ -64,32 +61,22 @@ export const AddressesSection = ({
     setAddresses(newAddressesArr);
   };
   const navigate = useNavigate();
-  const deleteAddress = async (addressId: string) => {
+  const deleteAddressCard = async (addressId: string) => {
     try {
       setIsLoading(true);
-      const user = localStorage.getItem(LocalStorageKeys.USER);
-      const version = Number(localStorage.getItem(LocalStorageKeys.VERSION));
-      if (user && version) {
-        const { id } = JSON.parse(user);
-        const result = await deleteCustomerAddress(id, addressId, version);
-        if (result) {
-          toast.success('Address Deleted!', ToastConfig);
-          const newAddress = addresses.filter(
-            (address) => address.id !== addressId,
-          );
-          setAddresses(newAddress);
-          closeModal();
-        }
-      } else {
-        userMessage(ToastTypes.ERROR, 'Local Storage is empty :(');
-        navigate('/main');
-      }
+      await deleteAddress(addressId, setAddresses, addressType);
+      userMessage(ToastTypes.SUCCESS, 'Address deleted!');
     } catch (error) {
       if (error instanceof Error) {
-        let errorMessage = '';
+        let errorMessage;
         switch (error.cause) {
           case 409: {
             errorMessage = 'Error occurred! Wrong client version.';
+            break;
+          }
+          case 'LS': {
+            errorMessage = error.message;
+            navigate('/main');
             break;
           }
           default: {
@@ -103,6 +90,7 @@ export const AddressesSection = ({
         );
       }
     } finally {
+      closeModal();
       setIsLoading(false);
     }
   };
@@ -124,7 +112,7 @@ export const AddressesSection = ({
               defaultAddress={defaultId === id}
               addressId={id ?? ''}
               openModal={openModal}
-              deleteAddress={deleteAddress}
+              deleteAddress={deleteAddressCard}
             />
           );
         })}

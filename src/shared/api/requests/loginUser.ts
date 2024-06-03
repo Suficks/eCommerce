@@ -12,6 +12,7 @@ import {
 import { tokenInstance } from '../tokenHandlers';
 import { ValidationMessages } from '@/shared/const/Validation';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 const MERGE_ANONYMOUS_CART_WITH_USER_CART = 'MergeWithExistingCustomerCart';
 
@@ -95,10 +96,7 @@ export async function loginUser(
       LocalStorageKeys.USER,
       JSON.stringify(response.body.customer),
     );
-    localStorage.setItem(
-      LocalStorageKeys.VERSION,
-      JSON.stringify(response.body.customer.version),
-    );
+    setLocalStorageValue(response.body.customer.version);
     changeApiRootToPassword();
     // getActiveCart(true);
 

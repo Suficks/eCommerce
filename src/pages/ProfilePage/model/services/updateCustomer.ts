@@ -36,7 +36,10 @@ export const UpdateCustomer = async (
         updateState(false);
       }
     } else {
-      userMessage(ToastTypes.ERROR, 'Local Storage is empty :(');
+      userMessage(
+        ToastTypes.ERROR,
+        'Something wrong with local storage. Login and try again.',
+      );
       navigate('/main');
     }
   } catch (error) {
