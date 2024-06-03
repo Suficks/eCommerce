@@ -24,6 +24,7 @@ export async function getFilterSortSearchProducts(
     filter: [],
     limit: itemPerPage,
   };
+
   if (Array.isArray(queryArgs.filter)) {
     if (selectedCategoryId) {
       queryArgs.filter.push(`categories.id:"${selectedCategoryId}"`);

@@ -6,7 +6,11 @@ import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import cls from './Breadcrumbs.module.scss';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
-export const Breadcrumbs = () => {
+interface BreadcrumbsProps {
+  scrollIntoSection?: () => void;
+}
+
+export const Breadcrumbs = ({ scrollIntoSection }: BreadcrumbsProps) => {
   const location = useLocation();
   const { categoryId, subcategoryId, productKey } = useParams();
 
@@ -17,7 +21,10 @@ export const Breadcrumbs = () => {
         {location.pathname.includes(`/${categoryId}`) && (
           <>
             <AiOutlineRight size={20} />
-            <AppLink to={`${Routes.CATALOG}/${categoryId}`}>
+            <AppLink
+              to={`${Routes.CATALOG}/${categoryId}`}
+              onClick={scrollIntoSection}
+            >
               {categoryId}
             </AppLink>
           </>
@@ -25,7 +32,10 @@ export const Breadcrumbs = () => {
         {location.pathname.includes(`/${subcategoryId}`) && (
           <>
             <AiOutlineRight size={20} />
-            <AppLink to={`${Routes.CATALOG}/${categoryId}/${subcategoryId}`}>
+            <AppLink
+              to={`${Routes.CATALOG}/${categoryId}/${subcategoryId}`}
+              onClick={scrollIntoSection}
+            >
               {subcategoryId}
             </AppLink>
           </>

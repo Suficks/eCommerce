@@ -23,10 +23,10 @@ export const SimilarPrompts = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const onHandleClick =
-    (productKey: string, categoryKey: string, itemName: string) => async () => {
+    (productId: string, categoryId: string, itemName: string) => async () => {
       try {
         const response = await dispatch(
-          getProductPath({ productKey, categoryKey }),
+          getProductPath({ productId, categoryId }),
         ).unwrap();
         const { category, subCategory } = response;
         const path = `/catalog/${category}/${subCategory}/${itemName}`;

@@ -4,8 +4,8 @@ import { ThunkConfig } from '@/app/store/types/StateSchema';
 import { getCategoryById, getProductTypeById } from '@/shared/api';
 
 interface GetProductPathProps {
-  productKey: string;
-  categoryKey: string;
+  productId: string;
+  categoryId: string;
 }
 
 interface ReturnedValue {
@@ -19,10 +19,10 @@ export const getProductPath = createAsyncThunk<
   ThunkConfig<string>
 >(
   'catalog/getProductPath',
-  async ({ productKey, categoryKey }, { rejectWithValue }) => {
+  async ({ productId, categoryId }, { rejectWithValue }) => {
     try {
-      const [{ key: category }] = await getProductTypeById(productKey);
-      const [{ key: subCategory }] = await getCategoryById(categoryKey);
+      const [{ key: category }] = await getProductTypeById(productId);
+      const [{ key: subCategory }] = await getCategoryById(categoryId);
 
       return { category, subCategory };
     } catch (e) {

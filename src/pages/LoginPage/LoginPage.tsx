@@ -7,12 +7,13 @@ import { Logo } from '@/shared/ui/Logo/Logo';
 import { isLogged } from '@/shared/util/isLogged';
 
 import cls from './LoginPage.module.scss';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 export const LoginPage = memo(() => {
   const navigate = useNavigate();
 
   if (isLogged()) {
-    return <Navigate to="/main" replace />;
+    return <Navigate to={Routes.MAIN} replace />;
   }
 
   return (

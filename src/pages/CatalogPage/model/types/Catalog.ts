@@ -20,10 +20,10 @@ export enum ItemsCategoryName {
 }
 
 export interface CatalogPageData {
-  products: ProductProjection[];
-  discountProducts: ProductProjection[];
-  categories: CategoryCustom[];
-  brands: Set<string>;
+  products?: ProductProjection[];
+  discountProducts?: ProductProjection[];
+  categories?: CategoryCustom[];
+  isLoading?: boolean;
 }
 
 export type SortFields = 'price' | 'name.en-GB' | 'default';
