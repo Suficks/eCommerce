@@ -29,7 +29,7 @@ export const SelectedItems = (props: SelectedItemsProps) => {
   };
 
   const deletePriceFilter = () => {
-    onRemoveSelectedPrice();
+    onRemoveSelectedPrice?.();
   };
 
   const deleteAllSelectedItems = () => {
@@ -54,17 +54,16 @@ export const SelectedItems = (props: SelectedItemsProps) => {
           />
         </div>
       ))}
-      {Array.from(attributes).length !== 0 ||
-        (maxPrice && (
-          <div className={classNames(cls.selected, cls.reset)}>
-            Reset all
-            <Icon
-              Svg={RxReload}
-              className={cls.icon}
-              onClick={deleteAllSelectedItems}
-            />
-          </div>
-        ))}
+      {(Array.from(attributes).length !== 0 || maxPrice) && (
+        <div className={classNames(cls.selected, cls.reset)}>
+          Reset all
+          <Icon
+            Svg={RxReload}
+            className={cls.icon}
+            onClick={deleteAllSelectedItems}
+          />
+        </div>
+      )}
     </div>
   );
 };
