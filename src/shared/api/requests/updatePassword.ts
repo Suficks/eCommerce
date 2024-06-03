@@ -1,5 +1,6 @@
 import { apiRoot } from '../BuildClient';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 interface UpdateCustomerPasswordProps {
   ID: string;
@@ -25,11 +26,7 @@ export async function updateCustomerPassword(
         },
       })
       .execute();
-
-    localStorage.setItem(
-      LocalStorageKeys.VERSION,
-      JSON.stringify(response.body.version),
-    );
+    setLocalStorageValue(response.body.version);
     return response;
   } catch (e) {
     if (e instanceof Error) {

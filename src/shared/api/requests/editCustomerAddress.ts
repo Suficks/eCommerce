@@ -1,6 +1,7 @@
 import { apiRoot } from '../BuildClient';
 import { countriesList } from '@/shared/const/Countries';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 interface EditAddressProps {
   ID: string;
@@ -53,10 +54,7 @@ export async function editCustomerAddress(
         },
       })
       .execute();
-    localStorage.setItem(
-      LocalStorageKeys.VERSION,
-      JSON.stringify(response.body.version),
-    );
+    setLocalStorageValue(response.body.version);
     if (isDefault) {
       const newVersion = Number(localStorage.getItem(LocalStorageKeys.VERSION));
       response = await apiRoot
@@ -74,10 +72,7 @@ export async function editCustomerAddress(
           },
         })
         .execute();
-      localStorage.setItem(
-        LocalStorageKeys.VERSION,
-        JSON.stringify(response.body.version),
-      );
+      setLocalStorageValue(response.body.version);
     }
     return response;
   } catch (e) {
