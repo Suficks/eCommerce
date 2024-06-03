@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Address, Customer } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
 import cls from './EditAddressModal.module.scss';
 import { Input } from '@/shared/ui/input/input';
 import { Validation, ValidationMessages } from '@/shared/const/Validation';
@@ -10,15 +11,11 @@ import { AppError } from '@/shared/ui/AppError/AppError';
 import { Button } from '@/shared/ui/button/button';
 import { Select } from '@/shared/ui/Select/Select';
 import { CountryType } from '@/shared/const/Countries';
-import { getShippingAddresses } from '@/pages/ProfilePage/model/services/getShippingAddresses';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { ToastTypes, userMessage } from '@/shared/const/ToastConfig';
-import { editCustomerAddress } from '@/shared/api/requests/editCustomerAddress';
-import { getBillingAddresses } from '@/pages/ProfilePage/model/services/getBillingAddresses';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-import { addCustomerAddress } from '@/shared/api/requests/addCustomerAddress';
+import { editAddress } from '../../model/services/editAddress';
 
-type ApiResponse = {
+export type ApiResponse = {
   body: Customer;
   statusCode: number;
 };
@@ -32,7 +29,7 @@ interface ChangeModalProps {
   addressType: 'Billing' | 'Shipping';
   newAddress: boolean;
 }
-interface AddressData {
+export interface AddressData {
   country: string;
   city: string;
   street: string;
@@ -65,6 +62,7 @@ export const EditAddressModal = ({
     getValues,
     setValue,
     trigger,
+    control,
   } = useForm<AddressData>({
     mode: 'onChange',
     defaultValues: {
@@ -76,58 +74,28 @@ export const EditAddressModal = ({
     },
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      const { country, city, street, postalCode, isDefault } = getValues();
-      const user = localStorage.getItem(LocalStorageKeys.USER);
-      const version = Number(localStorage.getItem(LocalStorageKeys.VERSION));
-      if (user && version) {
-        const { id } = JSON.parse(user);
-        const result = newAddress
-          ? ((await addCustomerAddress({
-              ID: id,
-              version,
-              isDefault,
-              street,
-              postalCode,
-              city,
-              country,
-              addressType,
-            })) as ApiResponse)
-          : ((await editCustomerAddress({
-              ID: id,
-              version,
-              addressId,
-              isDefault,
-              street,
-              postal: postalCode,
-              city,
-              country,
-              addressType,
-            })) as ApiResponse);
-        if (result) {
-          userMessage(ToastTypes.SUCCESS, 'Address updated successfully.');
-          const { body: customerData } = result;
-          let addresses = [];
-          let defaultAddressId = '';
-          if (addressType === 'Shipping') {
-            addresses = getShippingAddresses(customerData) || [];
-            defaultAddressId = customerData.defaultShippingAddressId ?? '';
-          } else {
-            addresses = getBillingAddresses(customerData) || [];
-            defaultAddressId = customerData.defaultBillingAddressId ?? '';
-          }
-          updateAddresses(addresses, defaultAddressId ?? null);
-          closeModal();
-        }
-      }
+      const values = getValues();
+      await editAddress(
+        values,
+        addressType,
+        addressId,
+        newAddress,
+        updateAddresses,
+      );
     } catch (error) {
       if (error instanceof Error) {
+        if (error.cause === 'LS') {
+          navigate('/main');
+        }
         userMessage(ToastTypes.ERROR, error.message);
       }
     } finally {
       setIsLoading(false);
+      closeModal();
     }
   }, [
     closeModal,
@@ -136,6 +104,7 @@ export const EditAddressModal = ({
     updateAddresses,
     addressType,
     newAddress,
+    navigate,
   ]);
 
   return (
@@ -155,14 +124,21 @@ export const EditAddressModal = ({
           className={classNames(cls.form)}
         >
           <div className={cls.input__wrapper}>
-            <Select
-              label="Country"
-              optionValues={['Poland', 'Russia', 'Belarus']}
-              register={register('country', {
-                onChange: () => {
-                  setValue('postalCode', '', { shouldValidate: true });
-                },
-              })}
+            <Controller
+              control={control}
+              render={({ field: { name, onChange = () => {} } }) => (
+                <Select
+                  label="Country"
+                  optionValues={['Poland', 'Russia', 'Belarus']}
+                  onChange={onChange}
+                  register={register(name, {
+                    onChange: () => {
+                      setValue('postalCode', '', { shouldValidate: true });
+                    },
+                  })}
+                />
+              )}
+              name="country"
             />
           </div>
           <div className={cls.input__wrapper}>
@@ -201,7 +177,7 @@ export const EditAddressModal = ({
           </div>
           <div className={cls.input__wrapper}>
             <Input
-              placeholder={`${(getValues('postalCode') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
+              placeholder={`${(getValues('country') === CountryType.Poland && 'XY-ZZZ') || 'XXXYYY'}`}
               label="Postal code"
               className={errors.postalCode && cls.invalid}
               type="text"

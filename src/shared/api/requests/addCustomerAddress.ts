@@ -1,6 +1,6 @@
 import { apiRoot } from '../BuildClient';
 import { countriesList } from '@/shared/const/Countries';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 interface AddAddressProps {
   ID: string;
@@ -50,13 +50,28 @@ export async function addCustomerAddress(
         },
       })
       .execute();
-    localStorage.setItem(
-      LocalStorageKeys.VERSION,
-      JSON.stringify(response.body.version),
-    );
+    setLocalStorageValue(response.body.version);
+
     const { body } = response;
     const { version: newVersion, addresses } = body;
     const newAddressId = addresses[addresses.length - 1].id;
+
+    response = await apiRoot
+      .customers()
+      .withId({ ID })
+      .post({
+        body: {
+          version: newVersion,
+          actions: [
+            {
+              action: `add${addressType}AddressId`,
+              addressId: newAddressId,
+            },
+          ],
+        },
+      })
+      .execute();
+    setLocalStorageValue(response.body.version);
 
     if (isDefault) {
       response = await apiRoot
@@ -64,21 +79,17 @@ export async function addCustomerAddress(
         .withId({ ID })
         .post({
           body: {
-            version: newVersion,
+            version: response.body.version,
             actions: [
               {
                 action: `setDefault${addressType}Address`,
-                addressId: `${newAddressId}`,
+                addressId: newAddressId,
               },
             ],
           },
         })
         .execute();
-
-      localStorage.setItem(
-        LocalStorageKeys.VERSION,
-        JSON.stringify(response.body.version),
-      );
+      setLocalStorageValue(response.body.version);
     }
     return response;
   } catch (e) {
