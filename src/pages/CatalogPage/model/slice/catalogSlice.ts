@@ -78,13 +78,9 @@ export const catalogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(
         fetchAllProducts.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {
-          state.isLoading = false;
           state.products = payload;
 
           const newBrands = new Set<string>(
@@ -100,23 +96,12 @@ export const catalogSlice = createSlice({
           state.brands = new Set([...state.brands, ...newBrands]);
         },
       )
-      .addCase(fetchAllProducts.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getProductPath.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getProductPath.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getProductPath.rejected, (state) => {
-        state.isLoading = false;
-      })
       .addCase(
         getAdditionalInfo.fulfilled,
         (state, { payload }: PayloadAction<CatalogPageData>) => {
           state.discountProducts = payload.discountProducts || [];
           state.categories = payload.categories || [];
+          state.isLoading = false;
         },
       )
       .addCase(

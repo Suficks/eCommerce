@@ -55,7 +55,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
           return result;
         }
       } catch (e) {
-        navigate('/*');
+        navigate('404');
         toast.error(
           'Failed to fetch product or invalid URL parameters',
           ToastConfig,
