@@ -123,6 +123,18 @@ export const catalogSlice = createSlice({
         searchFilterSort.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {
           state.products = payload;
+
+          const newBrands = new Set<string>(
+            state.products
+              .map(
+                (item) =>
+                  item.masterVariant.attributes?.find(
+                    (attribute) => attribute.name === 'brand',
+                  )?.value as string,
+              )
+              .filter(Boolean),
+          );
+          state.brands = new Set([...state.brands, ...newBrands]);
         },
       );
   },
