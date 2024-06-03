@@ -11,15 +11,15 @@ import cls from './FilterItem.module.scss';
 interface FilterItemProps {
   className?: string;
   title: string;
+  selectedBrands?: string[];
+  range?: boolean;
+  maxPrice?: string;
+  minPrice?: string;
+  brands?: Set<string>;
   onAddBrands?: (value: string) => void;
   onRemoveSelectedBrands?: (value: string) => void;
   onChangeMaxPrice?: (newPrice: string) => void;
   onChangeMinPrice?: (newPrice: string) => void;
-  selectedBrands?: string[];
-  brandAttributes?: Set<string>;
-  range?: boolean;
-  maxPrice?: string;
-  minPrice?: string;
 }
 
 export const FilterItem = (props: FilterItemProps) => {
@@ -30,7 +30,7 @@ export const FilterItem = (props: FilterItemProps) => {
     selectedBrands,
     maxPrice,
     minPrice,
-    brandAttributes,
+    brands,
     onAddBrands,
     onRemoveSelectedBrands,
     onChangeMaxPrice,
@@ -78,10 +78,10 @@ export const FilterItem = (props: FilterItemProps) => {
   }, []);
 
   const brandContent = () => {
-    if (brandAttributes) {
+    if (brands) {
       return (
         <div className={cls.list}>
-          {Array.from(brandAttributes).map((attribute) => (
+          {Array.from(brands).map((attribute) => (
             <li key={attribute} className={cls.item}>
               <Input
                 onChange={onInputChange}

@@ -29,9 +29,9 @@ export const AllProductsBlock = forwardRef<
   }
 
   const handleOnClick =
-    (productKey: string, categoryKey: string, itemName: string) => async () => {
+    (productId: string, categoryId: string, itemName: string) => async () => {
       const { category, subCategory } = await dispatch(
-        getProductPath({ productKey, categoryKey }),
+        getProductPath({ productId, categoryId }),
       ).unwrap();
       navigate(`${category}/${subCategory}/${itemName}`);
     };

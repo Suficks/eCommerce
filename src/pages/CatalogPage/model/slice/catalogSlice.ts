@@ -1,11 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductProjection } from '@commercetools/platform-sdk';
 
+import { enableMapSet } from 'immer';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
-import { fetchProducts } from '../services/fetchProducts';
+import { fetchAllProducts } from '../services/fetchAllProducts';
 import { getProductPath } from '../services/getProductPath';
 import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
 import { searchFilterSort } from '../services/searchFilerSort';
+import { getAdditionalInfo } from '../services/getAdditionalInfo';
 
 const initialState: CatalogSchema = {
   isLoading: false,
@@ -21,6 +23,8 @@ const initialState: CatalogSchema = {
   selectedCategoryId: '',
 };
 
+enableMapSet();
+
 export const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
@@ -32,7 +36,7 @@ export const catalogSlice = createSlice({
       state.sort.field = SortMapper[payload].field;
       state.sort.order = SortMapper[payload].order;
     },
-    setFilters: (state, { payload }: PayloadAction<string>) => {
+    setSelectedBrands: (state, { payload }: PayloadAction<string>) => {
       state.selectedBrands.push(payload);
     },
     setSelectedCategoryId: (state, { payload }: PayloadAction<string>) => {
@@ -58,23 +62,45 @@ export const catalogSlice = createSlice({
     changeMinPrice: (state, { payload }: PayloadAction<string>) => {
       state.minPrice = payload;
     },
+    setBrands: (state) => {
+      const newBrands = new Set<string>(
+        state.products
+          .map(
+            (item) =>
+              item.masterVariant.attributes?.find(
+                (attribute) => attribute.name === 'brand',
+              )?.value as string,
+          )
+          .filter(Boolean),
+      );
+      state.brands = new Set([...state.brands, ...newBrands]);
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchAllProducts.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(
-        fetchProducts.fulfilled,
-        (state, { payload }: PayloadAction<CatalogPageData>) => {
+        fetchAllProducts.fulfilled,
+        (state, { payload }: PayloadAction<ProductProjection[]>) => {
           state.isLoading = false;
-          state.products = payload.products;
-          state.discountProducts = payload.discountProducts;
-          state.categories = payload.categories;
-          state.brands = payload.brands;
+          state.products = payload;
+
+          const newBrands = new Set<string>(
+            state.products
+              .map(
+                (item) =>
+                  item.masterVariant.attributes?.find(
+                    (attribute) => attribute.name === 'brand',
+                  )?.value as string,
+              )
+              .filter(Boolean),
+          );
+          state.brands = new Set([...state.brands, ...newBrands]);
         },
       )
-      .addCase(fetchProducts.rejected, (state) => {
+      .addCase(fetchAllProducts.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(getProductPath.pending, (state) => {
@@ -86,6 +112,13 @@ export const catalogSlice = createSlice({
       .addCase(getProductPath.rejected, (state) => {
         state.isLoading = false;
       })
+      .addCase(
+        getAdditionalInfo.fulfilled,
+        (state, { payload }: PayloadAction<CatalogPageData>) => {
+          state.discountProducts = payload.discountProducts || [];
+          state.categories = payload.categories || [];
+        },
+      )
       .addCase(
         searchFilterSort.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {

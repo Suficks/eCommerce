@@ -39,11 +39,11 @@ export const FiltersBlock = ({
 }: CategoriesBlockProps) => {
   const {
     search,
-    brandAttributes,
     selectedBrands,
     selectedCategory,
     maxPrice,
     minPrice,
+    brands,
     onChangeOrder,
     onChangeSearch,
     onChangeMaxPrice,
@@ -134,8 +134,8 @@ export const FiltersBlock = ({
       />
       <div className={cls.filtersWrap}>
         <FilterItem
+          brands={brands}
           selectedBrands={selectedBrands}
-          brandAttributes={brandAttributes}
           onAddBrands={onAddBrands}
           onRemoveSelectedBrands={onRemoveSelectedBrands}
           title="Brand"
@@ -153,12 +153,9 @@ export const FiltersBlock = ({
         attributes={selectedBrands}
         onRemoveSelectedFilter={onRemoveSelectedBrands}
         onRemoveAllFilters={onRemoveAllFilters}
-      />
-      <SelectedItems
+        onRemoveSelectedPrice={onRemoveSelectedPrice}
         minPrice={minPrice}
         maxPrice={maxPrice}
-        onRemoveAllFilters={onRemoveAllFilters}
-        onRemoveSelectedPrice={onRemoveSelectedPrice}
       />
       <CatalogSortSelector onChangeOrder={onChangeOrder} />
     </section>

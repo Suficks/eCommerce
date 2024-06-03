@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 import { searchFilterSort } from '../model/services/searchFilerSort';
 import { catalogActions } from '../model/slice/catalogSlice';
 import {
-  getCatalogPageBrands,
   getCatalogPageSelectedBrands,
   getCatalogPageMaxPrice,
   getCatalogPageMinPrice,
   getCatalogPageSearch,
   getCatalogPageSelectedCategory,
+  getCatalogPageBrands,
 } from '../model/selectors/catalogPageSelectors';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { useDebounce } from '@/shared/hooks/useDebounce';
@@ -17,7 +17,7 @@ import { SortingConsts } from '@/shared/const/SortingParams';
 export const useCatalogFilters = () => {
   const dispatch = useAppDispatch();
   const search = useAppSelector(getCatalogPageSearch);
-  const brandAttributes = useAppSelector(getCatalogPageBrands);
+  const brands = useAppSelector(getCatalogPageBrands);
   const selectedBrands = useAppSelector(getCatalogPageSelectedBrands);
   const selectedCategory = useAppSelector(getCatalogPageSelectedCategory);
   const maxPrice = useAppSelector(getCatalogPageMaxPrice);
@@ -63,7 +63,7 @@ export const useCatalogFilters = () => {
 
   const onAddBrands = useCallback(
     (value: string) => {
-      dispatch(catalogActions.setFilters(value));
+      dispatch(catalogActions.setSelectedBrands(value));
       fetchData();
     },
     [dispatch, fetchData],
@@ -96,12 +96,12 @@ export const useCatalogFilters = () => {
   );
 
   return {
-    brandAttributes,
     search,
     selectedBrands,
     maxPrice,
     minPrice,
     selectedCategory,
+    brands,
     onChangeOrder,
     onChangeSearch,
     onAddBrands,

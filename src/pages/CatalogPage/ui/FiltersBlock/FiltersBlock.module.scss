@@ -5,8 +5,10 @@
 }
   
 .wrapper {
-  @include flex(space-between, center, row, 30px);
-  flex-wrap: wrap;
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px; 
+  justify-items: center;
   margin-bottom: 30px;
 }
 
@@ -93,16 +95,3 @@
 
   pointer-events: none;
 }
-
-
-@media screen and (width <= 1050px) {
-  .wrapper {
-    justify-content: center;
-  } 
-} 
-
-@media screen and (width <= 530px) {
-  .filtersWrap {
-    @include flex(center, flex-start, column, 0)
-  } 
-} 
