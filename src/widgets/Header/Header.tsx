@@ -34,7 +34,7 @@ export const Header = () => {
     const login = localStorage.getItem(LocalStorageKeys.USER) || false;
     return (
       <div className={cls.button__wrapper}>
-        {login ? (
+        {login && (
           <Button
             text="Logout"
             className={cls.header__button}
@@ -43,38 +43,46 @@ export const Header = () => {
               navigate('/login');
             }}
           />
-        ) : (
-          false
         )}
-        <Button
-          text="Login"
-          className={`${cls.header__button} ${cls.mobile__hidden}`}
-          onClick={() => {
-            navigate('/login');
-          }}
-        />
-        <Button
-          text="Registration"
-          className={`${cls.header__button} ${cls.mobile__hidden}`}
-          onClick={() => {
-            navigate('/registration');
-          }}
-        />
-        <AppLink
-          to={Routes.LOGIN}
-          className={classNames(cls.icon, cls.mobile__visible)}
-        >
-          <FaUserPlus size={30} />
-        </AppLink>
-        <AppLink
-          to={Routes.REGISTRATION}
-          className={classNames(cls.icon, cls.mobile__visible)}
-        >
-          <AiOutlineIdcard size={30} />
-        </AppLink>
-        <AppLink to={Routes.PROFILE} className={cls.icon}>
-          <FaUser size={25} />
-        </AppLink>
+        {!login && (
+          <Button
+            text="Login"
+            className={`${cls.header__button} ${cls.mobile__hidden}`}
+            onClick={() => {
+              navigate('/login');
+            }}
+          />
+        )}
+        {!login && (
+          <Button
+            text="Registration"
+            className={`${cls.header__button} ${cls.mobile__hidden}`}
+            onClick={() => {
+              navigate('/registration');
+            }}
+          />
+        )}{' '}
+        {!login && (
+          <AppLink
+            to={Routes.LOGIN}
+            className={classNames(cls.icon, cls.mobile__visible)}
+          >
+            <FaUserPlus size={30} />
+          </AppLink>
+        )}
+        {!login && (
+          <AppLink
+            to={Routes.REGISTRATION}
+            className={classNames(cls.icon, cls.mobile__visible)}
+          >
+            <AiOutlineIdcard size={30} />
+          </AppLink>
+        )}{' '}
+        {login && (
+          <AppLink to={Routes.PROFILE} className={cls.icon}>
+            <FaUser size={25} />
+          </AppLink>
+        )}
       </div>
     );
   };
