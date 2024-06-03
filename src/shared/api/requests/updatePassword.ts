@@ -1,5 +1,4 @@
 import { apiRoot } from '../BuildClient';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 interface UpdateCustomerPasswordProps {

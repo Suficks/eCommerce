@@ -35,12 +35,19 @@ export const UpdatePassword = async (
         closeModal();
       }
     } else {
-      userMessage(ToastTypes.ERROR, 'Local Storage is empty :(');
+      userMessage(
+        ToastTypes.ERROR,
+        'Something wrong with local storage. Login and try again.',
+      );
       navigate('/main');
     }
   } catch (error) {
     if (error instanceof Error) {
-      toast.error(error.message, ToastConfig);
+      if (error.message.includes('version')) {
+        toast.error('Version error. Logout and try again.', ToastConfig);
+      } else {
+        toast.error(error.message, ToastConfig);
+      }
     }
   }
 };

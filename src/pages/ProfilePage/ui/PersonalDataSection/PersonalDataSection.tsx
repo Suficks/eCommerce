@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
 import { Validation, ValidationMessages } from '@/shared/const/Validation';
