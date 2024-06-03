@@ -2,10 +2,13 @@
 import { Product, ProductProjection } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 
 import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
+import { getCategoryById } from '@/shared/api';
 import { getProductByKey } from '@/shared/api/requests/getProduct';
 import { getProductsByCategory } from '@/shared/api/requests/getProductsByCategory';
+import { ToastConfig } from '@/shared/const/ToastConfig';
 import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
@@ -16,9 +19,9 @@ import { SimilarPrompts } from './similarPrompts/similarPrompts';
 
 export const ProductPage = () => {
   const navigate = useNavigate();
-  const { productKey } = useParams();
-  if (!productKey) {
-    throw new Error("can't find the product key");
+  const { categoryId, subcategoryId, productKey } = useParams();
+  if (!productKey || !categoryId || !subcategoryId) {
+    throw new Error('Invalid URL parameters');
   }
   const [product, setProduct] = useState<Product>({} as Product);
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,15 +33,34 @@ export const ProductPage = () => {
     const fetchProduct = async () => {
       try {
         const fetchedProduct = await getProductByKey(productKey);
+        const { categories } = fetchedProduct.masterData.current;
+        const fetchedSubCategoryId = categories[0].id;
+        const fetchedCategoryId = categories[1].id;
+
+        const productCategory =
+          categoryId ===
+            (await getCategoryById(fetchedCategoryId).then(
+              (data) => data[0].key,
+            )) &&
+          subcategoryId ===
+            (await getCategoryById(fetchedSubCategoryId).then(
+              (data) => data[0].key,
+            ));
+        if (!productCategory) {
+          throw new Error('Category or subcategory mismatch');
+        }
         setProduct(fetchedProduct);
         setLoading(false);
       } catch (error) {
         navigate('*');
-        console.error('Failed to fetch product:', error);
+        toast.error(
+          'Failed to fetch product or invalid URL parameters',
+          ToastConfig,
+        );
       }
     };
     fetchProduct();
-  }, [navigate, productKey]);
+  }, [navigate, productKey, categoryId, subcategoryId]);
 
   useEffect(() => {
     const fetchProducts = async () => {
