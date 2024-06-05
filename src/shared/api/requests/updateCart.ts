@@ -176,7 +176,7 @@ export async function addNewProductInCartOrUpdateQuantity(
       e instanceof Error &&
       (e.message === 'Missing required option (refreshToken)' ||
         e.message ===
-        'The refresh token was not found. It may have expired.') &&
+          'The refresh token was not found. It may have expired.') &&
       firstFunctionCall
     ) {
       localStorage.removeItem(LocalStorageKeys.USER);
@@ -231,7 +231,7 @@ export async function getActiveCart(
       e instanceof Error &&
       (e.message === 'Missing required option (refreshToken)' ||
         e.message ===
-        'The refresh token was not found. It may have expired.') &&
+          'The refresh token was not found. It may have expired.') &&
       firstFunctionCall
     ) {
       localStorage.removeItem(LocalStorageKeys.USER);
