@@ -1,4 +1,4 @@
-import { ApiRoot } from '@commercetools/platform-sdk';
+import { ApiRoot, Cart } from '@commercetools/platform-sdk';
 import {
   ParentCategoryName,
   ItemsCategoryName,
@@ -42,4 +42,14 @@ export type FilterSortSearchParameters = {
   maxPrice: number;
   attributesToSort?: CatalogSortObject;
   search?: string;
+};
+
+export type UpdateCartMode = 'new' | 'update' | 'remove';
+
+export type UpdateCartParams = {
+  cartData: Cart | null;
+  mode: UpdateCartMode;
+  cardId: string;
+  quantity: number;
+  firstFunctionCall: boolean;
 };

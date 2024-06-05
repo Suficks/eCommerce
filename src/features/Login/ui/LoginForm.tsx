@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/shared/hooks/redux';
 import { loginThunk } from '../model/services/loginThunk';
 import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
-import { LoginSubmitData } from '../model/types/LoginSchema';
+import { LoginSubmitData } from '../model/types/Login';
 import cls from './LoginForm.module.scss';
 import { ToastConfig } from '@/shared/const/ToastConfig';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';

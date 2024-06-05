@@ -6,11 +6,11 @@ import { loginUser } from '@/shared/api';
 import { userActions } from '@/entities/User';
 import { ThunkConfig } from '@/app/store/types/StateSchema';
 
-export const loginThunk = createAsyncThunk<
+export const cartThunk = createAsyncThunk<
   ByProjectKeyRequestBuilder,
   LoginSubmitData,
   ThunkConfig<string>
->('login/loginThunk', async ({ email, password }, thunkApi) => {
+>('cart/cartThunk', async ({ email, password }, thunkApi) => {
   const { rejectWithValue, dispatch } = thunkApi;
 
   try {
@@ -24,6 +24,6 @@ export const loginThunk = createAsyncThunk<
 
     return response;
   } catch (e) {
-    return rejectWithValue((e as Error).message);
+    return rejectWithValue('error');
   }
 });

@@ -5,14 +5,13 @@ import {
 } from '@reduxjs/toolkit';
 
 import { StateSchema } from '../types/StateSchema';
-import { loginReducer } from '@/features/Login';
 import { userReducer } from '@/entities/User';
 import { catalogReducer } from '@/pages/CatalogPage/model/slice/catalogSlice';
 
 const reducers: ReducersMapObject<StateSchema> = {
-  loginForm: loginReducer,
   user: userReducer,
   catalog: catalogReducer,
+  // cart: cartReducer,
 };
 
 const rootReducer = combineReducers(reducers);
