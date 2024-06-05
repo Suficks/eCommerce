@@ -25,13 +25,17 @@ export async function getFilterSortSearchProducts(
     limit: itemPerPage,
   };
 
+  const formattedBrands = selectedFiltersList
+    .map((brand) => `"${brand}"`)
+    .join(',\n');
+
   if (Array.isArray(queryArgs.filter)) {
     if (selectedCategoryId) {
       queryArgs.filter.push(`categories.id:"${selectedCategoryId}"`);
     }
     if (attributesToFilter.name && selectedFiltersList.length) {
       queryArgs.filter.push(
-        `variants.attributes.${attributesToFilter.name}:"${selectedFiltersList}"`,
+        `variants.attributes.${attributesToFilter.name}:${formattedBrands}`,
       );
     }
     if (attributesToFilter.name && !selectedFiltersList.length) {

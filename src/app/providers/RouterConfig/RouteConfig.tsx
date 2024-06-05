@@ -9,6 +9,7 @@ import { NotFound } from '@/pages/NotFound/NotFound';
 import { ProductPage } from '@/pages/ProductPage/ProductPage';
 import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
+import { CartPage } from '@/pages/CartPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -100,9 +101,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.CART,
-    element: (
-      <NotFound additionalMessage="The CART page will be created during the next sprint." />
-    ),
+    element: <CartPage />,
     nodeRef: createRef<HTMLDivElement>(),
   },
   {

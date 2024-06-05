@@ -43,14 +43,31 @@ export const AllProductsBlock = forwardRef<
           <div className={cls.no_products}>Products not found</div>
         )}
         {products.map((item) => {
-          const { masterVariant } = item;
+          const {
+            masterVariant,
+            id,
+            productType,
+            categories,
+            key,
+            name,
+            description,
+          } = item;
           const { images, prices = [] } = masterVariant;
           const { value: regularPrice, discounted } = prices[0];
 
           return (
-            <div key={item.id} className={cls.product}>
+            <button
+              type="button"
+              key={id}
+              className={cls.product}
+              onClick={handleOnClick(
+                productType.id,
+                categories?.[0].id,
+                key || '',
+              )}
+            >
               <img src={images?.[0]?.url || ''} alt="" className={cls.image} />
-              <p className={cls.name}>{item.name['en-GB']}</p>
+              <p className={cls.name}>{name['en-GB']}</p>
               <div className={cls.price_wrapper}>
                 {discounted ? (
                   <div className={cls.prices}>
@@ -68,20 +85,15 @@ export const AllProductsBlock = forwardRef<
                 )}
                 <p className={cls.reviews}>186 Reviews</p>
               </div>
-              <p className={cls.description}>{item.description?.['en-GB']}</p>
+              <p className={cls.description}>{description?.['en-GB']}</p>
               <Button
-                onClick={handleOnClick(
-                  item.productType.id,
-                  item.categories?.[0].id,
-                  item.key || '',
-                )}
                 small
                 className={cls.button}
                 transparent
-                text="Buy Now"
+                text="Add to Cart"
                 green
               />
-            </div>
+            </button>
           );
         })}
       </div>
