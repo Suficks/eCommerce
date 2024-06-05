@@ -26,7 +26,6 @@ import { getAdditionalInfo } from '../../model/services/getAdditionalInfo';
 import { ToastConfig } from '@/shared/const/ToastConfig';
 
 import cls from './CatalogPage.module.scss';
-import { catalogActions } from '../../model/slice/catalogSlice';
 
 interface CatalogPageProps {
   className?: string;
@@ -40,6 +39,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   const products = useAppSelector(getCatalogPageProducts);
   const categories = useAppSelector(getCatalogPageCategories);
   const discountProducts = useAppSelector(getCatalogPageDiscountProducts);
+
   const { categoryId, subcategoryId } = useParams();
   const { onChangeSelectedCategory } = useCatalogFilters();
 
@@ -72,7 +72,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   }, [dispatch]);
 
   const getAllProductsHandler = useCallback(async () => {
-    await dispatch(fetchAllProducts({ currentOffset: 0, itemPerPage: 80 }));
+    await dispatch(fetchAllProducts());
   }, [dispatch]);
 
   useEffect(() => {
