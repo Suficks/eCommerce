@@ -17,6 +17,10 @@ import cls from './ProductPage.module.scss';
 import { SimilarPrompts } from './similarPrompts/similarPrompts';
 
 export const ProductPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const navigate = useNavigate();
   const { categoryId, subcategoryId, productKey } = useParams();
   if (!productKey || !categoryId || !subcategoryId) {
@@ -27,7 +31,6 @@ export const ProductPage = () => {
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>(
     [],
   );
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
