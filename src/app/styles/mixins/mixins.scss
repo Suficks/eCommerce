@@ -4,3 +4,11 @@
   font-family: Montserrat, sans-serif;
   line-height: $lineHeight;
 }
+
+@mixin flex($justify-content: null, $align-items: $justify-content, $direction: null, $gap: null) {
+  display: flex;
+  flex-direction: $direction;
+  gap: $gap;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}

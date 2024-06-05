@@ -1,26 +1,21 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useEffect } from 'react';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import Bottle from '@/shared/assets/images/bottle.svg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
-import HeaderImage from '@/shared/assets/images/header1.jpg';
-import Icon_facebook from '@/shared/assets/images/icon_facebook.png';
-import Icon_instagram from '@/shared/assets/images/icon_instagram.png';
-import Icon_telegram from '@/shared/assets/images/icon_telegram.png';
-import Icon_youtube from '@/shared/assets/images/icon_youtube.png';
 import Background from '@/shared/assets/images/info_background.webp';
 import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import Product_1 from '@/shared/assets/images/product_1.png';
-import Product_2 from '@/shared/assets/images/product_2.png';
-import Product_3 from '@/shared/assets/images/product_3.png';
-import animation_background from '@/shared/assets/video/background_video.mp4';
+import BagImage from '@/shared/assets/images/bag_image.jpg';
+import CaseImage from '@/shared/assets/images/case_image.jpg';
+import CandleImage from '@/shared/assets/images/candle_image.jpg';
 import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
+import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
 
-import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import cls from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -36,7 +31,6 @@ export const MainPage = (props: MainPageProps) => {
   return (
     <main className={classNames(cls.MainPage, {}, [className])}>
       <div className={cls.wrapper}>
-        <img src={HeaderImage} alt="" className={cls.headerImage} />
         <Header />
         <section className={cls.mainBlock}>
           <h1 className={cls.title}>Don’t Panic, it’s</h1>
@@ -78,13 +72,31 @@ export const MainPage = (props: MainPageProps) => {
             <div className={cls.products}>
               <div className={cls.productsWrapper}>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_1} alt="product_1" width={210} />
+                  <Card
+                    clickable
+                    image={CaseImage}
+                    alt="product_1"
+                    width={210}
+                    transparent
+                  />
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_3} alt="product_3" width={230} />
+                  <Card
+                    clickable
+                    image={BagImage}
+                    alt="product_3"
+                    width={210}
+                    transparent
+                  />
                 </NavLink>
                 <NavLink to={Routes.CATALOG}>
-                  <Card image={Product_2} alt="product_2" width={210} />
+                  <Card
+                    clickable
+                    image={CandleImage}
+                    alt="product_2"
+                    width={210}
+                    transparent
+                  />
                 </NavLink>
               </div>
               <NavLink to={Routes.CATALOG} className={cls.linkAsButton}>
@@ -92,42 +104,7 @@ export const MainPage = (props: MainPageProps) => {
               </NavLink>
             </div>
           </div>
-          <div className={cls.socialMedia}>
-            <video autoPlay loop muted className={cls.videoBackground}>
-              <source src={animation_background} type="video/mp4" />
-            </video>
-            <p>Let’s get Social!</p>
-            <div className={cls.iconWrapper}>
-              <NavLink to="https://www.instagram.com/ecobar_by/?hl=ru">
-                <img
-                  src={Icon_instagram}
-                  alt="our_instagram"
-                  className={cls.icon}
-                />
-              </NavLink>
-              <NavLink to="https://t.me/noplasticitsfantastic_store">
-                <img
-                  src={Icon_telegram}
-                  alt="our_telegram"
-                  className={cls.icon}
-                />
-              </NavLink>
-              <NavLink to="https://www.facebook.com/ecobarby/">
-                <img
-                  src={Icon_facebook}
-                  alt="our_facebook"
-                  className={cls.icon}
-                />
-              </NavLink>
-              <NavLink to="https://www.youtube.com/channel/UC9XoSUHD5wztVgqnCKQqSDg">
-                <img
-                  src={Icon_youtube}
-                  alt="our_youtube"
-                  className={cls.icon}
-                />
-              </NavLink>
-            </div>
-          </div>
+          <Footer />
         </section>
       </div>
     </main>

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
-import LogoSVG from '@/shared/assets/images/logo.svg';
+import LogoImage from '@/shared/assets/images/logo.png';
 import cls from './Logo.module.scss';
 
 interface LogoProps {
@@ -16,7 +16,7 @@ export const Logo = ({ className, left }: LogoProps) => {
       to={Routes.MAIN}
       className={classNames(cls.logo, { [cls.left]: left }, className)}
     >
-      <LogoSVG />
+      <img src={LogoImage} alt="Prakriti Logo" />
     </Link>
   );
 };

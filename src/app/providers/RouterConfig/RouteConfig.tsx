@@ -1,9 +1,13 @@
 import { LegacyRef, createRef } from 'react';
 import { IndexRouteObject, NonIndexRouteObject } from 'react-router-dom';
 
+import { loadClient } from '@/features/Loader/LoadClient';
+import { CatalogPage } from '@/pages/CatalogPage';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage/MainPage';
 import { NotFound } from '@/pages/NotFound/NotFound';
+import { ProductPage } from '@/pages/ProductPage/ProductPage';
+import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 
 export enum Routes {
@@ -12,12 +16,16 @@ export enum Routes {
   MAIN = '/main',
   CATALOG = '/catalog',
   CATEGORY_ID = ':categoryId',
-  PRODUCT_ID = ':productId',
+  SUBCATEGORY_ID = ':categoryId/:subcategoryId',
+  PRODUCT = '/catalog/:categoryId/:subcategoryId/:productKey',
   PROFILE = '/profile',
   CART = '/cart',
   ABOUT = '/about',
   ROOT = '/',
   NOT_FOUND = '/*',
+}
+export enum PageIDs {
+  PROFILE = 'profile',
 }
 
 type IndexRouteObjectWithPath = Exclude<
@@ -58,9 +66,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.CATALOG,
-    element: (
-      <NotFound additionalMessage="The CATALOG page will be created during the next sprint" />
-    ),
+    element: <CatalogPage />,
     nodeRef: createRef<HTMLDivElement>(),
     children: [
       {
@@ -69,23 +75,27 @@ export const routeConfig: RouteConfig[] = [
           <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
         ),
         nodeRef: createRef<HTMLDivElement>(),
-        children: [
-          {
-            path: Routes.PRODUCT_ID,
-            element: (
-              <NotFound additionalMessage="The PRODUCT_ID page will be created during the next sprint." />
-            ),
-            nodeRef: createRef<HTMLDivElement>(),
-          },
-        ],
+      },
+      {
+        path: Routes.SUBCATEGORY_ID,
+        element: (
+          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
+        ),
+        nodeRef: createRef<HTMLDivElement>(),
       },
     ],
   },
   {
+    path: Routes.PRODUCT,
+    element: <ProductPage />,
+    nodeRef: createRef<HTMLDivElement>(),
+  },
+  {
     path: Routes.PROFILE,
-    element: (
-      <NotFound additionalMessage="The PROFILE page will be created during the next sprint." />
-    ),
+    id: PageIDs.PROFILE,
+    loader: loadClient,
+    element: <ProfilePage />,
+    errorElement: <NotFound additionalMessage="Some error occured!" />,
     nodeRef: createRef<HTMLDivElement>(),
   },
   {

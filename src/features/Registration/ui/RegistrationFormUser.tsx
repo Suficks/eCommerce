@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useCallback, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Input } from '@/shared/ui/input/input';
 import { Button } from '@/shared/ui/button/button';
-import { Validation, ValidationErrors } from '@/shared/const/Validation';
+import { Validation, ValidationMessages } from '@/shared/const/Validation';
 import { AppError } from '@/shared/ui/AppError/AppError';
 import { Select } from '@/shared/ui/Select/Select';
 import { SubmitData } from '@/features/Registration';
@@ -19,11 +19,13 @@ import { loginThunk } from '@/features/Login/model/services/loginThunk';
 export interface RegistrationFormProps {
   className?: string;
   onSuccess?: () => void;
+  setLoading: (value: boolean) => void;
 }
 
 export const RegistrationFormUser = ({
   className,
   onSuccess,
+  setLoading,
 }: RegistrationFormProps) => {
   const dispatch = useAppDispatch();
   const {
@@ -33,6 +35,7 @@ export const RegistrationFormUser = ({
     getValues,
     setValue,
     trigger,
+    control,
   } = useForm<SubmitData>({
     mode: 'onChange',
     defaultValues: {
@@ -51,6 +54,7 @@ export const RegistrationFormUser = ({
   const onSubmit = useCallback(async () => {
     const values = getValues();
     try {
+      setLoading(true);
       const result = await dispatch(signUpUserThunk(values)).unwrap();
       if (result && onSuccess) {
         await dispatch(
@@ -62,15 +66,25 @@ export const RegistrationFormUser = ({
       if (typeof error === 'string') {
         setServerError(error);
       }
+    } finally {
+      setLoading(false);
     }
-  }, [dispatch, getValues, onSuccess]);
+  }, [dispatch, getValues, onSuccess, setLoading]);
 
   const handleBilling = () => {
     if (getValues('shippingAsBilling')) {
-      setValue('billingCountry', getValues('shippingCountry'));
-      setValue('billingCity', getValues('shippingCity'));
-      setValue('billingStreet', getValues('shippingStreet'));
-      setValue('billingPostal', getValues('shippingPostal'));
+      setValue('billingCountry', getValues('shippingCountry'), {
+        shouldValidate: true,
+      });
+      setValue('billingCity', getValues('shippingCity'), {
+        shouldValidate: true,
+      });
+      setValue('billingStreet', getValues('shippingStreet'), {
+        shouldValidate: true,
+      });
+      setValue('billingPostal', getValues('shippingPostal'), {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -82,10 +96,10 @@ export const RegistrationFormUser = ({
       <div className={cls.input__wrapper}>
         <Input
           register={register('email', {
-            required: ValidationErrors.email.required,
+            required: ValidationMessages.email.required,
             pattern: {
               value: Validation.email,
-              message: ValidationErrors.email.error,
+              message: ValidationMessages.email.error,
             },
             onChange: () => {
               setServerError('');
@@ -96,7 +110,7 @@ export const RegistrationFormUser = ({
           label="Email"
           className={errors.email && cls.invalid}
         />
-        {errors?.email && AppError({ text: errors.email?.message || 'Error!' })}
+        {errors?.email && AppError({ text: errors.email?.message ?? 'Error!' })}
       </div>
       <div className={cls.input__wrapper}>
         <Input
@@ -120,10 +134,10 @@ export const RegistrationFormUser = ({
             )
           }
           register={register('password', {
-            required: ValidationErrors.password.required,
+            required: ValidationMessages.password.required,
             pattern: {
               value: Validation.password,
-              message: ValidationErrors.password.error,
+              message: ValidationMessages.password.error,
             },
             onChange: () => {
               setValue('passwordConfirm', `${getValues('passwordConfirm')}`, {
@@ -133,7 +147,7 @@ export const RegistrationFormUser = ({
           })}
         />
         {errors?.password &&
-          AppError({ text: errors.password?.message || 'Error!' })}
+          AppError({ text: errors.password?.message ?? 'Error!' })}
       </div>
       <div className={cls.input__wrapper}>
         <Input
@@ -157,13 +171,13 @@ export const RegistrationFormUser = ({
             )
           }
           register={register('passwordConfirm', {
-            required: ValidationErrors.password.required,
+            required: ValidationMessages.password.required,
             validate: (value) =>
               Validation.confirmPassword(value, getValues('password')),
           })}
         />
         {errors?.passwordConfirm &&
-          AppError({ text: errors.passwordConfirm?.message || 'Error!' })}
+          AppError({ text: errors.passwordConfirm?.message ?? 'Error!' })}
       </div>
       <fieldset className={cls.field__wrapper}>
         <legend className={cls.field__heading}>Personal data</legend>
@@ -174,15 +188,15 @@ export const RegistrationFormUser = ({
             className={errors.username && cls.invalid}
             type="text"
             register={register('username', {
-              required: ValidationErrors.username.required,
+              required: ValidationMessages.username.required,
               pattern: {
                 value: Validation.username,
-                message: ValidationErrors.username.error,
+                message: ValidationMessages.username.error,
               },
             })}
           />
           {errors?.username &&
-            AppError({ text: errors.username?.message || 'Error!' })}
+            AppError({ text: errors.username?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -191,15 +205,15 @@ export const RegistrationFormUser = ({
             className={errors.surname && cls.invalid}
             type="text"
             register={register('surname', {
-              required: ValidationErrors.surname.required,
+              required: ValidationMessages.surname.required,
               pattern: {
                 value: Validation.surname,
-                message: ValidationErrors.surname.error,
+                message: ValidationMessages.surname.error,
               },
             })}
           />
           {errors?.surname &&
-            AppError({ text: errors.surname?.message || 'Error!' })}
+            AppError({ text: errors.surname?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -207,26 +221,33 @@ export const RegistrationFormUser = ({
             className={`${errors.birthdate && cls.invalid} ${cls.input__date}`}
             type="date"
             register={register('birthdate', {
-              required: ValidationErrors.birthDate.required,
+              required: ValidationMessages.birthDate.required,
               validate: (value) => Validation.birthDate(value),
             })}
           />
           {errors?.birthdate &&
-            AppError({ text: errors.birthdate?.message || 'Error!' })}
+            AppError({ text: errors.birthdate?.message ?? 'Error!' })}
         </div>
       </fieldset>
       <fieldset className={cls.field__wrapper}>
         <legend className={cls.field__heading}>Shipping address</legend>
         <div className={cls.input__wrapper}>
-          <Select
-            label="Country"
-            optionValues={['Poland', 'Russia', 'Belarus']}
-            register={register('shippingCountry', {
-              onChange: () => {
-                setValue('shippingPostal', '', { shouldValidate: true });
-                handleBilling();
-              },
-            })}
+          <Controller
+            control={control}
+            render={({ field: { name, onChange = () => {} } }) => (
+              <Select
+                label="Country"
+                optionValues={['Poland', 'Russia', 'Belarus']}
+                onChange={onChange}
+                register={register(name, {
+                  onChange: () => {
+                    setValue('shippingPostal', '', { shouldValidate: true });
+                    handleBilling();
+                  },
+                })}
+              />
+            )}
+            name="shippingCountry"
           />
         </div>
         <div className={cls.input__wrapper}>
@@ -236,10 +257,10 @@ export const RegistrationFormUser = ({
             className={errors.shippingCity && cls.invalid}
             type="text"
             register={register('shippingCity', {
-              required: ValidationErrors.shipping.city.required,
+              required: ValidationMessages.shipping.city.required,
               pattern: {
                 value: Validation.city,
-                message: ValidationErrors.shipping.city.error,
+                message: ValidationMessages.shipping.city.error,
               },
               onChange: async () => {
                 handleBilling();
@@ -247,7 +268,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingCity &&
-            AppError({ text: errors.shippingCity?.message || 'Error!' })}
+            AppError({ text: errors.shippingCity?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -256,10 +277,10 @@ export const RegistrationFormUser = ({
             className={errors.shippingStreet && cls.invalid}
             type="text"
             register={register('shippingStreet', {
-              required: ValidationErrors.shipping.street.required,
+              required: ValidationMessages.shipping.street.required,
               pattern: {
                 value: Validation.street,
-                message: ValidationErrors.shipping.street.error,
+                message: ValidationMessages.shipping.street.error,
               },
               onChange: async () => {
                 handleBilling();
@@ -267,7 +288,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingStreet &&
-            AppError({ text: errors.shippingStreet?.message || 'Error!' })}
+            AppError({ text: errors.shippingStreet?.message ?? 'Error!' })}
         </div>
         <div className={cls.input__wrapper}>
           <Input
@@ -276,7 +297,7 @@ export const RegistrationFormUser = ({
             className={errors.shippingPostal && cls.invalid}
             type="text"
             register={register('shippingPostal', {
-              required: ValidationErrors.shipping.postal.required,
+              required: ValidationMessages.shipping.postal.required,
               validate: (value) =>
                 Validation.postalCode(value, getValues('shippingCountry')),
               onChange: async () => {
@@ -285,7 +306,7 @@ export const RegistrationFormUser = ({
             })}
           />
           {errors?.shippingPostal &&
-            AppError({ text: errors.shippingPostal?.message || 'Error!' })}
+            AppError({ text: errors.shippingPostal?.message ?? 'Error!' })}
         </div>
         <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
           <Input
@@ -307,7 +328,6 @@ export const RegistrationFormUser = ({
             register={register('shippingAsBilling', {
               onChange: async () => {
                 handleBilling();
-                await trigger('shippingAsBilling'); // need this to force rerender component on state change
               },
             })}
           />
@@ -318,14 +338,22 @@ export const RegistrationFormUser = ({
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
         >
-          <Select
-            label="Country"
-            optionValues={['Poland', 'Russia', 'Belarus']}
-            register={register('billingCountry', {
-              onChange: () => {
-                setValue('billingPostal', '', { shouldValidate: true });
-              },
-            })}
+          <Controller
+            control={control}
+            render={({ field: { name, onChange } }) => (
+              <Select
+                label="Country"
+                optionValues={['Poland', 'Russia', 'Belarus']}
+                onChange={onChange}
+                register={register(name, {
+                  onChange: async () => {
+                    // await trigger('billingPostal');
+                    setValue('billingPostal', '', { shouldValidate: true });
+                  },
+                })}
+              />
+            )}
+            name="billingCountry"
           />
         </div>
         <div
@@ -337,15 +365,15 @@ export const RegistrationFormUser = ({
             className={errors.billingCity && cls.invalid}
             type="text"
             register={register('billingCity', {
-              required: ValidationErrors.shipping.city.required,
+              required: ValidationMessages.shipping.city.required,
               pattern: {
                 value: Validation.city,
-                message: ValidationErrors.shipping.city.error,
+                message: ValidationMessages.shipping.city.error,
               },
             })}
           />
           {errors?.billingCity &&
-            AppError({ text: errors.billingCity?.message || 'Error!' })}
+            AppError({ text: errors.billingCity?.message ?? 'Error!' })}
         </div>
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
@@ -356,15 +384,15 @@ export const RegistrationFormUser = ({
             className={errors.billingStreet && cls.invalid}
             type="text"
             register={register('billingStreet', {
-              required: ValidationErrors.shipping.street.required,
+              required: ValidationMessages.shipping.street.required,
               pattern: {
                 value: Validation.street,
-                message: ValidationErrors.shipping.street.error,
+                message: ValidationMessages.shipping.street.error,
               },
             })}
           />
           {errors?.billingStreet &&
-            AppError({ text: errors.billingStreet?.message || 'Error!' })}
+            AppError({ text: errors.billingStreet?.message ?? 'Error!' })}
         </div>
         <div
           className={`${cls.input__wrapper} ${getValues('shippingAsBilling') && cls.blocked}`}
@@ -375,13 +403,13 @@ export const RegistrationFormUser = ({
             className={errors.billingPostal && cls.invalid}
             type="text"
             register={register('billingPostal', {
-              required: ValidationErrors.shipping.postal.required,
+              required: ValidationMessages.shipping.postal.required,
               validate: (value) =>
                 Validation.postalCode(value, getValues('billingCountry')),
             })}
           />
           {errors?.billingPostal &&
-            AppError({ text: errors.billingPostal?.message || 'Error!' })}
+            AppError({ text: errors.billingPostal?.message ?? 'Error!' })}
         </div>
         <div className={`${cls.input__wrapper} ${cls.checkbox__wrapper}`}>
           <Input
