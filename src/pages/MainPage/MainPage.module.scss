@@ -174,3 +174,29 @@
     }
   }
 }
+
+.promoCodes {
+  max-width: 100%;
+
+  @include flex(center, center, column, 30px);
+  padding: 10px;
+}
+
+.promoCodesTitle {
+  @include montserrat(50px, 700, 60px);
+  color: $green;
+}
+
+.descriptionWrapper {
+  @include flex(center, center, column, 30px);
+}
+
+.promoCodeName {
+  @include montserrat(40px, 600, 50px);
+  color: $green;
+  text-shadow: 0 0 10px rgb(0 255 0 / 70%);
+}
+
+.promoCodesDescription {
+  @include montserrat(35px, 600, 50px);
+}
