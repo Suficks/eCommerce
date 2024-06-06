@@ -70,15 +70,11 @@ export const catalogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(
         fetchAllProducts.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {
-          state.products = payload;
+          state.products.push(...payload);
           state.hasMore = payload.length >= state.limit;
-          state.isLoading = false;
 
           const newBrands = new Set<string>(
             state.products
