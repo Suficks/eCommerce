@@ -12,7 +12,6 @@ import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation'
 import {
   getCatalogPageHasMore,
   getCatalogPageIsLoading,
-  getCatalogPageLimit,
 } from '../../model/selectors/catalogPageSelectors';
 import { fetchNextPart } from '../../model/services/fetchNextPart';
 
@@ -31,7 +30,6 @@ export const AllProductsBlock = forwardRef<
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const hasMore = useAppSelector(getCatalogPageHasMore);
-  const limit = useAppSelector(getCatalogPageLimit);
 
   const onLoadNextPart = useCallback(() => {
     dispatch(fetchNextPart());

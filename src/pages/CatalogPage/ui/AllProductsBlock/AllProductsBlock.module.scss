@@ -29,8 +29,11 @@
 .product {
   @include flex(space-between, flex-start, column);
   max-width: 340px;
-  max-height: 1215px;
-  overflow-y: auto;
+  border: none;
+
+  text-align: start;
+
+  background: transparent;
 
   transition: 0.3s ease;
 
