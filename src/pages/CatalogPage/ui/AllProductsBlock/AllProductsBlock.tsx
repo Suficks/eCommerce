@@ -13,7 +13,6 @@ import { getCatalogPageIsLoading } from '../../model/selectors/catalogPageSelect
 import loader from '@/shared/assets/images/loader.gif';
 import {
   addToCart,
-  getCartIsAdd,
   getCartIsLoading,
   getCartLoadingProductId,
 } from '@/entities/Cart';
@@ -34,7 +33,6 @@ export const AllProductsBlock = forwardRef<
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const isLoadingCard = useAppSelector(getCartIsLoading);
   const loadingProductId = useAppSelector(getCartLoadingProductId);
-  const isAdd = useAppSelector(getCartIsAdd);
 
   if (isLoading) {
     return <LoadingAnimation />;
@@ -50,6 +48,32 @@ export const AllProductsBlock = forwardRef<
 
   const onAddToCart = (cardId: string, quantity: number) => () => {
     dispatch(addToCart({ cardId, quantity }));
+  };
+
+  const setButtonView = (id: string) => {
+    const isCurrentSelectedProduct = loadingProductId === id;
+    const isCurrentSelectedProductLoading =
+      isLoadingCard && isCurrentSelectedProduct;
+
+    if (isCurrentSelectedProductLoading) {
+      return <img src={loader} alt="loader" className={cls.loader} />;
+    }
+
+    if (isCurrentSelectedProduct) {
+      return <div className={cls.added}>Product added to cart!</div>;
+    }
+
+    return (
+      <Button
+        small
+        className={cls.button}
+        transparent
+        text="Add to Cart"
+        green
+        onClick={onAddToCart(id, 1)}
+        icon={<BsCart2 className={cls.cartIcon} />}
+      />
+    );
   };
 
   return (
@@ -70,13 +94,12 @@ export const AllProductsBlock = forwardRef<
           } = item;
           const { images, prices = [] } = masterVariant;
           const { value: regularPrice, discounted } = prices[0];
-          const isCurrentSelectedProduct = loadingProductId === id;
 
           return (
-            <div key={id}>
+            <div key={id} className={cls.product}>
               <button
                 type="button"
-                className={cls.product}
+                className={cls.clickableCard}
                 onClick={onOpenProduct(
                   productType.id,
                   categories?.[0].id,
@@ -108,22 +131,7 @@ export const AllProductsBlock = forwardRef<
                 </div>
                 <p className={cls.description}>{description?.['en-GB']}</p>
               </button>
-              {isLoadingCard && isCurrentSelectedProduct ? (
-                <img src={loader} alt="loader" className={cls.loader} />
-              ) : (
-                <Button
-                  small
-                  className={cls.button}
-                  transparent
-                  text="Add to Cart"
-                  green
-                  onClick={onAddToCart(id, 1)}
-                  icon={<BsCart2 className={cls.cartIcon} />}
-                />
-              )}
-              {isAdd && isCurrentSelectedProduct && (
-                <div>Product added to cart!</div>
-              )}
+              {setButtonView(id)}
             </div>
           );
         })}

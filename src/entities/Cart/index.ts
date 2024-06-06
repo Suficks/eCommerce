@@ -1,3 +1,4 @@
+export type { CartSchema } from './model/types/Cart';
 export {
   getCartIsLoading,
   getCartIsAdd,

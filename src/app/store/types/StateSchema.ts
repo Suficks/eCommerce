@@ -1,5 +1,5 @@
+import { CartSchema } from '@/entities/Cart';
 import { UserSchema } from '@/entities/User';
-import { CartSchema } from '@/pages/CartPage';
 import { CatalogSchema } from '@/pages/CatalogPage';
 
 export interface StateSchema {

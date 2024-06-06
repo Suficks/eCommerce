@@ -2,6 +2,7 @@ export { getFilterSortSearchProducts } from './requests/getFilterSortSearchProdu
 export type {
   CategoryCustom,
   FilterSortSearchParameters,
+  UpdateCartParams,
 } from './types/apiTypes';
 export { signUpUser } from './requests/signUpUser';
 export { loginUser } from './requests/loginUser';

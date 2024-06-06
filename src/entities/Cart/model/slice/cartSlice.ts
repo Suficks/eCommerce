@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Cart } from '@commercetools/platform-sdk';
 
 import { addToCart } from '../services/addToCart';
-import { CartSchema } from '@/pages/CartPage';
+import { CartSchema } from '../types/Cart';
 
 const initialState: CartSchema = {
   products: [],
@@ -27,8 +27,9 @@ export const cartSlice = createSlice({
         (state, { payload }: PayloadAction<Cart>) => {
           state.products.push(...payload.lineItems);
           state.isLoading = false;
-          state.isAdd = true;
-          state.loadingProductId = null;
+          state.isAdd = payload.lineItems.some(
+            (item) => item.productId === state.loadingProductId,
+          );
         },
       )
       .addCase(addToCart.rejected, (state) => {

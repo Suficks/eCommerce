@@ -26,8 +26,7 @@
 }
 
 .product {
-  display: flex;
-  flex-direction: column;
+  @include flex(space-between, flex-start, column);
   max-width: 340px;
   border: none;
 
@@ -40,6 +39,14 @@
   &:hover {
     transform: scale(1.05);
   }
+}
+
+.clickableCard {
+  border: none;
+
+  text-align: start;
+
+  background: transparent;
 }
 
 .price {
@@ -95,4 +102,8 @@
 
 .loader {
   width: 45px;
+}
+
+.added {
+  color: $green;
 }

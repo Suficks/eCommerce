@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Cart } from '@commercetools/platform-sdk';
 import {
-  addNewProductInCartOrUpdateQuantity,
   UpdateCartParams,
+  addNewProductInCartOrUpdateQuantity,
 } from '@/shared/api';
 import { ThunkConfig } from '@/app/store/types/StateSchema';
 
