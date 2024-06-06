@@ -47,9 +47,9 @@ export type FilterSortSearchParameters = {
 export type UpdateCartMode = 'new' | 'update' | 'remove';
 
 export type UpdateCartParams = {
-  cartData: Cart | null;
-  mode: UpdateCartMode;
+  cartData?: Cart | null;
+  mode?: UpdateCartMode;
   cardId: string;
   quantity: number;
-  firstFunctionCall: boolean;
+  firstFunctionCall?: boolean;
 };

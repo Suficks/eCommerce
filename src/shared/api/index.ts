@@ -12,3 +12,4 @@ export { getProductTypeById } from './requests/getProductTypeById';
 export { getCategoryById } from './requests/getCategoryById';
 export type { AllProductsProps } from './requests/getAllProducts';
 export { getCategoryByKey } from './requests/getCategoryByKey';
+export { addNewProductInCartOrUpdateQuantity } from './requests/updateCart';

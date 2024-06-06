@@ -85,3 +85,14 @@
 
   @include montserrat(20px, 400, 20px);
 }
+
+.cartIcon {
+  width: 20px;
+  height: 20px;
+
+  fill: $green;
+}
+
+.loader {
+  width: 45px;
+}

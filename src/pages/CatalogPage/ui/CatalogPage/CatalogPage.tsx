@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
-import { NotFound } from '@commercetools/sdk-client-v2/dist/declarations/src/sdk-client/errors';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';

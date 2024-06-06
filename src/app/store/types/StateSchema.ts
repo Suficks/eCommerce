@@ -5,7 +5,7 @@ import { CatalogSchema } from '@/pages/CatalogPage';
 export interface StateSchema {
   user: UserSchema;
   catalog: CatalogSchema;
-  // cart: CartSchema;
+  cart: CartSchema;
 }
 
 export interface ThunkConfig<T> {

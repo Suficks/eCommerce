@@ -65,9 +65,6 @@ export const catalogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(
         fetchAllProducts.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {
@@ -91,7 +88,6 @@ export const catalogSlice = createSlice({
         (state, { payload }: PayloadAction<CatalogPageData>) => {
           state.discountProducts = payload.discountProducts || [];
           state.categories = payload.categories || [];
-          state.isLoading = false;
         },
       )
       .addCase(
