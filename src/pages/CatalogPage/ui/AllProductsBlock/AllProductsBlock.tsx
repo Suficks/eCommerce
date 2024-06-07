@@ -2,8 +2,9 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 import { forwardRef, useCallback } from 'react';
-
+import { BsCart2 } from 'react-icons/bs';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
@@ -13,6 +14,13 @@ import {
   getCatalogPageHasMore,
   getCatalogPageIsLoading,
 } from '../../model/selectors/catalogPageSelectors';
+import loader from '@/shared/assets/images/loader.gif';
+import {
+  addToCart,
+  getCartIsLoading,
+  getCartLoadingProductsIds,
+  getCartProducts,
+} from '@/entities/Cart';
 import { fetchNextPart } from '../../model/services/fetchNextPart';
 
 import cls from './AllProductsBlock.module.scss';
@@ -29,6 +37,9 @@ export const AllProductsBlock = forwardRef<
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
+  const isLoadingCard = useAppSelector(getCartIsLoading);
+  const loadingProductsIds = useAppSelector(getCartLoadingProductsIds);
+  const productsInCart = useAppSelector(getCartProducts);
   const hasMore = useAppSelector(getCatalogPageHasMore);
 
   const onLoadNextPart = useCallback(() => {
@@ -39,13 +50,43 @@ export const AllProductsBlock = forwardRef<
     return <LoadingAnimation />;
   }
 
-  const handleOnClick =
+  const onOpenProduct =
     (productId: string, categoryId: string, itemName: string) => async () => {
       const { category, subCategory } = await dispatch(
         getProductPath({ productId, categoryId }),
       ).unwrap();
       navigate(`${category}/${subCategory}/${itemName}`);
     };
+
+  const onAddToCart = (cardId: string, quantity: number) => () => {
+    dispatch(addToCart({ cardId, quantity }));
+  };
+
+  const setButtonView = (id: string) => {
+    const isCurrentSelectedProduct = loadingProductsIds.includes(id);
+    const isCurrentSelectedProductLoading =
+      isLoadingCard && isCurrentSelectedProduct;
+
+    if (isCurrentSelectedProductLoading) {
+      return <img src={loader} alt="loader" className={cls.loader} />;
+    }
+
+    if (productsInCart.find((item) => item.productId === id)) {
+      return <div className={cls.added}>Product added to cart!</div>;
+    }
+
+    return (
+      <Button
+        small
+        className={cls.button}
+        transparent
+        text="Add to Cart"
+        green
+        onClick={onAddToCart(id, 1)}
+        icon={<BsCart2 className={cls.cartIcon} />}
+      />
+    );
+  };
 
   return (
     <section ref={ref} className={classNames(cls.AllProductsBlock, className)}>
@@ -75,9 +116,9 @@ export const AllProductsBlock = forwardRef<
             return (
               <div key={id} className={cls.product}>
                 <button
-                  className={cls.clickableCard}
                   type="button"
-                  onClick={handleOnClick(
+                  className={cls.clickableCard}
+                  onClick={onOpenProduct(
                     productType.id,
                     categories?.[0].id,
                     key || '',
@@ -108,13 +149,7 @@ export const AllProductsBlock = forwardRef<
                   </div>
                   <p className={cls.description}>{description?.['en-GB']}</p>
                 </button>
-                <Button
-                  small
-                  className={cls.button}
-                  transparent
-                  text="Add to Cart"
-                  green
-                />
+                {setButtonView(id)}
               </div>
             );
           })}

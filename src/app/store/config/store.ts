@@ -7,11 +7,12 @@ import {
 import { StateSchema } from '../types/StateSchema';
 import { userReducer } from '@/entities/User';
 import { catalogReducer } from '@/pages/CatalogPage/model/slice/catalogSlice';
+import { cartReducer } from '@/entities/Cart';
 
 const reducers: ReducersMapObject<StateSchema> = {
   user: userReducer,
   catalog: catalogReducer,
-  // cart: cartReducer,
+  cart: cartReducer,
 };
 
 const rootReducer = combineReducers(reducers);

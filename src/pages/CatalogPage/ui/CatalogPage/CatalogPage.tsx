@@ -3,12 +3,11 @@ import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
-import { NotFound } from '@commercetools/sdk-client-v2/dist/declarations/src/sdk-client/errors';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
 import { FiltersBlock } from '../FiltersBlock/FiltersBlock';
-import { fetchAllProducts } from '../../model/services/fetchAllProducts';
+import { fetchProducts } from '../../model/services/fetchProducts';
 import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { Footer } from '@/widgets/Footer/Footer';
@@ -67,14 +66,6 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     [dispatch, navigate],
   );
 
-  const getAdditionalInfoHandler = useCallback(async () => {
-    await dispatch(getAdditionalInfo());
-  }, [dispatch]);
-
-  const getAllProductsHandler = useCallback(async () => {
-    await dispatch(fetchAllProducts());
-  }, [dispatch]);
-
   useEffect(() => {
     const fetchAndSetCategory = async () => {
       let category = '';
@@ -89,20 +80,21 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
         onChangeSelectedCategory(category);
       }
     };
-    getAdditionalInfoHandler();
-    fetchAndSetCategory();
 
-    if (!subcategoryId && !categoryId) {
-      getAllProductsHandler();
+    if (categories.length === 0 || discountProducts.length === 0) {
+      dispatch(getAdditionalInfo());
     }
+
+    fetchAndSetCategory();
+    dispatch(fetchProducts({ scrolling: false }));
   }, [
     categoryId,
     subcategoryId,
     onChangeSelectedCategory,
     fetchCategory,
-    getAdditionalInfoHandler,
-    getAllProductsHandler,
     dispatch,
+    categories,
+    discountProducts,
   ]);
 
   if (isLoading) {

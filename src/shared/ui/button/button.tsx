@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import { ReactNode } from 'react';
+
 import cls from './button.module.scss';
 
 interface ButtonProps {
@@ -7,6 +9,7 @@ interface ButtonProps {
   transparent?: boolean;
   green?: boolean;
   small?: boolean;
+  icon?: ReactNode;
   onClick?: () => void;
 }
 
@@ -16,6 +19,7 @@ export const Button = ({
   transparent = false,
   small,
   green,
+  icon,
   onClick,
 }: ButtonProps) => {
   return (
@@ -29,6 +33,7 @@ export const Button = ({
       onClick={onClick}
     >
       {text}
+      {icon}
     </button>
   );
 };
