@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import { searchFilterSort } from '../model/services/searchFilerSort';
 import { catalogActions } from '../model/slice/catalogSlice';
 import {
   getCatalogPageSelectedBrands,
@@ -13,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { SortingConsts } from '@/shared/const/SortingParams';
+import { fetchProducts } from '../model/services/fetchProducts';
 
 export const useCatalogFilters = () => {
   const dispatch = useAppDispatch();
@@ -24,13 +24,14 @@ export const useCatalogFilters = () => {
   const minPrice = useAppSelector(getCatalogPageMinPrice);
 
   const fetchData = useCallback(() => {
-    dispatch(searchFilterSort());
+    dispatch(fetchProducts({ scrolling: false }));
   }, [dispatch]);
 
   const debouncedFetchData = useDebounce(fetchData, 500);
 
   const onChangeSearch = useCallback(
     (searchString: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.setSearch(searchString));
       debouncedFetchData();
     },
@@ -39,6 +40,7 @@ export const useCatalogFilters = () => {
 
   const onChangeOrder = useCallback(
     (value: SortingConsts) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.setOrder(value));
       fetchData();
     },
@@ -47,6 +49,7 @@ export const useCatalogFilters = () => {
 
   const onChangeMaxPrice = useCallback(
     (newPrice: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.changeMaxPrice(newPrice));
       debouncedFetchData();
     },
@@ -55,6 +58,7 @@ export const useCatalogFilters = () => {
 
   const onChangeMinPrice = useCallback(
     (newPrice: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.changeMinPrice(newPrice));
       debouncedFetchData();
     },
@@ -63,6 +67,7 @@ export const useCatalogFilters = () => {
 
   const onAddBrands = useCallback(
     (value: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.setSelectedBrands(value));
       fetchData();
     },
@@ -71,6 +76,7 @@ export const useCatalogFilters = () => {
 
   const onRemoveSelectedBrands = useCallback(
     (value: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.removeSelectedBrands(value));
       fetchData();
     },
@@ -78,17 +84,20 @@ export const useCatalogFilters = () => {
   );
 
   const onRemoveAllFilters = useCallback(() => {
+    dispatch(catalogActions.setPage(0));
     dispatch(catalogActions.removeAllFilters());
     fetchData();
   }, [dispatch, fetchData]);
 
   const onRemoveSelectedPrice = useCallback(() => {
+    dispatch(catalogActions.setPage(0));
     dispatch(catalogActions.removeSelectedPrice());
     fetchData();
   }, [dispatch, fetchData]);
 
   const onChangeSelectedCategory = useCallback(
     (id: string) => {
+      dispatch(catalogActions.setPage(0));
       dispatch(catalogActions.setSelectedCategoryId(id));
       fetchData();
     },

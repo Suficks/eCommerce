@@ -1,4 +1,5 @@
 .button {
+  @include flex(space-around, center);
   width: clamp(180px, 100%, 240px);
   height: 66px;
   border: none;
