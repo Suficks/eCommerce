@@ -22,7 +22,8 @@
   gap: clamp(30px, 10vw, 100px); 
   justify-content: center;
 
-  @include montserrat(24px, 400, 28px); 
+  @include montserrat(24px, 400, 28px);
+
 }
 
 .product {
@@ -54,8 +55,6 @@
 }
 
 .price_wrapper {
-  flex: 1 1 auto;
-
   @include flex(space-between, center, row);
   width: 100%;
   margin-bottom: 20px;
