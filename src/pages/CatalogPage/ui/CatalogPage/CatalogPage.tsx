@@ -86,6 +86,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     }
 
     fetchAndSetCategory();
+    dispatch(fetchProducts({ scrolling: false }));
   }, [
     categoryId,
     subcategoryId,

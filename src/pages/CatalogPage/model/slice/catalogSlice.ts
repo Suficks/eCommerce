@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductProjection } from '@commercetools/platform-sdk';
 
 import { enableMapSet } from 'immer';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
