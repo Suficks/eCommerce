@@ -4,5 +4,5 @@ export interface CartSchema {
   products: LineItem[];
   isLoading?: boolean;
   isAdd?: boolean;
-  loadingProductId?: string | null;
+  getCartLoadingProductsIds?: string[];
 }

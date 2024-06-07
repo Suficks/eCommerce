@@ -42,6 +42,8 @@ export type FilterSortSearchParameters = {
   maxPrice: number;
   attributesToSort?: CatalogSortObject;
   search?: string;
+  currentOffSet: number;
+  itemPerPage: number;
 };
 
 export type UpdateCartMode = 'new' | 'update' | 'remove';

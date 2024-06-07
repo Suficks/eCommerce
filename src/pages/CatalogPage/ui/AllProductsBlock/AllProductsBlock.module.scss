@@ -1,5 +1,5 @@
 .AllProductsBlock {
-  padding: 10px 30px 80px;
+  padding: 0 30px 60px;
 }
 
 .image {
@@ -21,6 +21,7 @@
   grid-template-columns:  repeat(auto-fill, 340px);
   gap: clamp(30px, 10vw, 100px); 
   justify-content: center;
+  padding: 17px 0;
 
   @include montserrat(24px, 400, 28px);
 

@@ -18,7 +18,8 @@ import loader from '@/shared/assets/images/loader.gif';
 import {
   addToCart,
   getCartIsLoading,
-  getCartLoadingProductId,
+  getCartLoadingProductsIds,
+  getCartProducts,
 } from '@/entities/Cart';
 import { fetchNextPart } from '../../model/services/fetchNextPart';
 
@@ -37,7 +38,8 @@ export const AllProductsBlock = forwardRef<
   const navigate = useNavigate();
   const isLoading = useAppSelector(getCatalogPageIsLoading);
   const isLoadingCard = useAppSelector(getCartIsLoading);
-  const loadingProductId = useAppSelector(getCartLoadingProductId);
+  const loadingProductsIds = useAppSelector(getCartLoadingProductsIds);
+  const productsInCart = useAppSelector(getCartProducts);
   const hasMore = useAppSelector(getCatalogPageHasMore);
 
   const onLoadNextPart = useCallback(() => {
@@ -61,7 +63,7 @@ export const AllProductsBlock = forwardRef<
   };
 
   const setButtonView = (id: string) => {
-    const isCurrentSelectedProduct = loadingProductId === id;
+    const isCurrentSelectedProduct = loadingProductsIds.includes(id);
     const isCurrentSelectedProductLoading =
       isLoadingCard && isCurrentSelectedProduct;
 
@@ -69,7 +71,7 @@ export const AllProductsBlock = forwardRef<
       return <img src={loader} alt="loader" className={cls.loader} />;
     }
 
-    if (isCurrentSelectedProduct) {
+    if (productsInCart.find((item) => item.productId === id)) {
       return <div className={cls.added}>Product added to cart!</div>;
     }
 

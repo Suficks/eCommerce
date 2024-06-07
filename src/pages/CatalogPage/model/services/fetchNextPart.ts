@@ -7,7 +7,7 @@ import {
   getCatalogPageNumber,
 } from '../selectors/catalogPageSelectors';
 import { catalogActions } from '../slice/catalogSlice';
-import { fetchAllProducts } from './fetchAllProducts';
+import { fetchProducts } from './fetchProducts';
 
 export const fetchNextPart = createAsyncThunk<void, void, ThunkConfig<string>>(
   'catalog/fetchNextPart',
@@ -20,7 +20,7 @@ export const fetchNextPart = createAsyncThunk<void, void, ThunkConfig<string>>(
 
     if (hasMore ?? !isLoading) {
       dispatch(catalogActions.setPage(page + 1));
-      dispatch(fetchAllProducts());
+      dispatch(fetchProducts({ scrolling: true }));
     }
   },
 );

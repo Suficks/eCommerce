@@ -3,9 +3,8 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 
 import { enableMapSet } from 'immer';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
-import { fetchAllProducts } from '../services/fetchAllProducts';
 import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
-import { searchFilterSort } from '../services/searchFilerSort';
+import { fetchProducts } from '../services/fetchProducts';
 import { getAdditionalInfo } from '../services/getAdditionalInfo';
 
 const initialState: CatalogSchema = {
@@ -70,48 +69,31 @@ export const catalogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        fetchAllProducts.fulfilled,
-        (state, { payload }: PayloadAction<ProductProjection[]>) => {
-          state.products.push(...payload);
-          state.hasMore = payload.length >= state.limit;
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        if (action.meta.arg?.scrolling) {
+          state.products.push(...action.payload);
+        } else {
+          state.products = action.payload;
+        }
+        state.hasMore = action.payload.length >= state.limit;
 
-          const newBrands = new Set<string>(
-            state.products
-              .map(
-                (item) =>
-                  item.masterVariant.attributes?.find(
-                    (attribute) => attribute.name === 'brand',
-                  )?.value as string,
-              )
-              .filter(Boolean),
-          );
-          state.brands = new Set([...state.brands, ...newBrands]);
-        },
-      )
+        const newBrands = new Set<string>(
+          state.products
+            .map(
+              (item) =>
+                item.masterVariant.attributes?.find(
+                  (attribute) => attribute.name === 'brand',
+                )?.value as string,
+            )
+            .filter(Boolean),
+        );
+        state.brands = new Set([...state.brands, ...newBrands]);
+      })
       .addCase(
         getAdditionalInfo.fulfilled,
         (state, { payload }: PayloadAction<CatalogPageData>) => {
           state.discountProducts = payload.discountProducts || [];
           state.categories = payload.categories || [];
-        },
-      )
-      .addCase(
-        searchFilterSort.fulfilled,
-        (state, { payload }: PayloadAction<ProductProjection[]>) => {
-          state.products = payload;
-
-          const newBrands = new Set<string>(
-            state.products
-              .map(
-                (item) =>
-                  item.masterVariant.attributes?.find(
-                    (attribute) => attribute.name === 'brand',
-                  )?.value as string,
-              )
-              .filter(Boolean),
-          );
-          state.brands = new Set([...state.brands, ...newBrands]);
         },
       );
   },

@@ -8,7 +8,7 @@ const initialState: CartSchema = {
   products: [],
   isAdd: false,
   isLoading: false,
-  loadingProductId: null,
+  getCartLoadingProductsIds: [],
 };
 
 export const cartSlice = createSlice({
@@ -20,22 +20,20 @@ export const cartSlice = createSlice({
       .addCase(addToCart.pending, (state, action) => {
         state.isLoading = true;
         state.isAdd = false;
-        state.loadingProductId = action.meta.arg.cardId;
+        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId);
       })
       .addCase(
         addToCart.fulfilled,
         (state, { payload }: PayloadAction<Cart>) => {
           state.products.push(...payload.lineItems);
           state.isLoading = false;
-          state.isAdd = payload.lineItems.some(
-            (item) => item.productId === state.loadingProductId,
-          );
+          state.getCartLoadingProductsIds = [];
         },
       )
       .addCase(addToCart.rejected, (state) => {
         state.isLoading = false;
         state.isAdd = false;
-        state.loadingProductId = null;
+        state.getCartLoadingProductsIds = [];
       });
   },
 });
