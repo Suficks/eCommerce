@@ -22,12 +22,12 @@
   gap: clamp(30px, 10vw, 100px); 
   justify-content: center;
 
-  @include montserrat(24px, 400, 28px); 
+  @include montserrat(24px, 400, 28px);
+
 }
 
 .product {
-  display: flex;
-  flex-direction: column;
+  @include flex(space-between, flex-start, column);
   max-width: 340px;
   border: none;
 
@@ -42,13 +42,19 @@
   }
 }
 
+.clickableCard {
+  border: none;
+
+  text-align: start;
+
+  background: transparent;
+}
+
 .price {
   font-weight: 700;
 }
 
 .price_wrapper {
-  flex: 1 1 auto;
-
   @include flex(space-between, center, row);
   width: 100%;
   margin-bottom: 20px;
@@ -84,4 +90,9 @@
   text-decoration: line-through;
 
   @include montserrat(20px, 400, 20px);
+}
+
+.trigger {
+  height: 20px;
+  margin: 10px;
 }

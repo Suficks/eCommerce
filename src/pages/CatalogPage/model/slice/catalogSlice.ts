@@ -4,7 +4,6 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { enableMapSet } from 'immer';
 import { CatalogPageData, CatalogSchema } from '../types/Catalog';
 import { fetchAllProducts } from '../services/fetchAllProducts';
-import { getProductPath } from '../services/getProductPath';
 import { SortMapper, SortingConsts } from '@/shared/const/SortingParams';
 import { searchFilterSort } from '../services/searchFilerSort';
 import { getAdditionalInfo } from '../services/getAdditionalInfo';
@@ -21,6 +20,9 @@ const initialState: CatalogSchema = {
   maxPrice: '',
   minPrice: '',
   selectedCategoryId: '',
+  page: 0,
+  hasMore: true,
+  limit: 6,
 };
 
 enableMapSet();
@@ -62,16 +64,17 @@ export const catalogSlice = createSlice({
     changeMinPrice: (state, { payload }: PayloadAction<string>) => {
       state.minPrice = payload;
     },
+    setPage: (state, { payload }: PayloadAction<number>) => {
+      state.page = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(
         fetchAllProducts.fulfilled,
         (state, { payload }: PayloadAction<ProductProjection[]>) => {
-          state.products = payload;
+          state.products.push(...payload);
+          state.hasMore = payload.length >= state.limit;
 
           const newBrands = new Set<string>(
             state.products
