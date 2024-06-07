@@ -6,7 +6,6 @@ import { CartSchema } from '../types/Cart';
 
 const initialState: CartSchema = {
   products: [],
-  isAdd: false,
   isLoading: false,
   getCartLoadingProductsIds: [],
 };
@@ -19,7 +18,6 @@ export const cartSlice = createSlice({
     builder
       .addCase(addToCart.pending, (state, action) => {
         state.isLoading = true;
-        state.isAdd = false;
         state.getCartLoadingProductsIds?.push(action.meta.arg.cardId);
       })
       .addCase(
@@ -32,7 +30,6 @@ export const cartSlice = createSlice({
       )
       .addCase(addToCart.rejected, (state) => {
         state.isLoading = false;
-        state.isAdd = false;
         state.getCartLoadingProductsIds = [];
       });
   },

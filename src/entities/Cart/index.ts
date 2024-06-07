@@ -1,7 +1,6 @@
 export type { CartSchema } from './model/types/Cart';
 export {
   getCartIsLoading,
-  getCartIsAdd,
   getCartLoadingProductsIds,
   getCartProducts,
 } from './model/selectors/cartSelectors';
