@@ -1,12 +1,18 @@
-.CartPage {
+.wrapper {
   display: block;
 }
 
 .productsWrapper {
   @include flex(null, null, column, 30px);
+  flex: 1 1;
 }
 
-.emptyButton {
+.main {
+  @include flex(null, null, row, 30px);
+  flex-wrap: wrap;
+}
+
+.clearButton {
   align-self: flex-end;
   padding: 0;
   border: none;
@@ -23,4 +29,8 @@
   &:focus {
     text-decoration: underline;
   }
+}
+
+.invoiceWrapper {
+  width: 380px;
 }

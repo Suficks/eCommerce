@@ -5,6 +5,7 @@ import { useAppSelector } from '@/shared/hooks/redux';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
 import cls from './CartPage.module.scss';
+import { ProductCard } from './productCard/productCard';
 
 interface CartPageProps {
   className?: string;
@@ -13,16 +14,18 @@ interface CartPageProps {
 export const CartPage = ({ className }: CartPageProps) => {
   const productsInCart = useAppSelector(getCartProducts);
   return (
-    <div className={classNames(cls.CartPage, {}, [className])}>
+    <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
       <div className={cls.main}>
         <div className={cls.productsWrapper}>
-          <button type="button" className={cls.emptyButton}>
-            Empty your cart
+          <button type="button" className={cls.clearButton}>
+            Clear cart
           </button>
+          {productsInCart.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
         <div className={cls.invoiceWrapper}>Invoice</div>
-        <h2>Cart</h2>
       </div>
       <Footer />
     </div>

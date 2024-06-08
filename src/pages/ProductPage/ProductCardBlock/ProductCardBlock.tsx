@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Button as BootstrapButton, Modal } from 'react-bootstrap';
-import { BsCart2 } from 'react-icons/bs';
 import { FaRegTrashCan } from 'react-icons/fa6';
+import { PiShoppingCartBold } from 'react-icons/pi';
 
 import { addToCart, getCartProducts } from '@/entities/Cart';
 import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
@@ -141,7 +141,7 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
             className={cls.buyButtons}
             onClick={onAddToCart(product.id, 1)}
             disabled={isInCart}
-            icon={<BsCart2 />}
+            icon={<PiShoppingCartBold />}
           />
           <Button
             text="Remove"
