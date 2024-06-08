@@ -7,6 +7,7 @@ import { BsCart2 } from 'react-icons/bs';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
 import { addToCart, getCartProducts } from '@/entities/Cart';
+import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
 import { ProductSlider } from '@/pages/ProductPage/ProductSlider/productSlider';
 import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
@@ -78,6 +79,12 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
     dispatch(addToCart({ cardId, quantity }));
   };
 
+  const onRemoveProduct = (key: string) => () => {
+    dispatch(removeProduct({ key, quantity: 1 })).then(() =>
+      setIsInCart(false),
+    );
+  };
+
   useEffect(() => {
     setIsInCart(
       productsInCart.some(
@@ -140,9 +147,7 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
             text="Remove"
             transparent
             className={isInCart ? cls.buyButtons : cls.none}
-            // onClick={() =>
-            //   // removeProduct(product.key)
-            // }
+            onClick={onRemoveProduct(product.key ? product.key : '')}
             disabled={!isInCart}
             icon={<FaRegTrashCan />}
           />

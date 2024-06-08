@@ -1,8 +1,9 @@
 import { ApiRoot, Cart } from '@commercetools/platform-sdk';
+
 import {
-  ParentCategoryName,
-  ItemsCategoryName,
   CatalogSortObject,
+  ItemsCategoryName,
+  ParentCategoryName,
 } from '@/pages/CatalogPage';
 
 export interface UserLogin {
@@ -46,12 +47,13 @@ export type FilterSortSearchParameters = {
   itemPerPage: number;
 };
 
-export type UpdateCartMode = 'new' | 'update' | 'remove';
+export type UpdateCartMode = 'new' | 'update' | 'remove' | 'removeProduct';
 
 export type UpdateCartParams = {
   cartData?: Cart | null;
   mode?: UpdateCartMode;
-  cardId: string;
+  cardId?: string;
   quantity: number;
   firstFunctionCall?: boolean;
+  key?: string;
 };

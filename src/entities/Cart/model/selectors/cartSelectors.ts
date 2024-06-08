@@ -6,3 +6,4 @@ export const getCartLoadingProductsIds = (state: StateSchema) =>
   state.cart?.getCartLoadingProductsIds ?? '';
 export const getCartProducts = (state: StateSchema) =>
   state.cart?.products ?? '';
+export const getCart = (state: StateSchema) => state.cart ?? '';
