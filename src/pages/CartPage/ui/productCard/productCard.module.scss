@@ -2,14 +2,15 @@
   position: relative;
 
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: clamp(0px, 2vw, 15px);
   border-bottom: 1px solid $green;
 
 
   .imageAndNameWrapper {
-    @include flex(null, null, row, 30px);
+    @include flex(null, null, row, clamp(5px, 2vw, 30px));
     backdrop-filter: blur(3px);
 
     .productImage {
@@ -21,7 +22,7 @@
 
     .nameAndPriceWrapper {
       .productName {
-        width: 270px;
+        width: 250px;
         margin-bottom: 0.5rem;
 
         // color: $green;
