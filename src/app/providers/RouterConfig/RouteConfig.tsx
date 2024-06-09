@@ -10,6 +10,7 @@ import { ProductPage } from '@/pages/ProductPage/ProductPage';
 import { ProfilePage } from '@/pages/ProfilePage/ui/ProfilePage';
 import { RegistrationPage } from '@/pages/RegistrationPage/RegistrationPage';
 import { CartPage } from '@/pages/CartPage';
+import { AboutUsPage } from '@/pages/AboutUsPage/ui/AboutUsPage';
 
 export enum Routes {
   LOGIN = '/login',
@@ -106,9 +107,7 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: Routes.ABOUT,
-    element: (
-      <NotFound additionalMessage="The ABOUT page will be created during the next sprint." />
-    ),
+    element: <AboutUsPage />,
     nodeRef: createRef<HTMLDivElement>(),
   },
   {
