@@ -6,6 +6,9 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 // import { removeProduct, updateProductQuantity } from '@/entities/Cart';
 import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
 
+import { updateQuantity } from '@/entities/Cart/model/services/updateQuantity';
+import Minus from '@/shared/assets/images/minus.svg';
+import Plus from '@/shared/assets/images/plus.svg';
 import { useAppDispatch } from '@/shared/hooks/redux';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import cls from './productCard.module.scss';
@@ -23,6 +26,7 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
       value: { centAmount },
       discounted,
     },
+    totalPrice,
   } = product;
 
   const imageUrl =
@@ -35,18 +39,15 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(product.quantity);
   const key = product.productKey || '';
-  console.log(product);
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1);
-    // dispatch(updateProductQuantity({ id: product.id, quantity: quantity + 1 }));
+    dispatch(updateQuantity({ cardId: product.id, quantity: quantity + 1 }));
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
-      // dispatch(
-      // updateProductQuantity({ id: product.id, quantity: quantity - 1 }),
-      // );
+      dispatch(updateQuantity({ cardId: product.id, quantity: quantity - 1 }));
     }
   };
 
@@ -56,16 +57,32 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
 
   return (
     <div className={classNames(cls.ProductCard, {}, [className])}>
-      <img src={imageUrl} alt={productName} className={cls.productImage} />
+      <div className={cls.imageAndNameWrapper}>
+        <img src={imageUrl} alt={productName} className={cls.productImage} />
+        <div className={cls.nameAndPriceWrapper}>
+          <h3 className={cls.productName}>{productName}</h3>
+          <div className={cls.productPrice}>
+            {discountedPrice ? (
+              <>
+                <span className={cls.originalPrice}>{price}</span>
+                <span className={cls.discountPrice}>{discountedPrice}</span>
+              </>
+            ) : (
+              <span className={cls.price}>{price}</span>
+            )}
+            {/* {ConverterPrice(totalPrice.centAmount)} */}
+          </div>
+        </div>
+      </div>
       <div className={cls.productDetails}>
-        <h3 className={cls.productName}>{productName}</h3>
         <div className={cls.productQuantity}>
           <button
             type="button"
             onClick={handleDecrease}
             className={cls.quantityButton}
+            aria-label="close"
           >
-            -
+            <Minus />
           </button>
           <input
             type="number"
@@ -77,48 +94,26 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
             type="button"
             onClick={handleIncrease}
             className={cls.quantityButton}
+            aria-label="close"
           >
-            +
+            <Plus />
           </button>
         </div>
-        <div className={cls.productPrice}>
-          {discountedPrice ? (
-            <>
-              <span className={cls.originalPrice}>{price}</span>
-              <span className={cls.discountPrice}>{discountedPrice}</span>
-            </>
-          ) : (
-            <span className={cls.price}>{price}</span>
-          )}
-          {/* <div className={cls.priceWrapper}>
-            <span
-              className={classNames(cls.price, {
-                [cls.crossed]: discountedPrice,
-              })}
-            >
-              {price}
-            </span>
-            <span
-              className={classNames(
-                {
-                  [cls.price]: discountedPrice,
-                },
-                cls.discountedPrice,
-              )}
-            >
-              {discountedPrice}
-            </span>
-          </div> */}
+        <div className={cls.totalPriceWrapper}>
+          total:
+          <div className={cls.totalPrice}>
+            {ConverterPrice(totalPrice.centAmount)}
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={handleRemove}
-          className={cls.removeButton}
-          aria-label="close"
-        >
-          <FaRegTrashCan />
-        </button>
       </div>
+      <button
+        type="button"
+        onClick={handleRemove}
+        className={cls.removeButton}
+        aria-label="close"
+      >
+        <FaRegTrashCan />
+      </button>
     </div>
   );
 };

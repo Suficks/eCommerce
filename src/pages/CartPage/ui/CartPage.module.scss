@@ -3,14 +3,30 @@
 }
 
 .productsWrapper {
-  @include flex(null, null, column, 30px);
+  @include flex(null, null, column);
   flex: 1 1;
 }
 
 .main {
   @include flex(null, null, row, 30px);
+  position: relative;
+
   flex-wrap: wrap;
+  min-height: 400px; // пока не отрисован invoice
+
+  .plantImageTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .plantImageBottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
 }
+
 
 .clearButton {
   align-self: flex-end;
@@ -23,7 +39,7 @@
   background: none;
   cursor: pointer;
 
-  @include montserrat(20px, 400, 30px);
+  @include montserrat(15px, 400, 30px);
 
   &:hover,
   &:focus {

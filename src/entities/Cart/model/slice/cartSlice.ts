@@ -1,5 +1,9 @@
+import {
+  Cart,
+  CentPrecisionMoney,
+  DiscountOnTotalPrice,
+} from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Cart } from '@commercetools/platform-sdk';
 
 import { addToCart } from '../services/addToCart';
 import { CartSchema } from '../types/Cart';
@@ -8,6 +12,8 @@ const initialState: CartSchema = {
   products: [],
   isLoading: false,
   getCartLoadingProductsIds: [],
+  totalPrice: {} as CentPrecisionMoney,
+  discountOnTotalPrice: {} as DiscountOnTotalPrice,
 };
 
 export const cartSlice = createSlice({
@@ -24,6 +30,8 @@ export const cartSlice = createSlice({
         addToCart.fulfilled,
         (state, { payload }: PayloadAction<Cart>) => {
           state.products.push(...payload.lineItems);
+          state.totalPrice = payload.totalPrice;
+          state.discountOnTotalPrice = payload.discountOnTotalPrice;
           state.isLoading = false;
           state.getCartLoadingProductsIds = [];
         },

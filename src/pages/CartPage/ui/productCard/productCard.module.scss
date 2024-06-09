@@ -1,28 +1,61 @@
 .ProductCard {
+  position: relative;
+
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
-  padding: 1rem;
+  justify-content: space-between;
+  padding: 15px;
   border-bottom: 1px solid $green;
 
-  .productImage {
-    width: 100px;
-    height: 100px;
-    margin-right: 1rem;
-    object-fit: cover;
+
+  .imageAndNameWrapper {
+    @include flex(null, null, row, 30px);
+    backdrop-filter: blur(3px);
+
+    .productImage {
+      width: 100px;
+      height: 100px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    .nameAndPriceWrapper {
+      .productName {
+        width: 270px;
+        margin-bottom: 0.5rem;
+
+        // color: $green;
+
+        @include montserrat(20px, 400, 25px);
+      }
+
+      .productPrice {
+        @include montserrat(20px, 400, 25px);
+        @include flex(flex-start, center, row, 15px);
+        width: 150px;
+        margin-bottom: 0.5rem;
+
+        .originalPrice {
+          margin-right: 0.5rem;
+
+          color: $gray;
+          text-decoration: line-through;
+        }
+
+        .discountPrice {
+          color: $green;
+          font-weight: bold;
+        }
+
+        .price {
+          font-weight: bold;
+        }
+      }
+    }
   }
 
   .productDetails {
-    display: flex;
-    flex-direction: column;
-
-    .productName {
-      margin-bottom: 0.5rem;
-
-      color: $green;
-
-      @include montserrat(20px, 400, 25px);
-    }
+    @include flex(null, null, row, 30px);
 
     .productQuantity {
       display: flex;
@@ -30,7 +63,7 @@
       margin-bottom: 0.5rem;
 
       .quantityButton {
-        border-bottom: 1px solid white;
+        border: none;
         border-radius: 50%;
 
         background-color: transparent;
@@ -41,41 +74,36 @@
         width: 3rem;
         border: none;
 
-        @include montserrat(15px, 400, 20px);
+        color: $green;
+
         text-align: center;
+
+        @include montserrat(20px, 400, 20px);
       }
     }
 
-    .productPrice {
-      @include montserrat(15px, 400, 20px);
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.5rem;
+    .totalPriceWrapper {
+      @include montserrat(25px, 400, 25px);
+      @include flex(flex-start, center, column, 15px);
 
-      .originalPrice {
-        margin-right: 0.5rem;
-
-        color: $gray;
-        text-decoration: line-through;
-      }
-
-      .discountPrice {
-        color: $red;
-        font-weight: bold;
-      }
-
-      .price {
+      .totalPrice {
+        color: $green;
         font-weight: bold;
       }
     }
+  }
 
-    .removeButton {
-      width: 16px;
-      padding: 0;
-      border: none;
+  .removeButton {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
 
-      background: none;
-      cursor: pointer;
-    }
+    justify-self: flex-end;
+    width: 16px;
+    padding: 0;
+    border: none;
+
+    background: none;
+    cursor: pointer
   }
 }
