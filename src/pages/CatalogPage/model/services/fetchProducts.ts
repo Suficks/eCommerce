@@ -12,14 +12,14 @@ import {
 } from '../selectors/catalogPageSelectors';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
-import { getFilterSortSearchProducts } from '@/shared/api';
+import { ProductsResult, getFilterSortSearchProducts } from '@/shared/api';
 
 interface FetchAProductsProps {
   scrolling?: boolean;
 }
 
 export const fetchProducts = createAsyncThunk<
-  ProductProjection[],
+  ProductsResult,
   FetchAProductsProps,
   ThunkConfig<string>
 >('catalog/fetchProducts', async (_, { rejectWithValue, getState }) => {

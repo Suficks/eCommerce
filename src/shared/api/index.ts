@@ -1,4 +1,5 @@
 export { getFilterSortSearchProducts } from './requests/getFilterSortSearchProducts';
+export type { ProductsResult } from './requests/getFilterSortSearchProducts';
 export type {
   CategoryCustom,
   FilterSortSearchParameters,

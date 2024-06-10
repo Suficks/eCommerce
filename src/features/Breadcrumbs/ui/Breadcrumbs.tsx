@@ -5,6 +5,8 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import cls from './Breadcrumbs.module.scss';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
+import { useAppDispatch } from '@/shared/hooks/redux';
+import { catalogActions } from '@/pages/CatalogPage';
 
 interface BreadcrumbsProps {
   scrollIntoSection?: () => void;
@@ -12,7 +14,13 @@ interface BreadcrumbsProps {
 
 export const Breadcrumbs = ({ scrollIntoSection }: BreadcrumbsProps) => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const { categoryId, subcategoryId, productKey } = useParams();
+
+  const handleOnClick = () => {
+    scrollIntoSection?.();
+    dispatch(catalogActions.setPage(0));
+  };
 
   return (
     <div className={cls.wrapper}>
@@ -23,7 +31,7 @@ export const Breadcrumbs = ({ scrollIntoSection }: BreadcrumbsProps) => {
             <AiOutlineRight size={20} />
             <AppLink
               to={`${Routes.CATALOG}/${categoryId}`}
-              onClick={scrollIntoSection}
+              onClick={handleOnClick}
             >
               {categoryId}
             </AppLink>
@@ -34,7 +42,7 @@ export const Breadcrumbs = ({ scrollIntoSection }: BreadcrumbsProps) => {
             <AiOutlineRight size={20} />
             <AppLink
               to={`${Routes.CATALOG}/${categoryId}/${subcategoryId}`}
-              onClick={scrollIntoSection}
+              onClick={handleOnClick}
             >
               {subcategoryId}
             </AppLink>
