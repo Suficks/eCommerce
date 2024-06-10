@@ -5,13 +5,14 @@ import {
   MyCartRemoveLineItemAction,
 } from '@commercetools/platform-sdk';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
-import { tokenInstance } from '../tokenHandlers';
+
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import {
   apirootPassword,
   constructClientAnonymousFlow,
   constructClientRefresh,
 } from '../BuildClient';
+import { tokenInstance } from '../tokenHandlers';
 import { UpdateCartParams } from '../types/apiTypes';
 
 const { VITE_CTP_PROJECT_KEY } = import.meta.env;
@@ -88,11 +89,12 @@ async function createNewCart(): Promise<Cart | undefined> {
 export async function addNewProductInCartOrUpdateQuantity(
   props: UpdateCartParams,
 ): Promise<Cart | undefined> {
-  const { cartData, mode, cardId, quantity, firstFunctionCall } = props;
+  const { cartData, mode, cardId, quantity, firstFunctionCall, key } = props;
 
   let tempActions:
     | MyCartAddLineItemAction
     | MyCartChangeLineItemQuantityAction
+    | MyCartRemoveLineItemAction
     | MyCartRemoveLineItemAction[] = [];
   switch (mode) {
     case 'new':
@@ -119,6 +121,14 @@ export async function addNewProductInCartOrUpdateQuantity(
             lineItemId: el.id,
           };
         });
+      }
+      break;
+    case 'removeProduct':
+      if (cartData) {
+        tempActions = {
+          action: 'removeLineItem',
+          lineItemKey: key,
+        };
       }
       break;
     default:

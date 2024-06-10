@@ -1,16 +1,19 @@
 import { Product } from '@commercetools/platform-sdk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button as BootstrapButton, Modal } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { FaRegTrashCan } from 'react-icons/fa6';
+import { PiShoppingCartBold } from 'react-icons/pi';
 
-import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
+import { addToCart, getCartProducts } from '@/entities/Cart';
+import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
 import { ProductSlider } from '@/pages/ProductPage/ProductSlider/productSlider';
 import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
 import plantFromProductPage from '@/shared/assets/images/plantFromProductPage.png';
 import PrevButton from '@/shared/assets/images/prev-slide.svg';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { Button } from '@/shared/ui/button/button';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import cls from './ProductCardBlock.module.scss';
@@ -21,6 +24,8 @@ interface ProductCardBlockProps {
 
 export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
   const [show, setShow] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+  const productsInCart = useAppSelector(getCartProducts);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const {
     masterData: {
@@ -69,6 +74,25 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
     );
   };
 
+  const dispatch = useAppDispatch();
+  const onAddToCart = (cardId: string, quantity: number) => () => {
+    dispatch(addToCart({ cardId, quantity }));
+  };
+
+  const onRemoveProduct = (key: string) => () => {
+    dispatch(removeProduct({ key, quantity: 1 })).then(() =>
+      setIsInCart(false),
+    );
+  };
+
+  useEffect(() => {
+    setIsInCart(
+      productsInCart.some(
+        (cartProduct) => cartProduct.productId === product.id,
+      ),
+    );
+  }, [productsInCart, product.id]);
+
   return (
     <div className={cls.productCard}>
       <img src={plantFromProductPage} alt="" className={cls.plantImage} />
@@ -111,10 +135,22 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
           </span>
         </div>
         <div className={cls.buttonsWrapper}>
-          <NavLink to={Routes.CART} className={cls.linkAsButton}>
-            Buy now
-          </NavLink>
-          <Button text="Add to card" transparent className={cls.buyButtons} />
+          <Button
+            text={isInCart ? 'Item in cart' : 'Add to cart'}
+            green
+            className={cls.buyButtons}
+            onClick={onAddToCart(product.id, 1)}
+            disabled={isInCart}
+            icon={<PiShoppingCartBold />}
+          />
+          <Button
+            text="Remove"
+            transparent
+            className={isInCart ? cls.buyButtons : cls.none}
+            onClick={onRemoveProduct(product.key ? product.key : '')}
+            disabled={!isInCart}
+            icon={<FaRegTrashCan />}
+          />
         </div>
       </div>
       <Modal
