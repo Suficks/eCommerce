@@ -50,10 +50,10 @@ export type FilterSortSearchParameters = {
 export type UpdateCartMode = 'new' | 'update' | 'remove' | 'removeProduct';
 
 export type UpdateCartParams = {
-  cartData?: Cart | null;
+  cartData?: Partial<Cart> | null;
   mode?: UpdateCartMode;
   cardId?: string;
-  quantity: number;
+  quantity?: number;
   firstFunctionCall?: boolean;
-  key?: string;
+  id?: string;
 };

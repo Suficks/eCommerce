@@ -1,17 +1,20 @@
 import { LineItem } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
-import { useState } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
-// import { removeProduct, updateProductQuantity } from '@/entities/Cart';
-import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
-
-import { updateQuantity } from '@/entities/Cart/model/services/updateQuantity';
+import {
+  cartThunk,
+  getCartIsLoading,
+  getCartLoadingProductsIds,
+} from '@/entities/Cart';
 import Minus from '@/shared/assets/images/minus.svg';
 import Plus from '@/shared/assets/images/plus.svg';
-import { useAppDispatch } from '@/shared/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { ConverterPrice } from '@/shared/util/converterPrice';
+import loader from '@/shared/assets/images/loader.gif';
+
 import cls from './productCard.module.scss';
+import { getQuantity } from '@/entities/Cart/model/selectors/cartSelectors';
 
 interface ProductCardProps {
   className?: string;
@@ -27,8 +30,10 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
       discounted,
     },
     totalPrice,
+    id,
   } = product;
-
+  const isLoading = useAppSelector(getCartIsLoading);
+  const selectedProductId = useAppSelector(getCartLoadingProductsIds);
   const imageUrl =
     images && images.length > 0 ? images[0].url : 'default-image-url';
   const price = ConverterPrice(centAmount);
@@ -37,22 +42,23 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
     : null;
 
   const dispatch = useAppDispatch();
-  const [quantity, setQuantity] = useState(product.quantity);
-  const key = product.productKey || '';
+  const quantity = useAppSelector((state) => getQuantity(state, id));
   const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
-    dispatch(updateQuantity({ cardId: product.id, quantity: quantity + 1 }));
+    dispatch(cartThunk({ cardId: id, quantity: quantity + 1, mode: 'update' }));
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-      dispatch(updateQuantity({ cardId: product.id, quantity: quantity - 1 }));
+      dispatch(
+        cartThunk({ cardId: id, quantity: quantity - 1, mode: 'update' }),
+      );
+    } else {
+      dispatch(cartThunk({ cardId: id, mode: 'removeProduct' }));
     }
   };
 
   const handleRemove = () => {
-    dispatch(removeProduct({ key, quantity }));
+    dispatch(cartThunk({ cardId: id, mode: 'removeProduct' }));
   };
 
   return (
@@ -101,9 +107,13 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
         </div>
         <div className={cls.totalPriceWrapper}>
           total:
-          <div className={cls.totalPrice}>
-            {ConverterPrice(totalPrice.centAmount)}
-          </div>
+          {isLoading && selectedProductId.includes(id) ? (
+            <img src={loader} alt="loader" className={cls.loader} />
+          ) : (
+            <div className={cls.totalPrice}>
+              {ConverterPrice(totalPrice.centAmount)}
+            </div>
+          )}
         </div>
       </div>
       <button

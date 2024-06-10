@@ -13,7 +13,7 @@ const initialState: CatalogSchema = {
   categories: [],
   search: '',
   sort: { field: 'default', order: '' },
-  brands: new Set(),
+  brands: [],
   selectedBrands: [],
   maxPrice: '',
   minPrice: '',
@@ -70,23 +70,12 @@ export const catalogSlice = createSlice({
     builder
       .addCase(fetchProducts.fulfilled, (state, action) => {
         if (action.meta.arg?.scrolling) {
-          state.products.push(...action.payload);
+          state.products.push(...action.payload.products);
         } else {
-          state.products = action.payload;
+          state.products = action.payload.products;
         }
-        state.hasMore = action.payload.length >= state.limit;
-
-        const newBrands = new Set<string>(
-          state.products
-            .map(
-              (item) =>
-                item.masterVariant.attributes?.find(
-                  (attribute) => attribute.name === 'brand',
-                )?.value as string,
-            )
-            .filter(Boolean),
-        );
-        state.brands = new Set([...state.brands, ...newBrands]);
+        state.hasMore = action.payload.products.length >= state.limit;
+        state.brands = action.payload.brands;
       })
       .addCase(
         getAdditionalInfo.fulfilled,

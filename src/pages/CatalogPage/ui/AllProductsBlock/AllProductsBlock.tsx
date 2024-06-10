@@ -16,7 +16,7 @@ import {
 } from '../../model/selectors/catalogPageSelectors';
 import loader from '@/shared/assets/images/loader.gif';
 import {
-  addToCart,
+  cartThunk,
   getCartIsLoading,
   getCartLoadingProductsIds,
   getCartProducts,
@@ -59,7 +59,7 @@ export const AllProductsBlock = forwardRef<
     };
 
   const onAddToCart = (cardId: string, quantity: number) => () => {
-    dispatch(addToCart({ cardId, quantity }));
+    dispatch(cartThunk({ cardId, quantity, mode: 'new' }));
   };
 
   const setButtonView = (id: string) => {
@@ -71,7 +71,10 @@ export const AllProductsBlock = forwardRef<
       return <img src={loader} alt="loader" className={cls.loader} />;
     }
 
-    if (productsInCart.find((item) => item.productId === id)) {
+    if (
+      productsInCart &&
+      productsInCart.find((item) => item.productId === id)
+    ) {
       return <div className={cls.added}>Product added to cart!</div>;
     }
 

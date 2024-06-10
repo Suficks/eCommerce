@@ -46,7 +46,7 @@ export async function loginUser(
     );
     setLocalStorageValue(response.body.customer.version);
     changeApiRootToPassword();
-    getActiveCart(true);
+    await getActiveCart(true);
 
     return apirootPasswordFlow;
   } catch {

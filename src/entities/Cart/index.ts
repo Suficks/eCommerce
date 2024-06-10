@@ -6,4 +6,4 @@ export {
 } from './model/selectors/cartSelectors';
 export { cartActions } from './model/slice/cartSlice';
 export { cartReducer } from './model/slice/cartSlice';
-export { addToCart } from './model/services/addToCart';
+export { cartThunk } from './model/services/cartThunk';

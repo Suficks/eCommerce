@@ -2,11 +2,12 @@ import {
   Cart,
   CentPrecisionMoney,
   DiscountOnTotalPrice,
+  LineItem,
 } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { addToCart } from '../services/addToCart';
 import { CartSchema } from '../types/Cart';
+import { cartThunk } from '../services/cartThunk';
 
 const initialState: CartSchema = {
   products: [],
@@ -19,24 +20,31 @@ const initialState: CartSchema = {
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    setCart: (state, { payload }: PayloadAction<LineItem[]>) => {
+      state.products = payload;
+    },
+    clearCart: (state) => {
+      state.products = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(addToCart.pending, (state, action) => {
+      .addCase(cartThunk.pending, (state, action) => {
         state.isLoading = true;
-        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId);
+        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId || '');
       })
       .addCase(
-        addToCart.fulfilled,
+        cartThunk.fulfilled,
         (state, { payload }: PayloadAction<Cart>) => {
-          state.products.push(...payload.lineItems);
+          state.products = payload.lineItems;
           state.totalPrice = payload.totalPrice;
           state.discountOnTotalPrice = payload.discountOnTotalPrice;
           state.isLoading = false;
           state.getCartLoadingProductsIds = [];
         },
       )
-      .addCase(addToCart.rejected, (state) => {
+      .addCase(cartThunk.rejected, (state) => {
         state.isLoading = false;
         state.getCartLoadingProductsIds = [];
       });
