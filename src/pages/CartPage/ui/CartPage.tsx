@@ -8,8 +8,9 @@ import { useAppSelector } from '@/shared/hooks/redux';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
-import cls from './CartPage.module.scss';
 import { ProductCard } from './productCard/productCard';
+
+import cls from './CartPage.module.scss';
 
 interface CartPageProps {
   className?: string;

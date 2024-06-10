@@ -3,14 +3,18 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
-// import { removeProduct, updateProductQuantity } from '@/entities/Cart';
-import { removeProduct } from '@/entities/Cart';
-
-import { updateQuantity } from '@/entities/Cart/model/services/updateQuantity';
+import {
+  getCartIsLoading,
+  getCartLoadingProductsIds,
+  removeProduct,
+  updateQuantity,
+} from '@/entities/Cart';
 import Minus from '@/shared/assets/images/minus.svg';
 import Plus from '@/shared/assets/images/plus.svg';
-import { useAppDispatch } from '@/shared/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { ConverterPrice } from '@/shared/util/converterPrice';
+import loader from '@/shared/assets/images/loader.gif';
+
 import cls from './productCard.module.scss';
 
 interface ProductCardProps {
@@ -29,7 +33,8 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
     totalPrice,
     id,
   } = product;
-  console.log(product);
+  const isLoading = useAppSelector(getCartIsLoading);
+  const selectedProductId = useAppSelector(getCartLoadingProductsIds);
   const imageUrl =
     images && images.length > 0 ? images[0].url : 'default-image-url';
   const price = ConverterPrice(centAmount);
@@ -52,7 +57,6 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
   };
 
   const handleRemove = () => {
-    console.log(id);
     dispatch(removeProduct(id));
   };
 
@@ -102,9 +106,13 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
         </div>
         <div className={cls.totalPriceWrapper}>
           total:
-          <div className={cls.totalPrice}>
-            {ConverterPrice(totalPrice.centAmount)}
-          </div>
+          {isLoading && selectedProductId.includes(id) ? (
+            <img src={loader} alt="loader" className={cls.loader} />
+          ) : (
+            <div className={cls.totalPrice}>
+              {ConverterPrice(totalPrice.centAmount)}
+            </div>
+          )}
         </div>
       </div>
       <button

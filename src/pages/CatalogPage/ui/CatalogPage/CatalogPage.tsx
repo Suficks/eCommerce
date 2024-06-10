@@ -24,8 +24,6 @@ import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { getAdditionalInfo } from '../../model/services/getAdditionalInfo';
 import { ToastConfig } from '@/shared/const/ToastConfig';
 
-import cls from './CatalogPage.module.scss';
-
 interface CatalogPageProps {
   className?: string;
 }
@@ -102,7 +100,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
   }
 
   return (
-    <main className={classNames(cls.CatalogPage, {}, [className])}>
+    <main>
       <div className="wrapper">
         <Header />
         <MainBlock

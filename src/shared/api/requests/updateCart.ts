@@ -107,9 +107,7 @@ export async function addNewProductInCartOrUpdateQuantity(
     case 'update':
       tempActions = {
         action: 'changeLineItemQuantity',
-        lineItemId: cartData?.lineItems?.find((el) => {
-          return el.productId === cardId;
-        })?.id,
+        lineItemId: cardId,
         quantity,
       };
       break;
@@ -128,9 +126,9 @@ export async function addNewProductInCartOrUpdateQuantity(
       if (cartData) {
         tempActions = {
           action: 'removeLineItem',
-          lineItemId: cartData.lineItems?.find(
-            (item) => item.productId === cardId || item.id === cardId,
-          )?.id,
+          lineItemId:
+            cartData.lineItems?.find((item) => item.productId === cardId)?.id ||
+            cardId,
         };
       }
       break;

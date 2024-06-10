@@ -2,6 +2,7 @@ import {
   Cart,
   CentPrecisionMoney,
   DiscountOnTotalPrice,
+  LineItem,
 } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
@@ -10,6 +11,7 @@ import { CartSchema } from '../types/Cart';
 import { removeProduct } from '../services/removeProduct';
 import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { updateQuantity } from '../services/updateQuantity';
 
 const initialState: CartSchema = {
   products: getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).lineItems || [],
@@ -47,6 +49,18 @@ export const cartSlice = createSlice({
         removeProduct.fulfilled,
         (state, { payload }: PayloadAction<Cart>) => {
           state.products = payload.lineItems;
+        },
+      )
+      .addCase(updateQuantity.pending, (state, action) => {
+        state.isLoading = true;
+        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId || '');
+      })
+      .addCase(
+        updateQuantity.fulfilled,
+        (state, { payload }: PayloadAction<Cart>) => {
+          state.products = payload.lineItems;
+          state.getCartLoadingProductsIds = [];
+          state.isLoading = false;
         },
       );
   },
