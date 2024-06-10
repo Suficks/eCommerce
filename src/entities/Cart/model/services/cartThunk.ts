@@ -1,11 +1,11 @@
+import { Cart } from '@commercetools/platform-sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Cart } from '@commercetools/platform-sdk';
+import { ThunkConfig } from '@/app/store/types/StateSchema';
 import {
   UpdateCartParams,
   addNewProductInCartOrUpdateQuantity,
 } from '@/shared/api';
-import { ThunkConfig } from '@/app/store/types/StateSchema';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
@@ -15,7 +15,7 @@ export const cartThunk = createAsyncThunk<
   ThunkConfig<string>
 >(
   'cart/cartThunk',
-  async ({ cardId, mode, quantity = 1 }, { rejectWithValue }) => {
+  async ({ cardId, mode, quantity = 1, code }, { rejectWithValue }) => {
     const cartFromLS = getLocalStorageValue(LocalStorageKeys.ACTIVE_CART);
     const cartData = Object.keys(cartFromLS).length === 0 ? null : cartFromLS;
 
@@ -25,6 +25,7 @@ export const cartThunk = createAsyncThunk<
         quantity,
         cardId,
         cartData,
+        code,
       });
 
       if (!response) {

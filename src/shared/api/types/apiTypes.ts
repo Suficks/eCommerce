@@ -47,7 +47,12 @@ export type FilterSortSearchParameters = {
   itemPerPage: number;
 };
 
-export type UpdateCartMode = 'new' | 'update' | 'remove' | 'removeProduct';
+export type UpdateCartMode =
+  | 'new'
+  | 'update'
+  | 'remove'
+  | 'removeProduct'
+  | 'addDiscountCode';
 
 export type UpdateCartParams = {
   cartData?: Partial<Cart> | null;
@@ -56,4 +61,5 @@ export type UpdateCartParams = {
   quantity?: number;
   firstFunctionCall?: boolean;
   id?: string;
+  code?: string;
 };
