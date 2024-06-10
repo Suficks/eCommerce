@@ -1,6 +1,7 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 
-import { cartThunk, getCartProducts } from '@/entities/Cart';
+import { cartActions, cartThunk, getCartProducts } from '@/entities/Cart';
 import { getCartTotalPrice } from '@/entities/Cart/model/selectors/cartSelectors';
 import plant_1 from '@/shared/assets/images/plant_for_cart_1.png';
 import plant_2 from '@/shared/assets/images/plant_for_cart_2.png';
@@ -9,6 +10,8 @@ import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
 import { ProductCard } from './productCard/productCard';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 import cls from './CartPage.module.scss';
 
@@ -27,6 +30,13 @@ export const CartPage = ({ className }: CartPageProps) => {
     dispatch(cartThunk({ mode: 'remove' }));
   };
 
+  useEffect(() => {
+    const activeCart = getLocalStorageValue(
+      LocalStorageKeys.ACTIVE_CART,
+    ).lineItems;
+    dispatch(cartActions.setCart(activeCart || []));
+  }, [dispatch]);
+
   return (
     <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
@@ -41,9 +51,10 @@ export const CartPage = ({ className }: CartPageProps) => {
           >
             Clear cart
           </button>
-          {productsInCart.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {productsInCart &&
+            productsInCart.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
         </div>
         <div className={cls.invoiceWrapper}>
           Invoice

@@ -71,7 +71,10 @@ export const AllProductsBlock = forwardRef<
       return <img src={loader} alt="loader" className={cls.loader} />;
     }
 
-    if (productsInCart.find((item) => item.productId === id)) {
+    if (
+      productsInCart &&
+      productsInCart.find((item) => item.productId === id)
+    ) {
       return <div className={cls.added}>Product added to cart!</div>;
     }
 

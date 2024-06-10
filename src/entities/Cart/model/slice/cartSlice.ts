@@ -2,16 +2,15 @@ import {
   Cart,
   CentPrecisionMoney,
   DiscountOnTotalPrice,
+  LineItem,
 } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { CartSchema } from '../types/Cart';
-import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { cartThunk } from '../services/cartThunk';
 
 const initialState: CartSchema = {
-  products: getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).lineItems || [],
+  products: [],
   isLoading: false,
   getCartLoadingProductsIds: [],
   totalPrice: {} as CentPrecisionMoney,
@@ -21,7 +20,14 @@ const initialState: CartSchema = {
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    setCart: (state, { payload }: PayloadAction<LineItem[]>) => {
+      state.products = payload;
+    },
+    clearCart: (state) => {
+      state.products = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(cartThunk.pending, (state, action) => {

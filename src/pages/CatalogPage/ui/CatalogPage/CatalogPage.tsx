@@ -23,6 +23,7 @@ import { getCategoriesByKey } from '../../model/services/getCategoriesByKey';
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { getAdditionalInfo } from '../../model/services/getAdditionalInfo';
 import { ToastConfig } from '@/shared/const/ToastConfig';
+import { catalogActions } from '../../model/slice/catalogSlice';
 
 interface CatalogPageProps {
   className?: string;
@@ -84,6 +85,7 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     }
 
     fetchAndSetCategory();
+    dispatch(catalogActions.setPage(0));
     dispatch(fetchProducts({ scrolling: false }));
   }, [
     categoryId,

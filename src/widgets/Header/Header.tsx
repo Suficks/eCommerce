@@ -12,10 +12,11 @@ import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Button } from '@/shared/ui/button/button';
 import HeaderImage from '@/shared/assets/images/header1.jpg';
 import { Logo } from '@/shared/ui/Logo/Logo';
-
-import cls from './Header.module.scss';
 import { HideScroll } from '@/widgets/Header/util/HideScroll';
 import { ShowScroll } from '@/widgets/Header/util/ShowScroll';
+
+import cls from './Header.module.scss';
+import { cartActions } from '@/entities/Cart';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -27,7 +28,9 @@ export const Header = () => {
     localStorage.removeItem(LocalStorageKeys.TOKEN);
     localStorage.removeItem(LocalStorageKeys.REFRESH_TOKEN);
     localStorage.removeItem(LocalStorageKeys.VERSION);
+    localStorage.removeItem(LocalStorageKeys.ACTIVE_CART);
     dispatch(userActions.logout());
+    dispatch(cartActions.clearCart());
   }, [dispatch]);
 
   const setControls = () => {
