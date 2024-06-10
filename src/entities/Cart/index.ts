@@ -1,3 +1,4 @@
+export { removeProduct } from './model/services/removeProduct';
 export type { CartSchema } from './model/types/Cart';
 export {
   getCartIsLoading,

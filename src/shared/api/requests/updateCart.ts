@@ -89,7 +89,7 @@ async function createNewCart(): Promise<Cart | undefined> {
 export async function addNewProductInCartOrUpdateQuantity(
   props: UpdateCartParams,
 ): Promise<Cart | undefined> {
-  const { cartData, mode, cardId, quantity, firstFunctionCall, key } = props;
+  const { cartData, mode, cardId, quantity = 1, firstFunctionCall } = props;
 
   let tempActions:
     | MyCartAddLineItemAction
@@ -107,7 +107,7 @@ export async function addNewProductInCartOrUpdateQuantity(
     case 'update':
       tempActions = {
         action: 'changeLineItemQuantity',
-        lineItemId: cartData?.lineItems.find((el) => {
+        lineItemId: cartData?.lineItems?.find((el) => {
           return el.productId === cardId;
         })?.id,
         quantity,
@@ -115,19 +115,22 @@ export async function addNewProductInCartOrUpdateQuantity(
       break;
     case 'remove':
       if (cartData) {
-        tempActions = cartData.lineItems.map((el) => {
-          return {
-            action: 'removeLineItem',
-            lineItemId: el.id,
-          };
-        });
+        tempActions =
+          cartData.lineItems?.map((el) => {
+            return {
+              action: 'removeLineItem',
+              lineItemId: el.id,
+            };
+          }) || [];
       }
       break;
     case 'removeProduct':
       if (cartData) {
         tempActions = {
           action: 'removeLineItem',
-          lineItemKey: key,
+          lineItemId: cartData.lineItems?.find(
+            (item) => item.productId === cardId || item.id === cardId,
+          )?.id,
         };
       }
       break;
@@ -137,7 +140,7 @@ export async function addNewProductInCartOrUpdateQuantity(
 
   try {
     const cartForRequest = cartData || (await createNewCart());
-    if (cartForRequest) {
+    if (cartForRequest && cartForRequest.id && cartForRequest.version) {
       await apiRootForRequest
         .me()
         .carts()

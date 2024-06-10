@@ -7,9 +7,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { addToCart } from '../services/addToCart';
 import { CartSchema } from '../types/Cart';
+import { removeProduct } from '../services/removeProduct';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
 const initialState: CartSchema = {
-  products: [],
+  products: getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).lineItems || [],
   isLoading: false,
   getCartLoadingProductsIds: [],
   totalPrice: {} as CentPrecisionMoney,
@@ -24,12 +27,12 @@ export const cartSlice = createSlice({
     builder
       .addCase(addToCart.pending, (state, action) => {
         state.isLoading = true;
-        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId);
+        state.getCartLoadingProductsIds?.push(action.meta.arg.cardId || '');
       })
       .addCase(
         addToCart.fulfilled,
         (state, { payload }: PayloadAction<Cart>) => {
-          state.products.push(...payload.lineItems);
+          state.products = payload.lineItems;
           state.totalPrice = payload.totalPrice;
           state.discountOnTotalPrice = payload.discountOnTotalPrice;
           state.isLoading = false;
@@ -39,7 +42,13 @@ export const cartSlice = createSlice({
       .addCase(addToCart.rejected, (state) => {
         state.isLoading = false;
         state.getCartLoadingProductsIds = [];
-      });
+      })
+      .addCase(
+        removeProduct.fulfilled,
+        (state, { payload }: PayloadAction<Cart>) => {
+          state.products = payload.lineItems;
+        },
+      );
   },
 });
 

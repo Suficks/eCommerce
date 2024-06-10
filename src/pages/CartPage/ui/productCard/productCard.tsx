@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
 // import { removeProduct, updateProductQuantity } from '@/entities/Cart';
-import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
+import { removeProduct } from '@/entities/Cart';
 
 import { updateQuantity } from '@/entities/Cart/model/services/updateQuantity';
 import Minus from '@/shared/assets/images/minus.svg';
@@ -27,8 +27,9 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
       discounted,
     },
     totalPrice,
+    id,
   } = product;
-
+  console.log(product);
   const imageUrl =
     images && images.length > 0 ? images[0].url : 'default-image-url';
   const price = ConverterPrice(centAmount);
@@ -38,21 +39,21 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
 
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(product.quantity);
-  const key = product.productKey || '';
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1);
-    dispatch(updateQuantity({ cardId: product.id, quantity: quantity + 1 }));
+    dispatch(updateQuantity({ cardId: id, quantity: quantity + 1 }));
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
-      dispatch(updateQuantity({ cardId: product.id, quantity: quantity - 1 }));
+      dispatch(updateQuantity({ cardId: id, quantity: quantity - 1 }));
     }
   };
 
   const handleRemove = () => {
-    dispatch(removeProduct({ key, quantity }));
+    console.log(id);
+    dispatch(removeProduct(id));
   };
 
   return (

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ProductProjection } from '@commercetools/platform-sdk';
 import {
   getCatalogPageSort,
   getCatalogPageSearch,

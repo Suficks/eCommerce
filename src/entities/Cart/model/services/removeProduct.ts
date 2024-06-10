@@ -2,23 +2,23 @@ import { Cart } from '@commercetools/platform-sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ThunkConfig } from '@/app/store/types/StateSchema';
-import {
-  UpdateCartParams,
-  addNewProductInCartOrUpdateQuantity,
-} from '@/shared/api';
+import { addNewProductInCartOrUpdateQuantity } from '@/shared/api';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 export const removeProduct = createAsyncThunk<
   Cart,
-  UpdateCartParams,
+  string,
   ThunkConfig<string>
->('cart/removeProduct', async ({ key }, thunkApi) => {
+>('cart/removeProduct', async (id, thunkApi) => {
   const { rejectWithValue } = thunkApi;
+  const cart = getLocalStorageValue(LocalStorageKeys.ACTIVE_CART);
 
   try {
     const response = await addNewProductInCartOrUpdateQuantity({
       mode: 'removeProduct',
-      key,
-      quantity: 1,
+      cardId: id,
+      cartData: cart,
     });
 
     if (!response) {

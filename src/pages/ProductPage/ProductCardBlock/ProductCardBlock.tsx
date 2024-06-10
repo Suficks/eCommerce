@@ -6,8 +6,7 @@ import { Button as BootstrapButton, Modal } from 'react-bootstrap';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { PiShoppingCartBold } from 'react-icons/pi';
 
-import { addToCart, getCartProducts } from '@/entities/Cart';
-import { removeProduct } from '@/entities/Cart/model/services/removeProduct';
+import { addToCart, getCartProducts, removeProduct } from '@/entities/Cart';
 import { ProductSlider } from '@/pages/ProductPage/ProductSlider/productSlider';
 import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
@@ -35,6 +34,7 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
         description,
       },
     },
+    id,
   } = product;
   const imagesArr =
     images.length === 0
@@ -75,14 +75,12 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
   };
 
   const dispatch = useAppDispatch();
-  const onAddToCart = (cardId: string, quantity: number) => () => {
-    dispatch(addToCart({ cardId, quantity }));
+  const onAddToCart = (quantity: number) => () => {
+    dispatch(addToCart({ cardId: id, quantity }));
   };
 
-  const onRemoveProduct = (key: string) => () => {
-    dispatch(removeProduct({ key, quantity: 1 })).then(() =>
-      setIsInCart(false),
-    );
+  const onRemoveProduct = () => {
+    dispatch(removeProduct(id)).then(() => setIsInCart(false));
   };
 
   useEffect(() => {
@@ -139,7 +137,7 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
             text={isInCart ? 'Item in cart' : 'Add to cart'}
             green
             className={cls.buyButtons}
-            onClick={onAddToCart(product.id, 1)}
+            onClick={onAddToCart(1)}
             disabled={isInCart}
             icon={<PiShoppingCartBold />}
           />
@@ -147,7 +145,7 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
             text="Remove"
             transparent
             className={isInCart ? cls.buyButtons : cls.none}
-            onClick={onRemoveProduct(product.key ? product.key : '')}
+            onClick={onRemoveProduct}
             disabled={!isInCart}
             icon={<FaRegTrashCan />}
           />
