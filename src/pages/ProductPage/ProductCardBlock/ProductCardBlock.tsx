@@ -6,7 +6,7 @@ import { Button as BootstrapButton, Modal } from 'react-bootstrap';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { PiShoppingCartBold } from 'react-icons/pi';
 
-import { addToCart, getCartProducts, removeProduct } from '@/entities/Cart';
+import { cartThunk, getCartProducts } from '@/entities/Cart';
 import { ProductSlider } from '@/pages/ProductPage/ProductSlider/productSlider';
 import noImage from '@/shared/assets/images/No-Image.webp';
 import NextButton from '@/shared/assets/images/next-slide.svg';
@@ -76,11 +76,13 @@ export const ProductCardBlock = ({ product }: ProductCardBlockProps) => {
 
   const dispatch = useAppDispatch();
   const onAddToCart = (quantity: number) => () => {
-    dispatch(addToCart({ cardId: id, quantity }));
+    dispatch(cartThunk({ cardId: id, quantity, mode: 'new' }));
   };
 
   const onRemoveProduct = () => {
-    dispatch(removeProduct(id)).then(() => setIsInCart(false));
+    dispatch(cartThunk({ cardId: id, mode: 'removeProduct' })).then(() =>
+      setIsInCart(false),
+    );
   };
 
   useEffect(() => {

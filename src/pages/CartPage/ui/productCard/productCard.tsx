@@ -1,13 +1,11 @@
 import { LineItem } from '@commercetools/platform-sdk';
 import classNames from 'classnames';
-import { useState } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
 import {
+  cartThunk,
   getCartIsLoading,
   getCartLoadingProductsIds,
-  removeProduct,
-  updateQuantity,
 } from '@/entities/Cart';
 import Minus from '@/shared/assets/images/minus.svg';
 import Plus from '@/shared/assets/images/plus.svg';
@@ -16,6 +14,7 @@ import { ConverterPrice } from '@/shared/util/converterPrice';
 import loader from '@/shared/assets/images/loader.gif';
 
 import cls from './productCard.module.scss';
+import { getQuantity } from '@/entities/Cart/model/selectors/cartSelectors';
 
 interface ProductCardProps {
   className?: string;
@@ -43,21 +42,23 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
     : null;
 
   const dispatch = useAppDispatch();
-  const [quantity, setQuantity] = useState(product.quantity);
+  const quantity = useAppSelector((state) => getQuantity(state, id));
   const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
-    dispatch(updateQuantity({ cardId: id, quantity: quantity + 1 }));
+    dispatch(cartThunk({ cardId: id, quantity: quantity + 1, mode: 'update' }));
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-      dispatch(updateQuantity({ cardId: id, quantity: quantity - 1 }));
+      dispatch(
+        cartThunk({ cardId: id, quantity: quantity - 1, mode: 'update' }),
+      );
+    } else {
+      dispatch(cartThunk({ cardId: id, mode: 'removeProduct' }));
     }
   };
 
   const handleRemove = () => {
-    dispatch(removeProduct(id));
+    dispatch(cartThunk({ cardId: id, mode: 'removeProduct' }));
   };
 
   return (

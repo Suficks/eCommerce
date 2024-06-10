@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 
-import { getCartProducts } from '@/entities/Cart';
+import { cartThunk, getCartProducts } from '@/entities/Cart';
 import { getCartTotalPrice } from '@/entities/Cart/model/selectors/cartSelectors';
 import plant_1 from '@/shared/assets/images/plant_for_cart_1.png';
 import plant_2 from '@/shared/assets/images/plant_for_cart_2.png';
-import { useAppSelector } from '@/shared/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
@@ -19,8 +19,14 @@ interface CartPageProps {
 export const CartPage = ({ className }: CartPageProps) => {
   const productsInCart = useAppSelector(getCartProducts);
   const totalPrice = useAppSelector(getCartTotalPrice);
+  const dispatch = useAppDispatch();
+
   const { length: cartLength } = productsInCart;
-  console.log(cartLength);
+
+  const onClearClick = () => {
+    dispatch(cartThunk({ mode: 'remove' }));
+  };
+
   return (
     <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
@@ -28,7 +34,11 @@ export const CartPage = ({ className }: CartPageProps) => {
         <img src={plant_1} alt="" className={cls.plantImageTop} />
         <img src={plant_2} alt="" className={cls.plantImageBottom} />
         <div className={cls.productsWrapper}>
-          <button type="button" className={cls.clearButton}>
+          <button
+            type="button"
+            className={cls.clearButton}
+            onClick={onClearClick}
+          >
             Clear cart
           </button>
           {productsInCart.map((product) => (

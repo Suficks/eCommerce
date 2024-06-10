@@ -10,3 +10,5 @@ export const getCartDiscountOnTotalPrice = (state: StateSchema) =>
   state.cart.discountOnTotalPrice ?? '';
 export const getCartTotalPrice = (state: StateSchema) =>
   state.cart.totalPrice ?? '';
+export const getQuantity = (state: StateSchema, id: string) =>
+  state.cart.products.find((item) => item.id === id)?.quantity ?? 1;
