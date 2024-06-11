@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AiOutlineClose, AiOutlineIdcard, AiOutlineMenu } from 'react-icons/ai';
 import { FaCartShopping, FaUser, FaUserPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -21,15 +21,11 @@ import { cartActions, getCartProducts } from '@/entities/Cart';
 export const Header = () => {
   const navigate = useNavigate();
   const [nav, setNav] = useState(false);
-  const [cart, setCart] = useState(0);
   const dispatch = useAppDispatch();
-  const valera = useAppSelector(getCartProducts).reduce((acc, curr) => {
+  const cartQuantity = useAppSelector(getCartProducts).reduce((acc, curr) => {
     acc += curr.quantity;
     return acc;
   }, 0);
-  useEffect(() => {
-    setCart(valera);
-  }, [valera]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem(LocalStorageKeys.USER);
@@ -138,7 +134,7 @@ export const Header = () => {
             {setControls()}
             <AppLink to="/cart" className={cls.icon__wrapper}>
               <FaCartShopping size={25} className={cls.icon} />
-              <div className={cls.cartQuantity}>{cart}</div>
+              <div className={cls.cartQuantity}>{cartQuantity}</div>
             </AppLink>
             {!nav ? (
               <AiOutlineMenu
