@@ -1,5 +1,6 @@
 import {
   Cart,
+  MyCartAddDiscountCodeAction,
   MyCartAddLineItemAction,
   MyCartChangeLineItemQuantityAction,
   MyCartRemoveLineItemAction,
@@ -89,10 +90,18 @@ async function createNewCart(): Promise<Cart | undefined> {
 export async function addNewProductInCartOrUpdateQuantity(
   props: UpdateCartParams,
 ): Promise<Cart | undefined> {
-  const { cartData, mode, cardId, quantity = 1, firstFunctionCall } = props;
+  const {
+    cartData,
+    mode,
+    cardId,
+    quantity = 1,
+    firstFunctionCall,
+    code,
+  } = props;
 
   let tempActions:
     | MyCartAddLineItemAction
+    | MyCartAddDiscountCodeAction
     | MyCartChangeLineItemQuantityAction
     | MyCartRemoveLineItemAction
     | MyCartRemoveLineItemAction[] = [];
@@ -109,6 +118,12 @@ export async function addNewProductInCartOrUpdateQuantity(
         action: 'changeLineItemQuantity',
         lineItemId: cardId,
         quantity,
+      };
+      break;
+    case 'addDiscountCode':
+      tempActions = {
+        action: 'addDiscountCode',
+        code: code || '',
       };
       break;
     case 'remove':
@@ -257,36 +272,5 @@ export async function getActiveCart(
     }
     localStorage.removeItem(LocalStorageKeys.ACTIVE_CART);
     return null;
-  }
-}
-
-export async function applyDiscount(
-  cartData: Cart,
-  promocode: string,
-): Promise<Cart> {
-  try {
-    const cartWithPromocode = await apiRootForRequest
-      .me()
-      .carts()
-      .withId({ ID: cartData.id })
-      .post({
-        body: {
-          version: cartData.version,
-          actions: [{ action: 'addDiscountCode', code: promocode }],
-        },
-      })
-      .execute();
-    localStorage.setItem(
-      LocalStorageKeys.ACTIVE_CART,
-      JSON.stringify(cartWithPromocode.body),
-    );
-    return cartWithPromocode.body;
-  } catch (e) {
-    const error = e as Error;
-    if (error.message === `The discount code '${promocode}' was not found.`) {
-      throw new Error('Промокод не найден:(');
-    } else {
-      throw new Error('Сервер в космосе, не обещал вернуться:(');
-    }
   }
 }

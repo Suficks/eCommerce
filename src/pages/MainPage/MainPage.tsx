@@ -108,16 +108,12 @@ export const MainPage = (props: MainPageProps) => {
             <p className={cls.promoCodesTitle}> Active promo codes</p>
             <div className={cls.descriptionWrapper}>
               <p className={cls.promoCodesDescription}>
+                <span className={cls.promoCodeName}>FIRST</span> - 10% off your
+                first order
+              </p>
+              <p className={cls.promoCodesDescription}>
                 <span className={cls.promoCodeName}>SALE</span> - promo code
                 discount applies to all items
-              </p>
-              <p className={cls.promoCodesDescription}>
-                <span className={cls.promoCodeName}>JUNGLE</span> - 5% on Jungle
-                Story brand merchandise
-              </p>
-              <p className={cls.promoCodesDescription}>
-                <span className={cls.promoCodeName}>HOME</span> - get 20% off on
-                Home category products
               </p>
             </div>
           </section>

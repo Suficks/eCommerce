@@ -1,19 +1,23 @@
 import classNames from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import { cartActions, cartThunk, getCartProducts } from '@/entities/Cart';
-import { getCartTotalPrice } from '@/entities/Cart/model/selectors/cartSelectors';
+import {
+  getCartDiscountOnTotalPrice,
+  getCartTotalPrice,
+} from '@/entities/Cart/model/selectors/cartSelectors';
+import emptyCart from '@/shared/assets/images/cart.png';
 import plant_1 from '@/shared/assets/images/plant_for_cart_1.png';
-import plant_2 from '@/shared/assets/images/plant_for_cart_2.png';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
-import { ProductCard } from './productCard/productCard';
-import { LocalStorageKeys } from '@/shared/const/LocalStorage';
-import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
-
 import cls from './CartPage.module.scss';
+import { ProductCard } from './productCard/productCard';
 
 interface CartPageProps {
   className?: string;
@@ -22,7 +26,15 @@ interface CartPageProps {
 export const CartPage = ({ className }: CartPageProps) => {
   const productsInCart = useAppSelector(getCartProducts);
   const totalPrice = useAppSelector(getCartTotalPrice);
+  const discountPrice = useAppSelector(getCartDiscountOnTotalPrice);
   const dispatch = useAppDispatch();
+  const [promoCode, setPromoCode] = useState<string>('');
+  const originalPrice =
+    Object.keys(discountPrice).length > 0 && discountPrice
+      ? ConverterPrice(
+          totalPrice.centAmount + discountPrice.discountedAmount.centAmount,
+        )
+      : '';
 
   const { length: cartLength } = productsInCart;
 
@@ -37,29 +49,92 @@ export const CartPage = ({ className }: CartPageProps) => {
     dispatch(cartActions.setCart(activeCart || []));
   }, [dispatch]);
 
+  const handleApplyPromoCode = () => {
+    dispatch(cartThunk({ mode: 'addDiscountCode', code: promoCode }));
+  };
   return (
     <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
       <div className={cls.main}>
-        <img src={plant_1} alt="" className={cls.plantImageTop} />
-        <img src={plant_2} alt="" className={cls.plantImageBottom} />
-        <div className={cls.productsWrapper}>
-          <button
-            type="button"
-            className={cls.clearButton}
-            onClick={onClearClick}
-          >
-            Clear cart
-          </button>
-          {productsInCart &&
-            productsInCart.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
-        <div className={cls.invoiceWrapper}>
-          Invoice
-          {ConverterPrice(totalPrice.centAmount)}
-        </div>
+        {cartLength === 0 ? (
+          <div className={cls.emptyCartWrapper}>
+            <img
+              src={emptyCart}
+              alt="Empty cart"
+              className={cls.emptyCartImage}
+            />
+            <p className={cls.emptyCartText}>
+              Shopping cart is empty.
+              <br />
+              You can choose goods in the{' '}
+              <NavLink to={Routes.CATALOG} className={cls.catalogLink}>
+                catalog
+              </NavLink>
+              .
+            </p>
+          </div>
+        ) : (
+          <>
+            <img src={plant_1} alt="" className={cls.plantImageTop} />
+            <div className={cls.productsWrapper}>
+              <button
+                type="button"
+                className={cls.clearButton}
+                onClick={onClearClick}
+              >
+                Clear cart
+              </button>
+              {productsInCart.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <div className={cls.invoiceWrapper}>
+              <h3 className={cls.invoiceTitle}>Invoice</h3>
+              <div className={cls.priceWrapper}>
+                {Object.keys(discountPrice).length > 0 && discountPrice ? (
+                  <>
+                    <span className={cls.originalPrice}>
+                      Price:
+                      {originalPrice}
+                    </span>
+                    <span className={cls.discount}>
+                      Discount:
+                      {ConverterPrice(
+                        discountPrice.discountedAmount.centAmount,
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  ''
+                )}
+
+                <span className={cls.totalPrice}>
+                  Total:
+                  {Object.keys(totalPrice).length > 0 && totalPrice
+                    ? ConverterPrice(totalPrice.centAmount)
+                    : ''}
+                </span>
+              </div>
+              <div className={cls.promoCodeView}>
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  placeholder="Enter promo code"
+                  className={cls.promoCodeInput}
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyPromoCode}
+                  className={cls.applyPromoCodeButton}
+                  disabled={promoCode === ''}
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <Footer />
     </div>
