@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineIdcard, AiOutlineMenu } from 'react-icons/ai';
 import { FaCartShopping, FaUser, FaUserPlus } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,15 @@ import { cartActions, getCartProducts } from '@/entities/Cart';
 export const Header = () => {
   const navigate = useNavigate();
   const [nav, setNav] = useState(false);
+  const [cart, setCart] = useState(0);
   const dispatch = useAppDispatch();
+  const valera = useAppSelector(getCartProducts).reduce((acc, curr) => {
+    acc += curr.quantity;
+    return acc;
+  }, 0);
+  useEffect(() => {
+    setCart(valera);
+  }, [valera]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem(LocalStorageKeys.USER);
@@ -32,10 +40,7 @@ export const Header = () => {
     dispatch(userActions.logout());
     dispatch(cartActions.clearCart());
   }, [dispatch]);
-  const valera = useAppSelector(getCartProducts).reduce((acc, curr) => {
-    acc += curr.quantity;
-    return acc;
-  }, 0);
+
   const setControls = () => {
     const login = localStorage.getItem(LocalStorageKeys.USER) || false;
     return (
@@ -133,11 +138,11 @@ export const Header = () => {
             {setControls()}
             <AppLink to="/cart" className={cls.icon__wrapper}>
               <FaCartShopping size={25} className={cls.icon} />
-              <div className={cls.cartQuantity}>{valera}</div>
+              <div className={cls.cartQuantity}>{cart}</div>
             </AppLink>
             {!nav ? (
               <AiOutlineMenu
-                className={`${cls.icon} ${cls.burger__icon}`}
+                className={`${cls.burger__icon} ${cls.icon}`}
                 size={30}
                 onClick={() => {
                   setNav(!nav);
@@ -146,7 +151,7 @@ export const Header = () => {
               />
             ) : (
               <AiOutlineClose
-                className={`${cls.icon__wrapper} ${cls.burger__icon}`}
+                className={`${cls.burger__icon} ${cls.icon}`}
                 size={30}
                 onClick={() => {
                   setNav(!nav);
