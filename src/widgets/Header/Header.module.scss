@@ -84,21 +84,53 @@
   }
 }
 
-.icon {
+.icon__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
-
-  transition: .7s;
   aspect-ratio: 1/1;
-}
 
-.icon:hover {
-  filter: invert(49%) sepia(9%) saturate(3244%) hue-rotate(77deg) brightness(118%) contrast(86%);
+  .icon {
+    transition: .5s;
+  }
 
-  transition: .5s;
+  .cartQuantity{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+
+    font-size: 10px;
+    line-height: normal;
+
+    background-color: #39b54a;
+
+    transition: .5s;
+  }
+
+  &:hover{
+    cursor: pointer;
+
+    .icon {
+      filter: invert(49%) sepia(9%) saturate(3244%) hue-rotate(77deg) brightness(118%) contrast(86%);
+
+      transition: .5s;
+    }
+
+    .cartQuantity{
+      color: $green;
+
+      background-color: white;
+
+      transition: .5s;
+    }
+  }
 }
 
 .burger__icon {
@@ -157,3 +189,4 @@
   }
 
 }
+
