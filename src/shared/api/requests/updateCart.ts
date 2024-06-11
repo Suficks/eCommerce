@@ -3,7 +3,9 @@ import {
   MyCartAddDiscountCodeAction,
   MyCartAddLineItemAction,
   MyCartChangeLineItemQuantityAction,
+  MyCartRemoveDiscountCodeAction,
   MyCartRemoveLineItemAction,
+  MyCartUpdateAction,
 } from '@commercetools/platform-sdk';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 
@@ -96,15 +98,18 @@ export async function addNewProductInCartOrUpdateQuantity(
     cardId,
     quantity = 1,
     firstFunctionCall,
-    code,
+    code = '',
+    promoCodeId = '',
   } = props;
 
   let tempActions:
     | MyCartAddLineItemAction
     | MyCartAddDiscountCodeAction
+    | MyCartRemoveDiscountCodeAction
     | MyCartChangeLineItemQuantityAction
     | MyCartRemoveLineItemAction
     | MyCartRemoveLineItemAction[] = [];
+
   switch (mode) {
     case 'new':
       tempActions = {
@@ -123,7 +128,16 @@ export async function addNewProductInCartOrUpdateQuantity(
     case 'addDiscountCode':
       tempActions = {
         action: 'addDiscountCode',
-        code: code || '',
+        code,
+      };
+      break;
+    case 'removeDiscountCode':
+      tempActions = {
+        action: 'removeDiscountCode',
+        discountCode: {
+          typeId: 'discount-code',
+          id: promoCodeId,
+        },
       };
       break;
     case 'remove':

@@ -23,9 +23,10 @@ import { Header } from '@/widgets/Header/Header';
 import { ProductCard } from './productCard/productCard';
 import Modal from '@/shared/ui/modal/modal';
 import { Button } from '@/shared/ui/button/button';
+import { AppError } from '@/shared/ui/AppError/AppError';
+import { Input } from '@/shared/ui/input/input';
 
 import cls from './CartPage.module.scss';
-import { AppError } from '@/shared/ui/AppError/AppError';
 
 interface CartPageProps {
   className?: string;
@@ -35,6 +36,7 @@ export const CartPage = ({ className }: CartPageProps) => {
   const productsInCart = useAppSelector(getCartProducts);
   const totalPrice = useAppSelector(getCartTotalPrice);
   const discountPrice = useAppSelector(getCartDiscountOnTotalPrice);
+  const isDiscountPromoCode = Object.keys(discountPrice).length === 0;
   const error = useAppSelector(getCartError);
   const dispatch = useAppDispatch();
 
@@ -55,8 +57,8 @@ export const CartPage = ({ className }: CartPageProps) => {
     setIsModalOpen(false);
   };
 
-  const onChangePromoCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPromoCode(e.target.value);
+  const onChangePromoCode = (value: string) => {
+    setPromoCode(value);
     dispatch(cartActions.clearError());
   };
 
@@ -69,6 +71,14 @@ export const CartPage = ({ className }: CartPageProps) => {
 
   const handleApplyPromoCode = () => {
     dispatch(cartThunk({ mode: 'addDiscountCode', code: promoCode }));
+    if (!error) {
+      setPromoCode('');
+    }
+  };
+
+  const handleResetPromoCode = () => {
+    setPromoCode('');
+    dispatch(cartThunk({ mode: 'removeDiscountCode' }));
   };
 
   return (
@@ -138,12 +148,13 @@ export const CartPage = ({ className }: CartPageProps) => {
                 </div>
               </div>
               <div className={cls.promoCodeView}>
-                <input
+                <Input
                   type="text"
                   value={promoCode}
                   onChange={onChangePromoCode}
                   placeholder="Enter promo code"
                   className={cls.promoCodeInput}
+                  classNameLabel={cls.label}
                 />
                 <button
                   type="button"
@@ -152,6 +163,14 @@ export const CartPage = ({ className }: CartPageProps) => {
                   disabled={promoCode === ''}
                 >
                   Apply
+                </button>
+                <button
+                  type="button"
+                  onClick={handleResetPromoCode}
+                  className={cls.applyPromoCodeButton}
+                  disabled={isDiscountPromoCode}
+                >
+                  Reset
                 </button>
                 <AppError text={error} className={cls.error} />
               </div>

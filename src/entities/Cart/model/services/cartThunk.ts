@@ -16,8 +16,9 @@ export const cartThunk = createAsyncThunk<
 >(
   'cart/cartThunk',
   async ({ cardId, mode, quantity = 1, code }, { rejectWithValue }) => {
-    const cartFromLS = getLocalStorageValue(LocalStorageKeys.ACTIVE_CART);
+    const cartFromLS: Cart = getLocalStorageValue(LocalStorageKeys.ACTIVE_CART);
     const cartData = Object.keys(cartFromLS).length === 0 ? null : cartFromLS;
+    const promoCodeId = cartFromLS?.discountCodes?.[0]?.discountCode?.id;
 
     try {
       const response = await addNewProductInCartOrUpdateQuantity({
@@ -26,6 +27,7 @@ export const cartThunk = createAsyncThunk<
         cardId,
         cartData,
         code,
+        promoCodeId,
       });
 
       if (!response) {

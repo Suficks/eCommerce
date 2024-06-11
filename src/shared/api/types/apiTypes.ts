@@ -52,7 +52,8 @@ export type UpdateCartMode =
   | 'update'
   | 'remove'
   | 'removeProduct'
-  | 'addDiscountCode';
+  | 'addDiscountCode'
+  | 'removeDiscountCode';
 
 export type UpdateCartParams = {
   cartData?: Partial<Cart> | null;
@@ -62,4 +63,5 @@ export type UpdateCartParams = {
   firstFunctionCall?: boolean;
   id?: string;
   code?: string;
+  promoCodeId?: string;
 };

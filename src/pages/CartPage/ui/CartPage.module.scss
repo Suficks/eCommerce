@@ -41,7 +41,6 @@
   }
 }
 
-
 .clearButton {
   align-self: flex-end;
   padding: 0;
@@ -66,7 +65,7 @@
 
   width: 370px;
   height: fit-content;
-  padding: 20px 15px 15px 40px;
+  padding: 20px 15px 15px 30px;
   border: 1px solid $green;
 
   @include flex(null, null, column, 30px);
@@ -131,22 +130,11 @@
 }
 
 .promoCodeInput {
-  border: none;
-  border-bottom: 1px solid $green;
-
-  color: $green;
-
-  @include montserrat(17px, 500, 20px);
-
-  outline: none;
-
-  &::placeholder {
-    color: $gray;
-  }
-
-  &:focus {
-    border-bottom-color: #39b54a90;
-  }
+  @include montserrat(16px, 400, 20px);
+}
+  
+.label {
+  width: 156px;
 }
 
 .applyPromoCodeButton {

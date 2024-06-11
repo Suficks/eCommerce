@@ -77,11 +77,15 @@ export const catalogSlice = createSlice({
         state.hasMore = action.payload.products.length >= state.limit;
         state.brands = action.payload.brands;
       })
+      .addCase(getAdditionalInfo.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(
         getAdditionalInfo.fulfilled,
         (state, { payload }: PayloadAction<CatalogPageData>) => {
           state.discountProducts = payload.discountProducts || [];
           state.categories = payload.categories || [];
+          state.isLoading = false;
         },
       );
   },
