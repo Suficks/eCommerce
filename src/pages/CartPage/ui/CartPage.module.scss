@@ -10,12 +10,14 @@
   z-index: 1;
 
   flex: 1 1;
+  max-width: 100%;
 }
 
 .main {
   position: relative;
 
   flex-wrap: wrap;
+  min-height: calc( 100vh - 143px - 384px);
   padding: 10px;
 
   background-color: $black;
@@ -38,7 +40,6 @@
     z-index: 0;
   }
 }
-
 
 .clearButton {
   align-self: flex-end;
@@ -63,8 +64,8 @@
   z-index: 1;
 
   width: 370px;
-  padding: 10px;
-  padding-left: 40px;
+  height: fit-content;
+  padding: 20px 15px 15px 30px;
   border: 1px solid $green;
 
   @include flex(null, null, column, 30px);
@@ -101,14 +102,18 @@
 }
 
 .priceWrapper {
-  @include flex(null, null, column, 30px);
+  @include flex(null, null, column, 20px);
 
   .originalPrice {
     @include montserrat(15px, 500, 25px);
     text-decoration: line-through
   }
 
-  .totalPrice {
+  .priceFlex {
+    @include flex(space-between, center, 10px);
+  }
+
+  .price {
     @include montserrat(25px, 500, 30px);
     color: $green;
   }
@@ -120,26 +125,16 @@
 }
 
 .promoCodeView {
-  @include flex(flex-start, center, row, 10px);
+  @include flex(space-between, center, row, 10px);
+  flex-wrap: wrap;
 }
 
 .promoCodeInput {
-  border: none;
-  border-bottom: 1px solid $green;
-
-  color: $green;
-
-  @include montserrat(13px, 500, 20px);
-
-  outline: none;
-
-  &::placeholder {
-    color: $gray;
-  }
-
-  &:focus {
-    border-bottom-color: #39b54a90;
-  }
+  @include montserrat(16px, 400, 20px);
+}
+  
+.label {
+  width: 156px;
 }
 
 .applyPromoCodeButton {
@@ -165,5 +160,21 @@
   &:disabled {
     background-color: $gray;
     cursor: not-allowed;
+  }
+}
+
+.Modal {
+  transform: translate(-50%, -1000%);
+}
+
+.active {
+  transform: translateX(-50%);
+}
+
+.buttonsWrap {
+  @include flex(space-between, center, row, 10px);
+
+  button {
+    width: 100px;
   }
 }

@@ -3,7 +3,9 @@ import {
   MyCartAddDiscountCodeAction,
   MyCartAddLineItemAction,
   MyCartChangeLineItemQuantityAction,
+  MyCartRemoveDiscountCodeAction,
   MyCartRemoveLineItemAction,
+  MyCartUpdateAction,
 } from '@commercetools/platform-sdk';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 
@@ -65,7 +67,7 @@ export async function changeApiRootToPassword(): Promise<void> {
   }
 }
 
-async function createNewCart(): Promise<Cart | undefined> {
+export async function createNewCart(): Promise<Cart | undefined> {
   try {
     const result = await apiRootForRequest
       .me()
@@ -96,15 +98,18 @@ export async function addNewProductInCartOrUpdateQuantity(
     cardId,
     quantity = 1,
     firstFunctionCall,
-    code,
+    code = '',
+    promoCodeId = '',
   } = props;
 
   let tempActions:
     | MyCartAddLineItemAction
     | MyCartAddDiscountCodeAction
+    | MyCartRemoveDiscountCodeAction
     | MyCartChangeLineItemQuantityAction
     | MyCartRemoveLineItemAction
     | MyCartRemoveLineItemAction[] = [];
+
   switch (mode) {
     case 'new':
       tempActions = {
@@ -123,7 +128,16 @@ export async function addNewProductInCartOrUpdateQuantity(
     case 'addDiscountCode':
       tempActions = {
         action: 'addDiscountCode',
-        code: code || '',
+        code,
+      };
+      break;
+    case 'removeDiscountCode':
+      tempActions = {
+        action: 'removeDiscountCode',
+        discountCode: {
+          typeId: 'discount-code',
+          id: promoCodeId,
+        },
       };
       break;
     case 'remove':
@@ -219,6 +233,12 @@ export async function addNewProductInCartOrUpdateQuantity(
         firstFunctionCall: false,
       });
     }
+    if (
+      e instanceof Error &&
+      e.message === `The discount code '${code}' was not found.`
+    ) {
+      throw new Error(e.message);
+    }
     if (e instanceof Error && e.message === 'Failed to fetch') {
       throw new Error('Server error');
     }
@@ -240,6 +260,7 @@ export async function getActiveCart(
       LocalStorageKeys.ACTIVE_CART,
       JSON.stringify(activeCart.body),
     );
+
     return activeCart.body;
   } catch (e) {
     if (
@@ -247,7 +268,7 @@ export async function getActiveCart(
       e.message === `URI not found: /${VITE_CTP_PROJECT_KEY}/me/active-cart` &&
       firstFunctionCall
     ) {
-      if (localStorage.getItem('refreshToken')) {
+      if (localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN)) {
         apiRootForRequest = constructClientRefresh();
         return getActiveCart(false);
       }
