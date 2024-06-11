@@ -18,6 +18,8 @@ import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
 import cls from './CartPage.module.scss';
 import { ProductCard } from './productCard/productCard';
+import Modal from '@/shared/ui/modal/modal';
+import { Button } from '@/shared/ui/button/button';
 
 interface CartPageProps {
   className?: string;
@@ -29,6 +31,7 @@ export const CartPage = ({ className }: CartPageProps) => {
   const discountPrice = useAppSelector(getCartDiscountOnTotalPrice);
   const dispatch = useAppDispatch();
   const [promoCode, setPromoCode] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const originalPrice =
     Object.keys(discountPrice).length > 0 && discountPrice
       ? ConverterPrice(
@@ -38,8 +41,9 @@ export const CartPage = ({ className }: CartPageProps) => {
 
   const { length: cartLength } = productsInCart;
 
-  const onClearClick = () => {
+  const onClearCart = () => {
     dispatch(cartThunk({ mode: 'remove' }));
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -52,6 +56,7 @@ export const CartPage = ({ className }: CartPageProps) => {
   const handleApplyPromoCode = () => {
     dispatch(cartThunk({ mode: 'addDiscountCode', code: promoCode }));
   };
+
   return (
     <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
@@ -80,7 +85,7 @@ export const CartPage = ({ className }: CartPageProps) => {
               <button
                 type="button"
                 className={cls.clearButton}
-                onClick={onClearClick}
+                onClick={() => setIsModalOpen(true)}
               >
                 Clear cart
               </button>
@@ -139,6 +144,18 @@ export const CartPage = ({ className }: CartPageProps) => {
           </>
         )}
       </main>
+      <Modal className={classNames(cls.Modal, { [cls.active]: isModalOpen })}>
+        <span>Are you sure you want to Clear Cart?</span>
+        <div className={cls.buttonsWrap}>
+          <Button text="Clear" small onClick={onClearCart} />
+          <Button
+            text="Cancel"
+            small
+            onClick={() => setIsModalOpen(false)}
+            cancel
+          />
+        </div>
+      </Modal>
       <Footer />
     </div>
   );

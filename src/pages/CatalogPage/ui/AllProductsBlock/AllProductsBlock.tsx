@@ -9,11 +9,7 @@ import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Button } from '@/shared/ui/button/button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { getProductPath } from '../../model/services/getProductPath';
-import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
-import {
-  getCatalogPageHasMore,
-  getCatalogPageIsLoading,
-} from '../../model/selectors/catalogPageSelectors';
+import { getCatalogPageHasMore } from '../../model/selectors/catalogPageSelectors';
 import loader from '@/shared/assets/images/loader.gif';
 import {
   cartThunk,
@@ -36,7 +32,6 @@ export const AllProductsBlock = forwardRef<
 >(({ className, products }, ref) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isLoading = useAppSelector(getCatalogPageIsLoading);
   const isLoadingCard = useAppSelector(getCartIsLoading);
   const loadingProductsIds = useAppSelector(getCartLoadingProductsIds);
   const productsInCart = useAppSelector(getCartProducts);
@@ -45,10 +40,6 @@ export const AllProductsBlock = forwardRef<
   const onLoadNextPart = useCallback(() => {
     dispatch(fetchNextPart());
   }, [dispatch]);
-
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
 
   const onOpenProduct =
     (productId: string, categoryId: string, itemName: string) => async () => {

@@ -12,6 +12,7 @@ interface ButtonProps {
   icon?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  cancel?: boolean;
 }
 
 export const Button = ({
@@ -21,6 +22,7 @@ export const Button = ({
   small,
   green,
   icon,
+  cancel = false,
   onClick,
   disabled,
 }: ButtonProps) => {
@@ -31,6 +33,7 @@ export const Button = ({
         [cls.transparent]: transparent,
         [cls.green]: green,
         [cls.small]: small,
+        [cls.cancel]: cancel,
       })}
       onClick={onClick}
       disabled={disabled}

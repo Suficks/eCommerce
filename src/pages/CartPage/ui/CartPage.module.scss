@@ -10,12 +10,14 @@
   z-index: 1;
 
   flex: 1 1;
+  max-width: 100%;
 }
 
 .main {
   position: relative;
 
   flex-wrap: wrap;
+  min-height: calc( 100vh - 143px - 384px);
   padding: 10px;
 
   background-color: $black;
@@ -124,7 +126,7 @@
 }
 
 .promoCodeView {
-  @include flex(flex-start, center, row, 10px);
+  @include flex(space-between, center, row, 10px);
 }
 
 .promoCodeInput {
@@ -169,5 +171,21 @@
   &:disabled {
     background-color: $gray;
     cursor: not-allowed;
+  }
+}
+
+.Modal {
+  transform: translate(-50%, -1000%);
+}
+
+.active {
+  transform: translateX(-50%);
+}
+
+.buttonsWrap {
+  @include flex(space-between, center, row, 10px);
+
+  button {
+    width: 100px;
   }
 }
