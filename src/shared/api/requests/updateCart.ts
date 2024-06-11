@@ -65,7 +65,7 @@ export async function changeApiRootToPassword(): Promise<void> {
   }
 }
 
-async function createNewCart(): Promise<Cart | undefined> {
+export async function createNewCart(): Promise<Cart | undefined> {
   try {
     const result = await apiRootForRequest
       .me()
@@ -218,6 +218,12 @@ export async function addNewProductInCartOrUpdateQuantity(
         quantity,
         firstFunctionCall: false,
       });
+    }
+    if (
+      e instanceof Error &&
+      e.message === `The discount code '${code}' was not found.`
+    ) {
+      throw new Error(e.message);
     }
     if (e instanceof Error && e.message === 'Failed to fetch') {
       throw new Error('Server error');

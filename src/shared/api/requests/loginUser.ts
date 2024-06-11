@@ -7,7 +7,11 @@ import { tokenInstance } from '../tokenHandlers';
 import { ValidationMessages } from '@/shared/const/Validation';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { setLocalStorageValue } from '@/shared/util/LocalStorageHandler';
-import { changeApiRootToPassword, getActiveCart } from './updateCart';
+import {
+  changeApiRootToPassword,
+  createNewCart,
+  getActiveCart,
+} from './updateCart';
 
 const MERGE_ANONYMOUS_CART_WITH_USER_CART = 'MergeWithExistingCustomerCart';
 

@@ -127,6 +127,7 @@
 
 .promoCodeView {
   @include flex(space-between, center, row, 10px);
+  flex-wrap: wrap;
 }
 
 .promoCodeInput {

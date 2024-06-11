@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
-import { cartActions, cartThunk, getCartProducts } from '@/entities/Cart';
 import {
+  cartActions,
+  cartThunk,
   getCartDiscountOnTotalPrice,
+  getCartError,
+  getCartProducts,
   getCartTotalPrice,
-} from '@/entities/Cart/model/selectors/cartSelectors';
+} from '@/entities/Cart';
+
 import emptyCart from '@/shared/assets/images/cart.png';
 import plant_1 from '@/shared/assets/images/plant_for_cart_1.png';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
@@ -16,10 +20,12 @@ import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { Footer } from '@/widgets/Footer/Footer';
 import { Header } from '@/widgets/Header/Header';
-import cls from './CartPage.module.scss';
 import { ProductCard } from './productCard/productCard';
 import Modal from '@/shared/ui/modal/modal';
 import { Button } from '@/shared/ui/button/button';
+
+import cls from './CartPage.module.scss';
+import { AppError } from '@/shared/ui/AppError/AppError';
 
 interface CartPageProps {
   className?: string;
@@ -29,9 +35,12 @@ export const CartPage = ({ className }: CartPageProps) => {
   const productsInCart = useAppSelector(getCartProducts);
   const totalPrice = useAppSelector(getCartTotalPrice);
   const discountPrice = useAppSelector(getCartDiscountOnTotalPrice);
+  const error = useAppSelector(getCartError);
   const dispatch = useAppDispatch();
+
   const [promoCode, setPromoCode] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const originalPrice =
     Object.keys(discountPrice).length > 0 && discountPrice
       ? ConverterPrice(
@@ -44,6 +53,11 @@ export const CartPage = ({ className }: CartPageProps) => {
   const onClearCart = () => {
     dispatch(cartThunk({ mode: 'remove' }));
     setIsModalOpen(false);
+  };
+
+  const onChangePromoCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPromoCode(e.target.value);
+    dispatch(cartActions.clearError());
   };
 
   useEffect(() => {
@@ -127,7 +141,7 @@ export const CartPage = ({ className }: CartPageProps) => {
                 <input
                   type="text"
                   value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
+                  onChange={onChangePromoCode}
                   placeholder="Enter promo code"
                   className={cls.promoCodeInput}
                 />
@@ -139,6 +153,7 @@ export const CartPage = ({ className }: CartPageProps) => {
                 >
                   Apply
                 </button>
+                <AppError text={error} className={cls.error} />
               </div>
             </div>
           </>
