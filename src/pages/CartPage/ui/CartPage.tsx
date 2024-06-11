@@ -55,7 +55,7 @@ export const CartPage = ({ className }: CartPageProps) => {
   return (
     <div className={classNames(cls.wrapper, {}, [className])}>
       <Header />
-      <div className={cls.main}>
+      <main className={cls.main}>
         {cartLength === 0 ? (
           <div className={cls.emptyCartWrapper}>
             <img
@@ -93,27 +93,30 @@ export const CartPage = ({ className }: CartPageProps) => {
               <div className={cls.priceWrapper}>
                 {Object.keys(discountPrice).length > 0 && discountPrice ? (
                   <>
-                    <span className={cls.originalPrice}>
-                      Price:
-                      {originalPrice}
-                    </span>
-                    <span className={cls.discount}>
-                      Discount:
-                      {ConverterPrice(
-                        discountPrice.discountedAmount.centAmount,
-                      )}
-                    </span>
+                    <div className={cls.priceFlex}>
+                      <span className={cls.discount}>Price:</span>
+                      <span className={cls.originalPrice}>{originalPrice}</span>
+                    </div>
+                    <div className={cls.priceFlex}>
+                      <span className={cls.discount}>Discount:</span>
+                      <span className={cls.discount}>
+                        {ConverterPrice(
+                          discountPrice.discountedAmount.centAmount,
+                        )}
+                      </span>
+                    </div>
                   </>
                 ) : (
                   ''
                 )}
-
-                <span className={cls.totalPrice}>
-                  Total:
-                  {Object.keys(totalPrice).length > 0 && totalPrice
-                    ? ConverterPrice(totalPrice.centAmount)
-                    : ''}
-                </span>
+                <div className={cls.priceFlex}>
+                  <span className={cls.price}>Total:</span>
+                  <span className={cls.price}>
+                    {Object.keys(totalPrice).length > 0 && totalPrice
+                      ? ConverterPrice(totalPrice.centAmount)
+                      : ''}
+                  </span>
+                </div>
               </div>
               <div className={cls.promoCodeView}>
                 <input
@@ -135,7 +138,7 @@ export const CartPage = ({ className }: CartPageProps) => {
             </div>
           </>
         )}
-      </div>
+      </main>
       <Footer />
     </div>
   );

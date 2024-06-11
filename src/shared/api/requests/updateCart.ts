@@ -240,6 +240,7 @@ export async function getActiveCart(
       LocalStorageKeys.ACTIVE_CART,
       JSON.stringify(activeCart.body),
     );
+
     return activeCart.body;
   } catch (e) {
     if (
@@ -247,7 +248,7 @@ export async function getActiveCart(
       e.message === `URI not found: /${VITE_CTP_PROJECT_KEY}/me/active-cart` &&
       firstFunctionCall
     ) {
-      if (localStorage.getItem('refreshToken')) {
+      if (localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN)) {
         apiRootForRequest = constructClientRefresh();
         return getActiveCart(false);
       }

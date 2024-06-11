@@ -9,7 +9,7 @@ import cls from './Footer.module.scss';
 
 export const Footer = () => {
   return (
-    <div className={cls.socialMedia}>
+    <footer className={cls.socialMedia}>
       <video autoPlay loop muted className={cls.videoBackground}>
         <source src={animation_background} type="video/mp4" />
       </video>
@@ -29,6 +29,6 @@ export const Footer = () => {
           <img src={Icon_youtube} alt="our_youtube" className={cls.icon} />
         </NavLink>
       </div>
-    </div>
+    </footer>
   );
 };

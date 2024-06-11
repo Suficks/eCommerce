@@ -1,20 +1,20 @@
-import {
-  Cart,
-  CentPrecisionMoney,
-  DiscountOnTotalPrice,
-  LineItem,
-} from '@commercetools/platform-sdk';
+import { Cart, LineItem } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { CartSchema } from '../types/Cart';
 import { cartThunk } from '../services/cartThunk';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 const initialState: CartSchema = {
   products: [],
   isLoading: false,
   getCartLoadingProductsIds: [],
-  totalPrice: {} as CentPrecisionMoney,
-  discountOnTotalPrice: {} as DiscountOnTotalPrice,
+  totalPrice:
+    getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).totalPrice || {},
+  discountOnTotalPrice:
+    getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).discountOnTotalPrice ||
+    {},
 };
 
 export const cartSlice = createSlice({

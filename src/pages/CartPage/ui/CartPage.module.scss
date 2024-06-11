@@ -63,8 +63,8 @@
   z-index: 1;
 
   width: 370px;
-  padding: 10px;
-  padding-left: 40px;
+  height: fit-content;
+  padding: 20px 15px 15px 40px;
   border: 1px solid $green;
 
   @include flex(null, null, column, 30px);
@@ -101,14 +101,18 @@
 }
 
 .priceWrapper {
-  @include flex(null, null, column, 30px);
+  @include flex(null, null, column, 20px);
 
   .originalPrice {
     @include montserrat(15px, 500, 25px);
     text-decoration: line-through
   }
 
-  .totalPrice {
+  .priceFlex {
+    @include flex(space-between, center, 10px);
+  }
+
+  .price {
     @include montserrat(25px, 500, 30px);
     color: $green;
   }
@@ -129,7 +133,7 @@
 
   color: $green;
 
-  @include montserrat(13px, 500, 20px);
+  @include montserrat(17px, 500, 20px);
 
   outline: none;
 
