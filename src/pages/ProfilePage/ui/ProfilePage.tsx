@@ -19,16 +19,16 @@ export const ProfilePage = () => {
     return <Navigate to="/main" replace />;
   }
   const isDataLoaded = !!client;
-  const shippingAddresses = getShippingAddresses(client) || [];
-  const { defaultShippingAddressId } = client;
-  const billingAddresses = getBillingAddresses(client) || [];
-  const { defaultBillingAddressId } = client;
+  const shippingAddresses = (client && getShippingAddresses(client)) || [];
+  const defaultShippingAddressId = client?.defaultShippingAddressId;
+  const billingAddresses = (client && getBillingAddresses(client)) || [];
+  const defaultBillingAddressId = client?.defaultBillingAddressId;
   const PersonalData = {
-    username: client.firstName ?? '',
-    surname: client.lastName ?? '',
-    email: client.email ?? '',
-    password: client.password ?? '',
-    birthdate: client.dateOfBirth ?? '',
+    username: client?.firstName ?? '',
+    surname: client?.lastName ?? '',
+    email: client?.email ?? '',
+    password: client?.password ?? '',
+    birthdate: client?.dateOfBirth ?? '',
   };
   return (
     isDataLoaded && (
