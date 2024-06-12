@@ -7,7 +7,7 @@ import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
 
 const initialState: CartSchema = {
-  products: [],
+  products: getLocalStorageValue(LocalStorageKeys.ACTIVE_CART).lineItems || [],
   isLoading: false,
   getCartLoadingProductsIds: [],
   totalPrice:

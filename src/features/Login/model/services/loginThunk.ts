@@ -1,10 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
+import { ByProjectKeyRequestBuilder, Cart } from '@commercetools/platform-sdk';
 import { LoginSubmitData } from '../types/Login';
 import { loginUser } from '@/shared/api';
 import { userActions } from '@/entities/User';
 import { ThunkConfig } from '@/app/store/types/StateSchema';
+import { cartActions } from '@/entities/Cart';
+import { getLocalStorageValue } from '@/shared/util/LocalStorageHandler';
+import { LocalStorageKeys } from '@/shared/const/LocalStorage';
 
 export const loginThunk = createAsyncThunk<
   ByProjectKeyRequestBuilder,
@@ -19,8 +22,13 @@ export const loginThunk = createAsyncThunk<
     if (!response) {
       throw new Error();
     }
-
     dispatch(userActions.setIsLogged(true));
+    const cartFromLS = getLocalStorageValue(
+      LocalStorageKeys.ACTIVE_CART,
+    ).lineItems;
+    if (cartFromLS) {
+      dispatch(cartActions.setCart(cartFromLS));
+    }
 
     return response;
   } catch (e) {
