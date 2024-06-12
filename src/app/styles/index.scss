@@ -1,4 +1,5 @@
-body, * {
+body,
+* {
   box-sizing: border-box;
 
   color: white;
@@ -22,12 +23,12 @@ body, * {
   background-color: white;
 }
 
-.slick-dots li.slick-active button{
+.slick-dots li.slick-active button {
   background-color: $green;
 }
 
 .slick-next::before,
-.slick-prev::before  {
+.slick-prev::before {
   display: none;
 }
 
@@ -60,7 +61,7 @@ input[type="checkbox"] {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    appearance: none;
+  appearance: none;
 }
 
 .range-slider .range-slider__thumb,
