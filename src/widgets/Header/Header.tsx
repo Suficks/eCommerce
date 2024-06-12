@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import { userActions } from '@/entities/User';
 import { LocalStorageKeys } from '@/shared/const/LocalStorage';
-import { useAppDispatch } from '@/shared/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { AppLink } from '@/shared/ui/AppLink/AppLink';
 import { Button } from '@/shared/ui/button/button';
 import HeaderImage from '@/shared/assets/images/header1.jpg';
@@ -16,12 +16,16 @@ import { HideScroll } from '@/widgets/Header/util/HideScroll';
 import { ShowScroll } from '@/widgets/Header/util/ShowScroll';
 
 import cls from './Header.module.scss';
-import { cartActions } from '@/entities/Cart';
+import { cartActions, getCartProducts } from '@/entities/Cart';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [nav, setNav] = useState(false);
   const dispatch = useAppDispatch();
+  const cartQuantity = useAppSelector(getCartProducts).reduce((acc, curr) => {
+    acc += curr.quantity;
+    return acc;
+  }, 0);
 
   const logOut = useCallback(() => {
     localStorage.removeItem(LocalStorageKeys.USER);
@@ -68,22 +72,22 @@ export const Header = () => {
         {!login && (
           <AppLink
             to={Routes.LOGIN}
-            className={classNames(cls.icon, cls.mobile__visible)}
+            className={classNames(cls.icon__wrapper, cls.mobile__visible)}
           >
-            <FaUserPlus size={30} />
+            <FaUserPlus size={30} className={cls.icon} />
           </AppLink>
         )}
         {!login && (
           <AppLink
             to={Routes.REGISTRATION}
-            className={classNames(cls.icon, cls.mobile__visible)}
+            className={classNames(cls.icon__wrapper, cls.mobile__visible)}
           >
-            <AiOutlineIdcard size={30} />
+            <AiOutlineIdcard size={30} className={cls.icon} />
           </AppLink>
         )}{' '}
         {login && (
-          <AppLink to={Routes.PROFILE} className={cls.icon}>
-            <FaUser size={25} />
+          <AppLink to={Routes.PROFILE} className={cls.icon__wrapper}>
+            <FaUser size={25} className={cls.icon} />
           </AppLink>
         )}
       </div>
@@ -128,12 +132,13 @@ export const Header = () => {
           </nav>
           <div className={cls.controls}>
             {setControls()}
-            <AppLink to="/cart" className={cls.icon}>
-              <FaCartShopping size={25} />
+            <AppLink to="/cart" className={cls.icon__wrapper}>
+              <FaCartShopping size={25} className={cls.icon} />
+              <div className={cls.cartQuantity}>{cartQuantity}</div>
             </AppLink>
             {!nav ? (
               <AiOutlineMenu
-                className={`${cls.icon} ${cls.burger__icon}`}
+                className={`${cls.burger__icon} ${cls.icon}`}
                 size={30}
                 onClick={() => {
                   setNav(!nav);
@@ -142,7 +147,7 @@ export const Header = () => {
               />
             ) : (
               <AiOutlineClose
-                className={`${cls.icon} ${cls.burger__icon}`}
+                className={`${cls.burger__icon} ${cls.icon}`}
                 size={30}
                 onClick={() => {
                   setNav(!nav);
