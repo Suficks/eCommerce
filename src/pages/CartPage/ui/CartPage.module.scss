@@ -1,6 +1,6 @@
 .wrapper {
   display: block;
-  height: 100vh;
+  height: 100%;
 
   background-color: $black;
 }
@@ -17,7 +17,7 @@
   position: relative;
 
   flex-wrap: wrap;
-  min-height: calc( 100vh - 143px - 384px);
+  min-height: calc(100vh - 143px - 384px);
   padding: 10px;
 
   background-color: $black;
@@ -132,7 +132,7 @@
 .promoCodeInput {
   @include montserrat(16px, 400, 20px);
 }
-  
+
 .label {
   width: 156px;
 }
