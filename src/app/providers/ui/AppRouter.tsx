@@ -1,37 +1,34 @@
 import { useRef } from 'react';
-import { createBrowserRouter, useLocation } from 'react-router-dom';
+import { createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { routeConfig } from '../RouterConfig/RouteConfig';
 
 import '@/app/providers/ui/AppRouterTransitions.scss';
-import { NotFound } from '@/pages/NotFound/NotFound';
 
-export const AppPage = () => {
+function TransitionWrapper() {
   const location = useLocation();
-  const nodeRef = useRef<HTMLDivElement>(null);
-
-  const selectedRoute = routeConfig.find(
-    (route) => route.path === location.pathname,
-  );
-  const element = selectedRoute?.element || <NotFound />;
-
+  const currentOutlet = useOutlet();
+  const nodeRef = useRef(null);
   return (
     <SwitchTransition>
       <CSSTransition
         key={location.pathname}
         nodeRef={nodeRef}
-        timeout={200}
+        timeout={300}
         classNames="page"
         unmountOnExit
       >
-        {() => (
-          <div ref={nodeRef} className="page">
-            {element}
-          </div>
-        )}
+        <div ref={nodeRef} className="page">
+          {currentOutlet}
+        </div>
       </CSSTransition>
     </SwitchTransition>
   );
-};
-
-export const AppRouter = createBrowserRouter(routeConfig);
+}
+export const AppRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <TransitionWrapper />,
+    children: [...routeConfig],
+  },
+]);
