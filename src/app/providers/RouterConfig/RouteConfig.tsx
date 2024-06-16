@@ -70,22 +70,6 @@ export const routeConfig: RouteConfig[] = [
     path: Routes.CATALOG,
     element: <CatalogPage />,
     nodeRef: createRef<HTMLDivElement>(),
-    children: [
-      {
-        path: Routes.CATEGORY_ID,
-        element: (
-          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
-        ),
-        nodeRef: createRef<HTMLDivElement>(),
-      },
-      {
-        path: Routes.SUBCATEGORY_ID,
-        element: (
-          <NotFound additionalMessage="The CATEGORY_ID page will be created during the next sprint." />
-        ),
-        nodeRef: createRef<HTMLDivElement>(),
-      },
-    ],
   },
   {
     path: Routes.PRODUCT,
