@@ -1,7 +1,7 @@
 import { createRef, memo, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { toast } from 'react-toastify';
 
+import { toast } from 'react-toastify';
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
@@ -21,8 +21,9 @@ import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 import { getCategoriesByKey } from '../../model/services/getCategoriesByKey';
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { getAdditionalInfo } from '../../model/services/getAdditionalInfo';
-import { ToastConfig } from '@/shared/const/ToastConfig';
 import { catalogActions } from '../../model/slice/catalogSlice';
+import { ToastConfig } from '@/shared/const/ToastConfig';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 interface CatalogPageProps {
   className?: string;
@@ -46,10 +47,22 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
 
   const fetchCategory = useCallback(
     async (id: string) => {
-      const result = await dispatch(getCategoriesByKey(id)).unwrap();
-      return result;
+      try {
+        const result = await dispatch(getCategoriesByKey(id)).unwrap();
+        if (result) {
+          return result;
+        }
+      } catch (e) {
+        navigate(Routes.ERROR);
+        toast.error(
+          'Failed to fetch product or invalid URL parameters',
+          ToastConfig,
+        );
+        return '';
+      }
+      return '';
     },
-    [dispatch],
+    [dispatch, navigate],
   );
 
   useEffect(() => {
