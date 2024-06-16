@@ -46,22 +46,10 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
 
   const fetchCategory = useCallback(
     async (id: string) => {
-      try {
-        const result = await dispatch(getCategoriesByKey(id)).unwrap();
-        if (result) {
-          return result;
-        }
-      } catch (e) {
-        navigate('404');
-        toast.error(
-          'Failed to fetch product or invalid URL parameters',
-          ToastConfig,
-        );
-        return '';
-      }
-      return '';
+      const result = await dispatch(getCategoriesByKey(id)).unwrap();
+      return result;
     },
-    [dispatch, navigate],
+    [dispatch],
   );
 
   useEffect(() => {
