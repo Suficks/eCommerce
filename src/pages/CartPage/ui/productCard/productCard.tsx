@@ -76,7 +76,6 @@ export const ProductCard = ({ className, product }: ProductCardProps) => {
             ) : (
               <span className={cls.price}>{price}</span>
             )}
-            {/* {ConverterPrice(totalPrice.centAmount)} */}
           </div>
         </div>
       </div>
