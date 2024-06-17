@@ -17,6 +17,7 @@
 
     .productDescription {
       @include montserrat(16px, 500, 20px);
+      padding: 10px;
     }
 
     .price {
