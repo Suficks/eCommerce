@@ -1,12 +1,11 @@
 import { createRef, memo, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
-
 import { toast } from 'react-toastify';
+
 import { Header } from '@/widgets/Header/Header';
 import { MainBlock } from '../MainBlock/MainBlock';
 import { SalesBlock } from '../SalesBlock/SalesBlock';
 import { FiltersBlock } from '../FiltersBlock/FiltersBlock';
-import { fetchProducts } from '../../model/services/fetchProducts';
 import { AllProductsBlock } from '../AllProductsBlock/AllProductsBlock';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { Footer } from '@/widgets/Footer/Footer';
@@ -21,7 +20,6 @@ import { Breadcrumbs } from '@/features/Breadcrumbs/ui/Breadcrumbs';
 import { getCategoriesByKey } from '../../model/services/getCategoriesByKey';
 import { useCatalogFilters } from '../../hooks/useCatalogPageFilters';
 import { getAdditionalInfo } from '../../model/services/getAdditionalInfo';
-import { catalogActions } from '../../model/slice/catalogSlice';
 import { ToastConfig } from '@/shared/const/ToastConfig';
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
@@ -77,6 +75,8 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
       }
       if (category) {
         onChangeSelectedCategory(category);
+      } else {
+        onChangeSelectedCategory('');
       }
     };
 
@@ -85,8 +85,6 @@ export const CatalogPage = memo(({ className }: CatalogPageProps) => {
     }
 
     fetchAndSetCategory();
-    dispatch(catalogActions.setPage(0));
-    dispatch(fetchProducts({ scrolling: false }));
   }, [
     categoryId,
     subcategoryId,
