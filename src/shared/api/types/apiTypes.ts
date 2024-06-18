@@ -1,8 +1,9 @@
-import { ApiRoot } from '@commercetools/platform-sdk';
+import { ApiRoot, Cart } from '@commercetools/platform-sdk';
+
 import {
-  ParentCategoryName,
-  ItemsCategoryName,
   CatalogSortObject,
+  ItemsCategoryName,
+  ParentCategoryName,
 } from '@/pages/CatalogPage';
 
 export interface UserLogin {
@@ -42,4 +43,25 @@ export type FilterSortSearchParameters = {
   maxPrice: number;
   attributesToSort?: CatalogSortObject;
   search?: string;
+  currentOffSet: number;
+  itemPerPage: number;
+};
+
+export type UpdateCartMode =
+  | 'new'
+  | 'update'
+  | 'remove'
+  | 'removeProduct'
+  | 'addDiscountCode'
+  | 'removeDiscountCode';
+
+export type UpdateCartParams = {
+  cartData?: Partial<Cart> | null;
+  mode?: UpdateCartMode;
+  cardId?: string;
+  quantity?: number;
+  firstFunctionCall?: boolean;
+  id?: string;
+  code?: string;
+  promoCodeId?: string;
 };

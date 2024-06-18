@@ -1,11 +1,11 @@
+import { CartSchema } from '@/entities/Cart';
 import { UserSchema } from '@/entities/User';
-import { LoginSchema } from '@/features/Login';
 import { CatalogSchema } from '@/pages/CatalogPage';
 
 export interface StateSchema {
-  loginForm: LoginSchema;
   user: UserSchema;
   catalog: CatalogSchema;
+  cart: CartSchema;
 }
 
 export interface ThunkConfig<T> {

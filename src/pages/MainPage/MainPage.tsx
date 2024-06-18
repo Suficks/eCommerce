@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
+import BagImage from '@/shared/assets/images/bag_image.jpg';
 import Bottle from '@/shared/assets/images/bottle.svg';
+import CandleImage from '@/shared/assets/images/candle_image.jpg';
+import CaseImage from '@/shared/assets/images/case_image.jpg';
 import Cloud from '@/shared/assets/images/cloud.svg';
 import Hands from '@/shared/assets/images/hands.svg';
 import Background from '@/shared/assets/images/info_background.webp';
 import MainLeaf from '@/shared/assets/images/main_leaf.svg';
-import BagImage from '@/shared/assets/images/bag_image.jpg';
-import CaseImage from '@/shared/assets/images/case_image.jpg';
-import CandleImage from '@/shared/assets/images/candle_image.jpg';
 import { Card } from '@/shared/ui/Card/Card';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Footer } from '@/widgets/Footer/Footer';
@@ -104,6 +104,19 @@ export const MainPage = (props: MainPageProps) => {
               </NavLink>
             </div>
           </div>
+          <section className={cls.promoCodes}>
+            <p className={cls.promoCodesTitle}> Active promo codes</p>
+            <div className={cls.descriptionWrapper}>
+              <p className={cls.promoCodesDescription}>
+                <span className={cls.promoCodeName}>FIRST</span> - 10% off your
+                first order
+              </p>
+              <p className={cls.promoCodesDescription}>
+                <span className={cls.promoCodeName}>SALE</span> - promo code
+                discount applies to all items
+              </p>
+            </div>
+          </section>
           <Footer />
         </section>
       </div>

@@ -17,6 +17,7 @@
 
     .productDescription {
       @include montserrat(16px, 500, 20px);
+      padding: 10px;
     }
 
     .price {
@@ -35,7 +36,7 @@
     }
 
     .discountedPrice {
-      color: $red;
+      color: $green;
     }
   }
 
@@ -47,10 +48,13 @@
   z-index: 0;
 }
 
-.buttonsWrapper,
+.buttonsWrapper {
+  @include flex(flex-start, center, row, 30px);
+  width: 350px;
+}
+
 .priceWrapper {
-  @include flex(null, null, row, 30px);
-  justify-content: space-between;
+  @include flex(space-between, center, row, 30px);
   width: 350px;
 }
 
@@ -174,4 +178,8 @@
 
   max-width: 100%;
   border-radius: 20px;
+}
+
+.none {
+  display: none;
 }

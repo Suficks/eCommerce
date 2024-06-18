@@ -4,10 +4,10 @@ import { Navigate } from 'react-router-dom';
 
 import { LoginForm } from '@/features/Login';
 import { Logo } from '@/shared/ui/Logo/Logo';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 import { isLogged } from '@/shared/util/isLogged';
 
 import cls from './LoginPage.module.scss';
-import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 export const LoginPage = memo(() => {
   const navigate = useNavigate();

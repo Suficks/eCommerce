@@ -12,7 +12,12 @@ export async function getAllProducts({
 }: AllProductsProps): Promise<ProductProjection[]> {
   const result = await apiRoot
     .productProjections()
-    .get({ queryArgs: { offset: currentOffset, limit: itemPerPage } })
+    .get({
+      queryArgs: {
+        offset: currentOffset,
+        limit: itemPerPage,
+      },
+    })
     .execute();
   return result.body.results;
 }

@@ -10,9 +10,8 @@ import { MathRandom } from '@/shared/util/MathRandom';
 import { SliderComponent } from './Slider';
 import { ConverterPrice } from '@/shared/util/converterPrice';
 import { SectionSeparator } from '@/shared/ui/SectionSeparator/SectionSeparator';
-import { LoadingAnimation } from '@/shared/ui/loadingAnimation/loadingAnimation';
 import { getProductPath } from '../../model/services/getProductPath';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
+import { useAppDispatch } from '@/shared/hooks/redux';
 
 import cls from './SalesBlock.module.scss';
 
@@ -27,11 +26,6 @@ export const SalesBlock = ({
 }: SalesBlockProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.catalog.isLoading);
-
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
 
   const onHandleClick =
     (productId: string, categoryId: string, itemName: string) => async () => {

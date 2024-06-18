@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import { ReactNode } from 'react';
+
 import cls from './button.module.scss';
 
 interface ButtonProps {
@@ -7,7 +9,10 @@ interface ButtonProps {
   transparent?: boolean;
   green?: boolean;
   small?: boolean;
+  icon?: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
+  cancel?: boolean;
 }
 
 export const Button = ({
@@ -16,7 +21,10 @@ export const Button = ({
   transparent = false,
   small,
   green,
+  icon,
+  cancel = false,
   onClick,
+  disabled,
 }: ButtonProps) => {
   return (
     <button
@@ -25,10 +33,13 @@ export const Button = ({
         [cls.transparent]: transparent,
         [cls.green]: green,
         [cls.small]: small,
+        [cls.cancel]: cancel,
       })}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
+      {icon}
     </button>
   );
 };

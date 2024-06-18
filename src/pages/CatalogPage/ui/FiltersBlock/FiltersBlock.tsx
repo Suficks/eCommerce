@@ -17,9 +17,9 @@ import TablewareIcon from '@/shared/assets/images/tableware_icon.png';
 import PersonalCareIcon from '@/shared/assets/images/personal_care_icon.png';
 import LeafIcon from '@/shared/assets/images/categories_leaf.svg';
 import AllProductsIcon from '@/shared/assets/images/all_products_icon.png';
+import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 import cls from './FiltersBlock.module.scss';
-import { Routes } from '@/app/providers/RouterConfig/RouteConfig';
 
 interface CategoriesBlockProps {
   className?: string;

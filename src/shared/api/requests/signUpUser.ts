@@ -67,6 +67,7 @@ export async function signUpUser(
         },
       })
       .execute();
+
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {

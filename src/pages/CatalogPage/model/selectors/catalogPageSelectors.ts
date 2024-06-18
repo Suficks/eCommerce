@@ -22,3 +22,9 @@ export const getCatalogPageMinPrice = (state: StateSchema) =>
   state.catalog?.minPrice ?? '';
 export const getCatalogPageSelectedCategory = (state: StateSchema) =>
   state.catalog?.selectedCategoryId ?? '';
+export const getCatalogPageNumber = (state: StateSchema) =>
+  state.catalog?.page ?? '';
+export const getCatalogPageHasMore = (state: StateSchema) =>
+  state.catalog?.hasMore ?? '';
+export const getCatalogPageLimit = (state: StateSchema) =>
+  state.catalog?.limit ?? '';

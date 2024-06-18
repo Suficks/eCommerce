@@ -1,11 +1,18 @@
-import { ProductProjection } from '@commercetools/platform-sdk';
+import {
+  ProductProjection,
+  TermFacetResult,
+} from '@commercetools/platform-sdk';
 import { apiRoot } from '../BuildClient';
 import { FilterSortSearchParameters } from '../types/apiTypes';
 
+export interface ProductsResult {
+  products: ProductProjection[];
+  brands: string[];
+}
+
 export async function getFilterSortSearchProducts(
   parameters: FilterSortSearchParameters,
-  itemPerPage: number,
-): Promise<ProductProjection[]> {
+): Promise<ProductsResult> {
   const {
     categoryType: { attributesToFilter, selectedCategoryId },
     selectedFiltersList,
@@ -13,25 +20,34 @@ export async function getFilterSortSearchProducts(
     maxPrice,
     attributesToSort,
     search,
+    currentOffSet,
+    itemPerPage,
   } = parameters;
   const queryArgs: {
     filter: string | string[] | undefined;
     sort?: string;
+    offset: number;
     limit: number;
     ['text.en-GB']?: string;
     fuzzy?: boolean;
+    facet?: string[];
   } = {
     filter: [],
+    facet: [],
+    offset: currentOffSet,
     limit: itemPerPage,
   };
 
+  const formattedBrands = selectedFiltersList
+    .map((brand) => `"${brand}"`)
+    .join(',');
   if (Array.isArray(queryArgs.filter)) {
     if (selectedCategoryId) {
       queryArgs.filter.push(`categories.id:"${selectedCategoryId}"`);
     }
     if (attributesToFilter.name && selectedFiltersList.length) {
       queryArgs.filter.push(
-        `variants.attributes.${attributesToFilter.name}:"${selectedFiltersList}"`,
+        `variants.attributes.${attributesToFilter.name}:${formattedBrands}`,
       );
     }
     if (attributesToFilter.name && !selectedFiltersList.length) {
@@ -58,6 +74,8 @@ export async function getFilterSortSearchProducts(
     queryArgs.fuzzy = true;
   }
 
+  queryArgs.facet?.push(`variants.attributes.brand`);
+
   const result = await apiRoot
     .productProjections()
     .search()
@@ -65,5 +83,13 @@ export async function getFilterSortSearchProducts(
       queryArgs,
     })
     .execute();
-  return result.body.results;
+
+  return {
+    products: result.body.results,
+    brands: [
+      ...(
+        result.body.facets['variants.attributes.brand'] as TermFacetResult
+      ).terms.map((item) => item.term),
+    ],
+  };
 }

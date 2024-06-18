@@ -1,3 +1,4 @@
+export { catalogActions } from './model/slice/catalogSlice';
 export {
   getCatalogPageIsLoading,
   getCatalogPageProducts,

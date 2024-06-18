@@ -41,10 +41,14 @@ export interface CatalogSchema {
   discountProducts: ProductProjection[];
   categories: CategoryCustom[];
 
+  page: number;
+  hasMore: boolean;
+  limit: number;
+
   search: string;
   sort: CatalogSortObject;
   selectedBrands: string[];
-  brands: Set<string>;
+  brands: string[];
   maxPrice: string;
   minPrice: string;
   selectedCategoryId: string;

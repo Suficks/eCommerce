@@ -15,7 +15,7 @@ interface FilterItemProps {
   range?: boolean;
   maxPrice?: string;
   minPrice?: string;
-  brands?: Set<string>;
+  brands?: string[];
   onAddBrands?: (value: string) => void;
   onRemoveSelectedBrands?: (value: string) => void;
   onChangeMaxPrice?: (newPrice: string) => void;
